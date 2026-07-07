@@ -18,6 +18,11 @@
           </svg>
         </div>
         <span class="logo-text">RedesMaster</span>
+        <button class="sidebar-close-btn" id="menu-close-btn" aria-label="Fechar menu">
+          <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2">
+            <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/>
+          </svg>
+        </button>
       </div>
 
       <nav>
@@ -72,9 +77,16 @@
     <main>
       <!-- Header -->
       <header class="content-header">
-        <div class="header-title">
-          <h1 id="view-title">Dashboard Principal</h1>
-          <p id="view-subtitle">Bem-vindo à sua central de estudos. Escolha uma das atividades ao lado.</p>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="hamburger-btn" id="menu-toggle-btn" aria-label="Abrir menu">
+            <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="header-title">
+            <h1 id="view-title">Dashboard Principal</h1>
+            <p id="view-subtitle">Bem-vindo à sua central de estudos. Escolha uma das atividades ao lado.</p>
+          </div>
         </div>
         <div class="header-actions">
           <button class="btn" id="quick-quiz-btn">
@@ -556,8 +568,8 @@
           </div>
         </div>
       </section>
-    </main>
   </div>
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
 
   <!-- Scripts -->
   <script src="assets/js/db.js"></script>

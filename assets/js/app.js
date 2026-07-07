@@ -243,6 +243,43 @@ class RedesMasterApp {
         document.getElementById('simulado-final-result-screen').style.display = 'block';
       });
     }
+
+    // Mobile Sidebar Toggle Events
+    const menuToggle = document.getElementById('menu-toggle-btn');
+    const menuClose = document.getElementById('menu-close-btn');
+    const overlay = document.getElementById('sidebar-overlay');
+    const sidebar = document.querySelector('aside');
+
+    if (menuToggle && sidebar && overlay) {
+      menuToggle.addEventListener('click', () => {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+      });
+    }
+
+    if (menuClose && sidebar && overlay) {
+      menuClose.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+      });
+    }
+
+    if (overlay && sidebar) {
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+      });
+    }
+
+    // Auto-close sidebar on menu click on mobile
+    document.querySelectorAll('aside nav .nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        if (window.innerWidth <= 1024) {
+          if (sidebar) sidebar.classList.remove('open');
+          if (overlay) overlay.classList.remove('active');
+        }
+      });
+    });
   }
 
   // Dashboard Renderer
