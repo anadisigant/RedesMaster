@@ -1,0 +1,158 @@
+
+--- PAGE 1 ---
+REDES DE COMPUTADORES
+Camada de Aplicação
+DNS
+QUESTÃO 1 –  Qual o registro de recurso DNS responsável pela criação de aliases?  
+Quais são as 3 classes de servidores DNS?
+QUESTÃO 2 -  Os serviços e os protocolos da camada de Aplicação da arquitetura  
+TCP/IP são transportados pelos protocolos da camada de Transporte utilizando um  
+número de Porta padronizado. O protocolo DNS é identificado na camada de Transporte  
+pelo uso do número de qual porta?
+QUESTÃO 3 - Servidores DNS (Domain Name Server) são responsáveis pela conversão  
+do nome dos diversos servidores espalhados pela Internet para seu número IP e vice-
+versa. Servidores de DNS trabalham de forma colaborativa e hierárquica. Qual o nome  
+dado aos servidores que se encontram no topo da hierarquia de DNS?
+QUESTÃO 4 - Servidores de DNS (Domain Name System) têm como função converter  
+endereços  IP  em  seu  respectivo  nome  e  vice-versa.  Para  sua  confguração,  são 
+utilizados  arquivos  denominados  mapas  de  domínio  (zone).  Esses  arquivos  são 
+compostos por entradas chamadas RR (Resource Record). Qual é o tipo básico de RR  
+que estabelece a correspondência entre um nome canônico e um endereço IP?
+QUESTÃO 5 - No serviço conhecido como DNS, qual registro indica o servidor de  
+mensagens de e-mail em um domínio?
+QUESTÃO 6 - As mensagens DNS possuem um cabeçalho com tamanho fixo de quantos  
+bytes?
+QUESTÃO 7 -  Liste quatro tipos diferentes de registros DNS. 
+QUESTÃO 8 -  Qual o tamanho do cabeçalho do protocolo DNS? 
+QUESTÃO  9  - Execute  o  comando  dig  para  obter  o  registro  PTR  (inverso)  para  o 
+endereço IP "8.8.8.8"
+QUESTÃO  10  - Execute  o  comando  dig  para  obter  o  endereço  IPv6  do  domínio 
+"www.youtube.com"
+QUESTÃO 11 - Um requisição DNS possui no campo ID o valor 34. Qual será o valor do  
+campo ID na resposta? Explique
+QUESTÃO 12 - Utilizando o comando dig realize as seguintes consultas:
+a) Qual é o servidor de e-mail para o domínio "google.com"? 
+b) Qual é o endereço IP para o domínio "www.uesc.br"?
+c) Qual é o Name Server para o domínio "wikipedia.org"?
+d) Qual é o nome para o endereço IP "8.8.8.8"?
+e) Qual é o alias para o domínio "www.uesb.edu.br"?
+Repita o exercício 12 utilizando os comandos host e nslookup.
+--- PAGE 2 ---
+QUESTÃO  13  - Quais  protocolos  de  transporte  o  DNS  usa:  TCP ,  UDP  ou  ambos? 
+Justifique.                                                                                                  
+QUESTÃO 14 - Qual campo indica o tipo de operação DNS que está sendo realizada,  
+como uma consulta (query) ou uma resposta (response)?
+QUESTÃO 15 – Como funciona a resolução de nomes iterativa?
+QUESTÃO 16 – Como funciona a resolução de nomes recursiva?
+  
+QUESTÃO 17 – Qual o objetivo do uso de cache no serviço de nome?
+          
+QUESTÃO 18 – Quais as vantagens de um serviço de nomes hirerárquico e distribuído  
+como o DNS?
+QUESTÃO 19 -  Utilizando o Wireshark, capture pacotes DNS durante uma consulta real  
+(por  exemplo,  usando  o  comando  nslookup  para  obter  o  endereço  IP  da  máquina 
+www.uesb.br). Analise os campos do cabeçalho DNS, identificando o Transaction ID,  
+flags  (QR,  AA,  TC,  RD,  RA),  contadores  (Questions,  Answer  RRs,  Authority  RRs, 
+Additional RRs) e o conteúdo das consultas e respostas. Responda perguntas básicas  
+sobre o funcionamento do protocolo DNS a partir da análise dos pacotes capturados. 
+• Qual é o valor do campo Transaction ID nos pacotes consulta e resposta? Eles  
+são iguais? Por quê?
+• Qual  o  significado  da  flag  QR?  Como  você  identifica  uma  consulta  e  uma 
+resposta?
+• Quantas perguntas (Questions) existem no cabeçalho? 
+• Quantos registros de resposta (Answer RRs) são retornados?
+• Quais  tipos  de  registros  (A,  AAAA,  MX,  CNAME)  aparecem  na  seção  de 
+respostas?
+• O que representam os campos Authority RRs e Additional RRs?
+QUESTÃO 20 – Configure uma rede cliente servidor DNS utilizando o Cisco Packet  
+Tracer e realize a simulação do protocolo.
+QUESTÃO 21 - Qual parâmetro do dig é usado para especificar o tipo de registro DNS a  
+ser consultado, como A, MX, ou TXT?
+a) +noall  
+b) +answer  
+c) -x  
+d) -t
+e) -consult  
+QUESTÃO 22 - Qual comando dig você usaria para realizar uma consulta reversa a  
+partir de um endereço IP?
+a) dig -t MX  
+--- PAGE 3 ---
+b) dig -x 8.8.8.8  
+c) dig +trace  
+d) dig @8.8.8.8 google.com
+e) dig reverse 8.8.8.8
+QUESTÃO 23 - Como você exibe apenas a resposta da consulta, omitindo informações  
+adicionais, usando o dig?
+a) dig +trace
+b) dig +short  
+c) dig -t ANY  
+d) dig +all  
+e) dig +noinfo
+QUESTÃO 24 - Qual opção do dig permite seguir o caminho completo da resolução DNS, 
+exibindo cada passo da consulta?
+a) +noall
+b) +stats  
+c) +trace  
+d) +short  
+e) +path
+Questões Objetivas (Múltipla Escolha)
+1 . Qual registro DNS é usado para mapear um nome de domínio para um endereço 
+IPv4?
+A) MX
+B) AAAA
+C) A
+D) NS
+2 . Qual registro DNS é responsável por armazenar o servidor de e-mail de um domínio?
+A) TXT
+B) MX
+C) NS
+D) PTR
+3 . Qual registro DNS é utilizado para mapear um nome de domínio para um endereço 
+IPv6?
+A) AAAA
+B) A
+C) CNAME
+D) SOA
+--- PAGE 4 ---
+4 . O registro CNAME é utilizado para:
+A) Definir servidor de e-mail
+B) Criar um alias para outro domínio
+C) Definir autoridade do domínio
+D) Mapear IPv4
+5 . O principal objetivo do cache DNS é:
+A) Aumentar o tamanho das respostas DNS
+B) Reduzir o tempo de resolução de nomes
+C) Armazenar arquivos do usuário
+D) Criptografar consultas DNS
+6 . Uma consulta recursiva DNS ocorre quando:
+A) O cliente consulta apenas um servidor
+B) O servidor DNS consulta outros servidores em nome do cliente
+C) O cliente consulta todos os servidores
+D) Nenhuma consulta é feita
+7 . Uma consulta iterativa DNS ocorre quando:
+A) O servidor resolve completamente o nome
+B) O cliente consulta vários servidores sucessivamente
+C) Apenas um servidor responde
+D) O cache não é utilizado
+8 . Qual campo do cabeçalho DNS indica o tipo de consulta ou resposta?
+A) ID
+B) QR
+C) ANCOUNT
+D) ARCOUNT
+9 . Qual registro DNS indica o servidor responsável por um domínio?
+A) NS
+B) PTR
+C) TXT
+D) MX
+10. Qual registro DNS é utilizado para resolução reversa (IP → nome)?
+A) PTR
+B) A
+C) AAAA
+D) MX
+11. O cabeçalho DNS contém diversos campos importantes. Explique a função dos 
+seguintes campos:
+a) ID
+b) QR
+c) QDCOUNT
+--- PAGE 5 ---
+d) ANCOUNT

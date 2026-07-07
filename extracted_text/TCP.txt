@@ -1,0 +1,129 @@
+
+--- PAGE 1 ---
+Lista de Exercícios
+Camada de Transporte
+QUESTÃO 1 - Qual é o tamanho mínimo do cabeçalho TCP em bytes?
+                                                       
+   a) 16 bytes
+   b) 20 bytes
+   c) 24 bytes
+   d) 32 bytes
+QUESTÃO 2 - Quais são os campos principais do cabeçalho TCP?
+   a) Porta de Origem, Porta de Destino, Número de Sequência, Número de Acknowledgement, 
+Offset, Flags, Janela, Checksum, Ponteiro Urgente, Opções
+   b) Porta de Origem, Porta de Destino, Comprimento, Checksum
+   c) IP de Origem, IP de Destino, TTL, Protocolo
+   d) Endereço de Origem, Endereço de Destino, Comprimento, Dados
+QUESTÃO 3 - O que o campo Número de Sequência no cabeçalho TCP representa?
+   a) O número total de pacotes enviados
+   b) O número de bytes recebidos
+   c) O número do primeiro byte de dados deste segmento
+   d) O tamanho total do pacote TCP
+QUESTÃO 4 - Qual é a principal função do campo Número de Acknowledgement no cabeçalho 
+TCP?
+   a) Determinar o tamanho do pacote
+   b) Confirmar o recebimento dos dados até um determinado byte
+   c) Identificar o protocolo utilizado
+   d) Identificar a aplicação de origem
+QUESTÃO 5 - O campo Janela no cabeçalho TCP é usado para:
+   a) Controlar o tamanho do cabeçalho
+   b) Especificar o tamanho do buffer de recepção
+   c) Determinar o tempo de vida do pacote
+   d) Identificar o tamanho do segmento de dados
+QUESTÃO 6 - O campo Checksum no cabeçalho TCP é usado para:
+   a) Determinar o tamanho do pacote
+   b) Verificar a integridade dos dados no pacote
+   c) Identificar o protocolo utilizado
+   d) Identificar a aplicação de origem
+QUESTÃO 7 - Quais são algumas das flags utilizadas no cabeçalho TCP?
+   a) SYN, ACK, FIN, RST, PSH, URG
+   b) SYN, ACK, FIN, URG, LEN
+--- PAGE 2 ---
+   c) ACK, FIN, RST, PSH, TTL
+   d) SYN, ACK, FIN, RST, TTL
+Questão 8 - A seguir é apresentado um dump de um cabeçalho TCP no formato hexadecimal
+05 32 00 17 00 00 00 01 00 00 00 00 50 02 07 FF 00 00 00 00
+a) Qual o número da porta de origem?
+b) Qual o número da porta de destino?
+c) Qual o número de sequência?
+d) Qual o número de confirmação?
+e) Qual o comprimento do cabeçalho?
+f) Qual é o tipo de segmento?
+g) Qual é o tamanho da janela?
+Questão 9 - O TCP abre uma conexão usando o número de sequencia inicial igual a 14.534. A outra 
+parte abre a conexão com o número de sequência inicial igual a 21.732. Mostre os três segmentos  
+TCP de estabelecimento da conexão.
+Questão 10 -  No TCP,  se o valor de HLEN for 0111, quantos bytes de opção estão inclusos no  
+segmento?
+Questão 11 -  Suponha que um hospedeiro A envie dois segmentos TCP um atrás do outro ao  
+hospedeiro B sobre uma conexão TCP. O primeiro segmento tem o número de sequência 90 e, o  
+segundo, número de sequência 110. Quantos dados tem o primeiro segmento? Suponha que o  
+primeiro segmento seja perdido, mas o segundo chege a B. No reconhecimento que B envia a A,  
+qual será o número de reconhecimento?
+Questão 12 -  Suponha que uma conexão TCP esta transferindo um arquivo de 5000 bytes. O  
+primeiro byte é o número 10.001. Qual é o número de seqüência para cada segmento se os dados  
+são enviados em 5 segmentos, cada um carregando 1000 bytes? 
+Questão 13 Qual é o tamanho máximo do cabeçalho TCP? Qual é o tamanho mínimo do cabeçalho 
+TCP?
+Questão 14 - Considere uma conexão TCP entre o host A e o host B. Suponha que os segmentos 
+TCP que trafegam de A para B tenham número de porta destino 80 e número de porta fonte 9999. 
+Quais são os números da porta fonte e da porta destino para os segmentos que trafegam de B para 
+A? 
+Questão 15 - Os hosts A e B comunicam-se através de uma conexão TCP e o host B já recebeu até  
+o byte 126 do host A. Suponha que o host A envie dois segmentos para o host B sucessivamente. Os 
+segmentos contém, respectivamente, 50 e 70 bytes de dados. No primeiro segmento, o número de  
+sequência é 127, a porta fonte é 3020 e a porta destino 80. O host B envia um segmento de  
+reconhecimento para cada segmento de dados enviado pelo host A. 
+a) No segundo segmento enviado de A, quais são o número de sequência, a porta fonte e a  
+porta destino?
+b) Considerando que os segmentos de dados chegam na ordem correta em B, quais são o  
+número de reconhecimento, a porta fonte e a porta destino do segmento de reconhecimento ao  
+--- PAGE 3 ---
+primeiro segmento de dados? 
+Questão 16 - 
+Considere o gráfico e responda às questões: 
+a. Qual(is) o(s) intervalo(s) de rodada de transmissão em que há partida lenta? 
+b. Após a 10a rodada de transmissão, qual o evento de perda? 
+c. Após a 22a rodada de transmissão, qual o evento de perda? 
+Questão 17 – Responda as questões a seguir:
+a)  Para estabelecer uma conexão, o módulo TCP da camada de transporte do cliente executa o  
+procedimento do 3-way handshake com o módulo TCP da camada de transporte do servidor. Esse  
+handshake é caracterizado pela troca de três mensagens. Cite as mensagens trocadas em ordem.
+b) Qual o campo do cabeçalho do protocolo TCP é utilizado para controle de fluxo?
+c) No cabeçalho do protocolo TCP, qual a flag que é utilizada para reiniciar uma conexão que tenha  
+ficado confusa devido a uma falha no host ou por qualquer outra razão?
+d)  Um pacote trocado entre pares TCP é chamado segmento e contém um cabeçalho com vários  
+campos, dentre eles o flags, de 6 bits, utilizado para repassar informações de controle entre os pares  
+TCP. Quais são os flags utilizados para estabelecer e encerrar uma conexão?
+e) Qual é o campo abaixo do cabeçalho do protocolo TCP? Qual o tamanho desse campo?
+
+--- PAGE 4 ---
+  
+QUESTÃO 18 – Estude os programas Python abaixo. Execute os programas e utilizando Wireshark  
+apresente como acontece o estabelecimento da conexão, a troca de dados e o encerramento da  
+conexão TCP
+###########################################
+# cliente_tcp_simples.py
+import socket
+HOST = 'localhost'
+PORT = 5000
+cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+cliente.connect((HOST, PORT))
+mensagem = "Olá, servidor!"
+cliente.send(mensagem.encode())
+cliente.close()
+###########################################
+# servidor_tcp_simples.py
+import socket
+HOST = 'localhost'
+PORT = 5000
+servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+servidor.bind((HOST, PORT))
+servidor.listen(1)
+print("Aguardando conexão...")
+conn, addr = servidor.accept()
+print(f"Conectado por {addr}")
+dados = conn.recv(1024)
+print("Mensagem recebida:", dados.decode())
+conn.close()
+servidor.close()

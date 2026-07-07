@@ -1,0 +1,63 @@
+
+--- PAGE 1 ---
+Programação em Rede Java 
+Exercícios 
+1. Desenvolva uma aplicação em Java que simule a consulta DNS, resolvendo nomes de domínio  
+(como www.google.com) para seus respectivos endereços IP. 
+2. Implemente um servidor TCP que escute conexões na porta 12345 e um cliente que se conecte a  
+ele. O cliente envia uma mensagem de texto para o servidor e o servidor responde confirmando o  
+recebimento.
+                                              
+3. Desenvolva uma aplicação de rede simples utilizando sockets TCP em Java, onde um cliente  
+envia mensagens de texto ao servidor e recebe exatamente a mesma mensagem de volta. O servidor  
+deve ficar escutando em uma porta predefinida (por exemplo, 12345), e para cada mensagem  
+recebida, deve responder com o mesmo conteúdo. O cliente deve permitir que o usuário digite  
+mensagens repetidamente, encerrando a comunicação com uma palavra-chave como "sair". 
+4. Implemente um servidor TCP em Java que envia a data e a hora atual sempre que um cliente se  
+conecta. O cliente, por sua vez, deve estabelecer a conexão e exibir a resposta recebida na tela. O  
+formato da data deve seguir o padrão brasileiro: dd/MM/yyyy HH:mm:ss. 
+5. Crie um programa cliente que receba um endereço IP ou hostname e um intervalo de portas (ex:  
+20 a 1024). O programa deve testar quais portas TCP estão abertas naquele host.
+6. Desenvolver  um  servidor TCP em Java  que  funcione  como  um  jogo de  quiz  para  clientes  
+remotos. O servidor deverá enviar perguntas aos clientes conectados, receber respostas, verificar se  
+estão corretas e enviar o feedback adequado.
+7. Crie um servidor TCP em Java que sorteia aleatoriamente um número inteiro entre 1 e 100. O  
+cliente deve tentar adivinhar esse número enviando palpites por meio da conexão TCP. O servidor  
+deve  responder com dicas como “maior”, “menor” ou “acertou”  até que  o cliente descubra o  
+número correto. O jogo termina quando o cliente acerta e o servidor informa a quantidade de  
+tentativas realizadas.
+8. Implemente uma aplicação Java com comunicação cliente-servidor via TCP, onde o servidor  
+simula operações bancárias básicas para uma conta corrente. O cliente deve enviar comandos para  
+consultar saldo, realizar depósitos e efetuar saques, como:
+• SALDO
+• DEPOSITO 100.0
+• SAQUE 50.0
+O servidor deve manter o saldo em memória e retornar mensagens apropriadas, como “Saldo atual:  
+R$150.00” ou “Erro: saldo insuficiente”.
+9. Implemente um servidor TCP que receba expressões aritméticas simples (como  10+5,  7*3, 
+20/4) enviadas pelo cliente. O servidor deve calcular o resultado e retornar para o cliente. O  
+cliente permite entrada contínua de expressões e exibe os resultados calculados.
+--- PAGE 2 ---
+10. Crie uma aplicação cliente-servidor em Java utilizando TCP, em que o cliente envia palavras em 
+inglês e o servidor responde com a tradução correspondente em português. O servidor deve possuir  
+um pequeno  dicionário  interno  (por  exemplo,  10  a  20  palavras).  Se  a  palavra  não  estiver  no  
+dicionário, o servidor deve retornar uma mensagem informando que a tradução não foi encontrada.  
+Observação: Praticar estruturas de dados (como Map) no servidor. 
+Exemplo de dicionário interno:
+• hello → olá
+• world → mundo
+• computer → computador
+• friend → amigo
+                                                  
+11. Desenvolva uma aplicação cliente-servidor onde o cliente solicita um arquivo pelo nome (por  
+exemplo, documento.txt), e o servidor responde com o conteúdo do arquivo, caso ele exista. O  
+cliente deve salvar esse conteúdo em um arquivo local. Se o arquivo solicitado não existir, o  
+servidor deve enviar uma mensagem de erro. 
+12. Implemente  uma  aplicação Java  utilizando  o  protocolo UDP,  onde  o servidor  recebe  uma  
+mensagem do cliente e devolve a mesma mensagem como resposta. Diferente do TCP, o servidor  
+UDP não estabelece uma conexão, apenas recebe pacotes e responde com novos pacotes.
+13. Desenvolva uma aplicação onde um servidor UDP envia a data e a hora atuais ao receber  
+qualquer pacote de mensagem (mesmo vazio). O cliente envia um pacote e aguarda a resposta.
+14. Para uma aplicação cliente-servidor TCP, por que o programa servidor deve ser executado antes  
+do programa cliente? Para uma aplicação cliente-servidor UDP,  por que o programa cliente pode  
+ser executado antes do programa servidor?

@@ -1,8 +1,3 @@
-# Ignorar arquivos locais privados de estudo
-materiais/
-extracted_text/
-plataforma/assets/extracted_text/
-
 # Ignorar arquivos temporários do SO e IDEs
 .DS_Store
 Thumbs.db

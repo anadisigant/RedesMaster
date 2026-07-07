@@ -1,0 +1,135 @@
+
+--- PAGE 1 ---
+Camada de Rede
+Protocolo IPv4 e IPv6
+Lista de Exercícios
+QUESTÃO 1 - Determine a classe dos seguintes endereços IPv4:
+  
+     a) 192.168.0.1
+     b) 10.0.0.1
+     c) 172.16.0.1
+     d) 224.0.0.1 
+     e) 00000001 00001011 00001011 11101111
+     f) 11000001 10000011 00011011 11111111
+QUESTÃO 2 - Dado o endereço IP 192.168.1.10 com máscara de sub-rede 255.255.255.0, 
+determine o endereço de rede e o endereço de broadcast.
+QUESTÃO 3 - Para o endereço IP 172.16.0.0 com máscara de sub-rede 255.255.240.0, 
+quantas sub-redes e quantos hosts por sub-rede podem ser criados?
+QUESTÃO 4 - Converta a máscara de sub-rede 255.255.255.192 para notação CIDR e vice-
+versa.
+QUESTÃO 5 - Um bloco de endereços é concedido a uma pequena empresa. Sabemos que 
+um dos endereços é 205.16.37.39/28. Qual é o primeiro endereço no bloco? Descubra o 
+último endereço para o bloco; Encontre o número de endereços. 
+QUESTÃO 6 - Para o endereço IP 192.168.10.33 com máscara de sub-rede 
+255.255.255.224, determine a sub-rede a que pertence.
+QUESTÃO 7 - Dado o endereço IP 172.20.10.15 com máscara de sub-rede 
+255.255.255.248, determine o endereço de broadcast.
+QUESTÃO 8 - Classifique os seguintes endereços como privados ou públicos:
+  
+     a) 172.16.5.4
+     b) 203.0.113.5
+     c) 192.0.2.1
+     d) 10.1.1.1
+     e) 192.168.100.100
+QUESTÃO 9 - Sobre sub-rede IPv4:
+a) Para o endereço de rede 200.223.226.0 com máscara de sub-rede 255.255.255.0, divida 
+em 4 sub-redes menores e forneça os novos endereços de rede, suas máscaras e a faixa de 
+endereços IP de cada sub-rede.
+a) Para o endereço de rede 200.223.226.0 com máscara de sub-rede 255.255.255.0, divida 
+em 2 sub-redes menores e forneça os novos endereços de rede, suas máscaras e a faixa de 
+endereços IP de cada sub-rede.
+--- PAGE 2 ---
+QUESTÃO 10 -  Capturar e analisar no Wireshark pacotes IPv4 e IPv6, identificando os  
+campos de seus respectivos cabeçalhos, observando semelhanças e diferenças. 
+a) Quais campos existem no IPv4 mas não existem no IPv6? Por quê?
+                                          
+b) Qual o comprimento (em bits) dos endereços IPv4 e IPv6?
+c) O campo “Next Header” do IPv6 equivale a qual campo do IPv4?
+d) O que aconteceu com o campo “Checksum” no IPv6?
+e) O IPv6 possui campo de fragmentação no cabeçalho principal? Explique.
+QUESTÃO 11 - Comprima os seguintes endereços IPv6:
+     a) 2001:0db8:0000:0000:0000:0000:1428:57ab
+     b) fe80:0000:0000:0000:0202:b3ff:fe1e:8329
+     c) 2001:0db8:0000:0042:0000:8a2e:0370:7334
+QUESTÃO 12 - Expanda os seguintes endereços IPv6:
+     a) 2001:db8::1428:57ab
+     b) fe80::202:b3ff:fe1e:8329
+     c) 2001:db8::42:0:8a2e:370:7334
+QUESTÃO 13 - Classifique os seguintes endereços IPv6 como unicast, multicast ou anycast:
+     a) ff02::1
+     b) fe80::1
+     c) 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+     d) ff02::2
+QUESTÃO 14 - Dado o endereço IPv6 2001:0db8:abcd:0012::0/64, quantos endereços de 
+host estão disponíveis nessa sub-rede?
+QUESTÃO 15 - Para o endereço IPv6 2001:0db8:1234:5678:9abc:def0:1234:5678/64, 
+identifique o endereço de rede e o endereço da interface.
+QUESTÃO 16 - Explique o propósito dos endereços IPv6 link-local e dê um exemplo.
+QUESTÃO 17 - Liste e explique três benefícios do uso de NAT em redes corporativas. 
+Também descreva duas limitações ou desvantagens do uso de NAT.
+QUESTÃO 18 - Descreva os tipos de mensagens ICMP e dê exemplos de pelo menos três 
+mensagens comuns, incluindo seus propósitos.
+QUESTÃO 19 - Qual é o endereço de loopback IPv6? 
+QUESTÃO 20 -  No endereçamento IPv6, foi adotada para a representação dos endereços 
+IP em qual base?
+QUESTÃO 21 - O endereço IPv6 2001:db8:4::2, em sua forma descomprimida, é escrito 
+como?
+--- PAGE 3 ---
+QUESTÃO 22 -  Uma das principais diferenças entre o IPv4 e o IPv6 é o fato de não existir 
+mais o broadcast no IPv6, ou seja, as tarefas antes exercidas pelo broadcast são agora 
+despachadas como?
+QUESTÃO 23 -  Na arquitetura TCP/IP, o formato do endereçamento IPv4 foi dividido em 
+classes de endereços, dentro das quais existem classes especiais. A faixa de IP 127.0.0.0/8 
+é reservada para que?
+QUESTÃO 24 – A funcionalidade do protocolo ARP no IPv4 é desempenhada, no IPv6, por 
+qual protocolo? O campo Protocolo usado no cabeçalho do IPv4 não é encontrado no 
+cabeçalho fixo do IPv6. Por quê?
+  
+QUESTÃO 25 - Um Administrador de Redes deseja utilizar uma técnica para transição de  
+IPv6 para IPv4, em que um pacote IP é enviado como  payload de outro pacote IP. Para a  
+transição do IPv6 esta técnica é usada para enviar um pacote IPv6 através de uma parte  
+da rede que só entende IPv4. Isso significa que o pacote IPv6 é encapsulado dentro de um  
+cabeçalho IPv4 que tem o endereço do ponto final em seu cabeçalho, é transmitido pela  
+parte da rede que suporta apenas IPv4 e, finalmente, desencapsulado no ponto final que  
+pode  ser  um  roteador  ou  um  host capaz  de  processar  o  pacote  IPv6  após  o  
+desencapsulamento. Qual é o nome dessa técnica?
+QUESTÃO 26 - O Analista de Suporte decidiu realizar a migração dos protocolos da rede  
+local da versão 4 para a versão 6, especificamente, do IPv4 para o IPv6, principalmente  
+pelo fato do IPv6 dar suporte à Qualidade de Serviço (QoS). Para isso, diferentemente do  
+campo Type of Service, existente no cabeçalho do IPv4, o IPv6 inclui um novo campo. Qual  
+o nome deste campo?
+QUESTÃO 27 - No IPv6, a quantidade de  bits utilizados para o endereçamento é de 128, o  
+que torna o cabeçalho do datagrama muito grande se acompanhasse a mesma estrutura do 
+cabeçalho do IPv4. Assim, e para facilitar o processo de tratamento, o cabeçalho base  
+do IPv6 foi alterado e possui um comprimento fixo, de quantos bytes?
+QUESTÃO 28 -  IPv6 é o novo protocolo da internet. Com o crescimento dos dispositivos  
+conectados à internet, o esgotamento dos endereços IPv4 é fato. Restam poucos blocos  
+para  serem  comercializados,  mas,  mesmo  assim,  pertencem  a  algumas empresas,  que 
+podem ou não comercializarem. Comparando o cabeçalho do IPv6 com o do IPv4, algumas  
+diferenças podem ser percebidas como, por exemplo, a renomeação de alguns campos. Um  
+dos campos renomeados do IPv4 no IPv6 foi o de nome Protocolo. Qual o nome do campo  
+do cabeçalho IPv6 correspondente ao campo Protocolo no cabeçalho IPv4? 
+QUESTÃO 29 - O administrador de uma rede local de computadores (LAN) de uma  
+empresa utiliza o recurso de sub-redes para organizar a comunicação na LAN. De  
+acordo com a quantidade de setores da empresa, o administrador estabeleceu o  
+uso da máscara de sub-rede 255.255.255.224 para ocupar toda a faixa de IPs na  
+LAN Classe C. Pode-se dizer, assim, qual é a máxima quantidade de sub-redes  
+nessa LAN?
+--- PAGE 4 ---
+QUESTÃO 30 - Considere a rede abaixo no Cisco Packet Tracer
+REQUISITOS:
+Roteador: Primeiro endereço IP
+Servidor: Segundo endereço IP 
+Impressora: Terçeiro endereço IP
+PC: Quarto endereço IP
+Documentação da rede: endereço da rede, endereço de broadcast, primeiro endereço e  
+último endereço da sub-rede, número de sub-redes, número de hosts por sub-rede.
+a) Divida a rede 200.223.226.0/24 em 8 sub-redes de mesmo tamanho e atribua as 4  
+últimas à topologia.
+b) Divida a rede 200.223.227.0/24 de forma que cada sub-rede suporte até 62 hosts.  
+Atribua as 4 primeiras sub-redes à topologia
+c) Utilizando VLSM divida a rede 200.223.228.0/24 para atender os seguintes requisitos:  
+Laboratório 1 (70 hosts), Laboratório 2 (30 hosts), Laboratório 3 (10 hosts), Laboratório 4  
+(50 hosts).
+d)  Divida  a  rede  2001:db8::/32  em  16  sub-redes  de  mesmo  tamanho  e  atribua  as  4 
+primeiras sub-redes à topologia

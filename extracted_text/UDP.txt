@@ -1,0 +1,103 @@
+
+--- PAGE 1 ---
+Lista de Exercícios
+Camada de Transporte
+Protocolo UDP
+1. Qual é o tamanho total do cabeçalho UDP em bytes?
+   a) 4 bytes
+   b) 8 bytes
+   c) 16 bytes
+   d) 32 bytes
+2. Quais são os quatro campos principais do cabeçalho UDP?
+   a) Porta de Origem, Porta de Destino, Comprimento, Checksum
+   b) IP de Origem, IP de Destino, TTL, Protocolo
+   c) Porta de Origem, Porta de Destino, Sequência, Ack
+   d) Endereço de Origem, Endereço de Destino, Comprimento, Dados
+3. O campo Porta de Origem é usado para:
+   a) Identificar a aplicação que enviou o pacote
+   b) Identificar a aplicação que vai receber o pacote
+   c) Identificar o endereço IP de origem
+   d) Identificar o protocolo utilizado
+4. O que o campo Comprimento no cabeçalho UDP representa?
+   a) Apenas o tamanho do cabeçalho UDP
+   b) O tamanho dos dados UDP
+   c) O tamanho total do pacote UDP (cabeçalho + dados)
+   d) O tamanho do cabeçalho e dos dados excluindo a camada de transporte
+5. Qual é a principal função do campo Checksum no cabeçalho UDP?
+   a) Determinar o tamanho do pacote
+   b) Verificar a integridade dos dados no pacote
+   c) Identificar o protocolo utilizado
+   d) Identificar a aplicação de origem
+7. O campo Porta de Destino no cabeçalho UDP indica:
+   a) O endereço IP do destinatário
+   b) A porta da aplicação que vai receber o pacote
+   c) A porta da aplicação que enviou o pacote
+   d) O endereço MAC do destinatário
+8. Qual é o valor mínimo possível para o campo Comprimento no cabeçalho UDP?
+   a) 0
+   b) 8
+   c) 20
+   d) 32
+9. Se o campo Comprimento no cabeçalho UDP é 20, qual é o tamanho dos dados UDP?
+--- PAGE 2 ---
+   a) 20 bytes
+   b) 12 bytes
+   c) 8 bytes
+   d) 28 bytes
+10. Em qual camada do modelo OSI o protocolo UDP opera?
+    a) Camada de Aplicação
+    b) Camada de Transporte
+    c) Camada de Rede
+    d) Camada de Enlace
+  
+Questão 11 A seguir é apresentado um dump de um cabeçalho UDP no formato hexadecimal
+06 32 00 0D 00 1C E2 17
+a) Qual o número da porta de origem? 
+b) Qual o número da porta de destino? 
+c) Qual é o comprimento total do datagrama do usuário? 
+d) Qual é o comprimento dos dados?
+e) O pacote é direcionado de um cliente para um servidor ou vice-versa?  
+f) Qual é o processo cliente?
+Questão 12 - Dadas as informações do cabeçalho de um datagrama UDP, responda as questões:
+Porta fonte: 64431 Porta destino: 63322
+Comprimento: ? Checksum: ?
+Dados: Z ASCII(´Z´) = 90
+a) Qual o comprimento?
+b) Qual a soma de verificação (checksum) ?
+Questão 13 - Compare os cabeçalhos do TCP e do UDP. Cite alguns campos do cabeçalho TCP que 
+não estão presentes nos cabeçalho UDP. Qual é a razão para essa ausência.
+Questão  14  –  Explique  o  conceito  de  pseudo-cabeçalho  e  como  ele  é  usado  no  cálculo  do 
+Checksum UDP.  Utilizando o Wireshark capture uma mensagem do protocolo DNS e apresente  
+como o protocolo UDP calcula o checksum.
+Questão 15 – Baseado no código Python abaixo:
+#############################################
+# cliente_udp.py
+import socket
+IP_SERVIDOR = "127.0.0.1"  # localhost
+PORTA = 12345
+# Criação do socket UDP
+cliente = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+--- PAGE 3 ---
+mensagem = input("Digite uma mensagem para o servidor: ")
+cliente.sendto(mensagem.encode('utf-8'), (IP_SERVIDOR, PORTA))
+print("Mensagem enviada com sucesso!")
+#######################################################
+# servidor_udp.py
+import socket
+IP = "0.0.0.0"  # Escuta em todas as interfaces
+PORTA = 12345
+# Criação do socket UDP
+servidor = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+servidor.bind((IP, PORTA))
+print(f"Servidor UDP escutando na porta {PORTA}...")
+while True:
+    dados, endereco = servidor.recvfrom(1024)
+    mensagem = dados.decode('utf-8')
+    print(f"Mensagem recebida de {endereco}: {mensagem}")
+a) Quantos pacotes foram trocados entre cliente e servidor? Qual é o endereço IP de origem e de  
+destino nos pacotes? Quais são as portas de origem e destino em cada pacote?
+b) Qual é o valor do campo Length (comprimento) no cabeçalho UDP?
+c) Qual é o valor hexadecimal do campo  Checksum? O campo  Checksum está marcado como  
+válido no Wireshark? 
+d) O  campo  Checksum muda  se  você  enviar  outra  mensagem?  Por quê?  É possível  ativar  a 
+validação do checksum UDP no wireshark? Explique.

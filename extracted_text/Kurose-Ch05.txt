@@ -1,0 +1,1992 @@
+
+--- PAGE 1 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 1
+Capítulo 5
+Camada de enlace
+ e redes locais
+Nota sobre o uso destes slides ppt:
+Estamos disponibilizando estes slides gratuitamente a todos
+(professores, alunos, leitores). Eles estão em formato do 
+PowerPoint para que você possa incluir, modificar e excluir 
+slides (incluindo este) e o conteúdo do slide, de acordo com 
+suas necessidades. Eles obviamente representam muito 
+trabalho da nossa parte. Em retorno pelo uso, pedimos apenas 
+o seguinte:
+ Se você usar estes slides (por exemplo, em sala de aula) 
+sem muita alteração, que mencione sua fonte (afinal, gostamos 
+que as pessoas usem nosso livro!).
+Se você postar quaisquer slides sem muita alteração em um 
+site Web, que informe que eles foram adaptados dos (ou talvez 
+idênticos aos) nossos slides, e inclua nossa nota de direito 
+autoral desse material.
+Obrigado e divirta-se!  JFK/KWR
+Todo o material copyright 1996-2009
+J. F Kurose e K. W. Ross, Todos os direitos reservados
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 1
+
+--- PAGE 2 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 2
+Capítulo 5: 
+A camada de enlace
+Objetivos do capítulo: 
+ entender os princípios por trás dos serviços da 
+camada de enlace de dados:
+ detecção e correção de erro
+ Compartilhamento de um canal de broadcast: acesso 
+múltiplo
+ endereçamento da camada de enlace
+ transferência de dados confiável, controle de fluxo: 
+feito!
+ instanciação e implementação de várias 
+tecnologias da camada de enlace
+
+--- PAGE 3 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 3
+Camada de enlace
+ 5.1 Introdução e 
+serviços
+ 5.2 Detecção e 
+correção de erros 
+ 5.3 Protocolos de 
+acesso múltiplo
+ 5.4 Endereçamento na 
+camada de enlace
+ 5.5 Ethernet
+ 5.6 Comutadores de 
+camada de enlace
+ 5.7 PPP
+ 5.8 Virtualização de 
+enlace: MPLS
+ 5.9 Um dia na vida de 
+uma solicitação de 
+página Web
+
+--- PAGE 4 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 4
+Camada de enlace: 
+introdução
+Alguma terminologia:
+ hospedeiros e roteadores são nós
+ canais de comunicação que se 
+conectam a nós adjacentes pelo 
+caminho de comunicação são enlaces
+ enlaces com fio
+ enlaces sem fio
+ LANs
+ pacote na camada-2 é um quadro, 
+encapsula datagrama
+Camada de enlace de dados tem a 
+responsabilidade de transferir um
+datagrama de um nó ao nó adjacente 
+por um enlace.
+
+--- PAGE 5 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 5
+Serviços da camada de enlace
+ enquadramento, acesso ao enlace: 
+ encapsula datagrama no quadro, incluindo cabeçalho, trailer
+ acesso ao canal de meio compartilhado
+ endereços “MAC” usados nos cabeçalhos de quadro para 
+identificar origem, destino
+• diferente do endereço IP!
+ entrega confiável entre nós adjacentes
+ já aprendemos a fazer isso (Capítulo 3)!
+ raramente usado em enlace com pouco erro de bit (fibra, 
+alguns pares trançados)
+ enlaces sem fio: altas taxas de erro
+• P: Por que confiabilidade em nível de enlace e fim a fim?
+
+--- PAGE 6 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 6
+ controle de fluxo: 
+ controle entre nós de emissão e recepção adjacentes
+ detecção de erro: 
+ erros causados por atenuação de sinal, ruído. 
+ receptor detecta presença de erros: 
+• pede ao remetente para retransmitir ou descarta quadro
+ correção de erro: 
+ receptor identifica e corrige erro(s) de bit sem lançar mão 
+da retransmissão
+ half-duplex e full-duplex
+ com half-duplex, os nós nas duas extremidades do enlace 
+podem transmitir, mas não ao mesmo tempo
+
+--- PAGE 7 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 7
+Onde é implementada a 
+camada de enlace?
+ em todo e qualquer hosp.
+ camada de enlace 
+implementada no 
+“adaptador” (ou placa de 
+interface de rede, NIC)
+ placa Ethernet, placa 
+PCMCIA, placa 802.11
+ implementa camada de 
+enlace, física
+ conecta aos barramentos 
+de sistema do hospedeiro
+ combinação de hardware, 
+software, firmware
+contro-
+lador
+física
+transmissão
+cpu memória
+barramento
+hospedeiro
+(p. e., PCI)
+placa adaptadora
+de rede
+esquema do hospedeiro
+aplicação
+transporte
+rede
+enlace
+enlace
+física
+
+--- PAGE 8 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 8
+Comunicação entre 
+adaptadores
+ lado emissor:
+ encapsula datagrama no 
+quadro
+ inclui bits de verificação 
+de erro, rdt, controle de 
+fluxo etc.
+ lado receptor
+ procura erros, rdt, 
+controle de fluxo etc.
+ extrai datagrama, passa 
+para camada superior no 
+lado receptor
+contro-
+lador
+contro-
+lador
+hosp. de origem hosp. de destino
+datagrama datagrama
+datagrama
+quadro
+
+--- PAGE 9 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 9
+Camada de enlace
+ 5.1 Introdução e 
+serviços
+ 5.2 Detecção e 
+correção de erros 
+ 5.3 Protocolos de 
+acesso múltiplo
+ 5.4 Endereçamento na 
+camada de enlace
+ 5.5 Ethernet
+ 5.6 Comutadores de 
+camada de enlace
+ 5.7 PPP
+ 5.8 Virtualização de 
+enlace: MPLS
+ 5.9 Um dia na vida de 
+uma solicitação de 
+página Web
+
+--- PAGE 10 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 10
+Detecção de erros
+EDC = Bits de detecção e correção de erros (redundância)
+D = Dados protegidos por verificação de erro, podem incluir
+campos de cabeçalho 
+ Detecção de erro não 100% confiável!
+• protocolo pode perder alguns erros, mas raramente
+• maior campo EDC gera melhor detecção e correção
+
+--- PAGE 11 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 11
+Verificação de paridade
+Paridade de único bit:
+Detecta erros de único bit
+Paridade bidimensional:
+Detecta e corrige erros de único bit
+
+--- PAGE 12 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 12
+Soma de verificação da 
+Internet (análise)
+Emissor:
+ trata conteúdo do 
+segmento como sequência 
+de inteiros de 16 bits
+ soma de verificação: 
+adição (soma no 
+complemento de 1) do 
+conteúdo do segmento
+ emissor colocar valor da 
+soma de verificação no 
+campo de soma de 
+verificação UDP
+Receptor:
+ calcula soma de verificação 
+do segmento recebido
+ verifica se soma de 
+verificação calculada é igual 
+ao valor do campo de soma de 
+verificação:
+ NÃO – erro detectado
+ SIM – nenhum erro 
+detectado. Mas pode 
+haver erros, apesar disso? 
+Objetivo: detectar “erros” (p. e., bits invertidos) no 
+pacote transmitido (nota: usada somente na camada 
+de transporte)
+
+--- PAGE 13 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 13
+Soma de verificação: 
+verificação de redundância 
+cíclica
+ veja bits de dados, D, como um número binário
+ escolha padrão de bits r + 1 (gerador), G 
+ objetivo: escolher r bits de CRC, R, tal que
+  <D,R> exatamente divisível por G (módulo 2) 
+ receptor sabe G, divide <D,R> por G. Se resto diferente de zero: erro 
+detectado!
+ pode detectar todos os erros em rajada menores que r + 1 bits
+ muito usada na prática (Ethernet, 802.11 WiFi, ATM)
+
+--- PAGE 14 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 14
+Exemplo de CRC
+Queremos:
+D . 2r XOR R = nG
+de modo equivalente:
+D . 2r = nG XOR R 
+de modo equivalente:  
+    se dividirmos D . 2r por 
+G, queremos resto R
+R = resto[           ]
+D . 2r
+G
+
+--- PAGE 15 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 15
+Camada de enlace
+ 5.1 Introdução e 
+serviços
+ 5.2 Detecção e 
+correção de erros 
+ 5.3 Protocolos de 
+acesso múltiplo
+ 5.4 Endereçamento na 
+camada de enlace
+ 5.5 Ethernet
+ 5.6 Comutadores de 
+camada de enlace
+ 5.7 PPP
+ 5.8 Virtualização de 
+enlace: MPLS
+ 5.9 Um dia na vida de 
+uma solicitação de 
+página Web
+
+--- PAGE 16 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 16
+Enlaces e protocolos de 
+acesso múltiplo
+Dois tipos de “enlaces”:
+ ponto a ponto
+ PPP para acesso discado
+ enlace ponto a ponto entre comutador Ethernet e 
+hospedeiro
+ broadcast (fio ou meio compartilhado)
+ Ethernet à moda antiga
+ HFC anterior
+ LAN sem fio 802.11
+fio compartilhado (p. e., 
+Ethernet cabeado)
+RF compartilhada
+ (p. e., WiFi 802.11)
+RF compartilhada
+(satélite) 
+humanos em uma festa 
+(ar e acústica
+compartilhados)
+
+--- PAGE 17 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 17
+Protocolos de acesso múltiplo
+ único canal de broadcast compartilhado
+ duas ou mais transmissões simultâneas por nós: 
+interferência 
+ colisão se o nó recebe dois ou mais sinais ao mesmo 
+tempo
+protocolo de acesso múltiplo
+ algoritmo distribuído que determina como os 
+nós compartilham canal, ou seja, determinam 
+quando o nó pode transmitir
+ comunicação sobre compartilhamento de canal 
+deve usar o próprio canal! 
+ nenhum canal fora-de-banda para coordenação
+
+--- PAGE 18 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 18
+Protocolo de acesso 
+múltiplo ideal
+Canal de broadcast de velocidade R bps
+1. quando um nó quer transmitir, ele pode enviar na 
+velocidade R.
+2. quando M nós querem transmitir, cada um pode 
+enviar na velocidade média de transmissão R/M
+3. totalmente descentralizado:
+ nenhum nó especial para coordenar transmissões
+ nenhuma sincronização de clocks, intervalos
+4. simples
+
+--- PAGE 19 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 19
+Protocolos MAC: 
+uma taxonomia
+Três classes gerais:
+ Protocolo de Divisão de Canal
+ divide o canal em “pedaços menores” (intervalos de 
+tempo, frequência, código)
+ aloca pedaço ao nó para uso exclusivo
+ Protocolo de Acesso Aleatório
+ canal não dividido, permite colisões
+ “recupera” de colisões
+ “Protocolo de Revezamento”
+ os nós se revezam, mas os nós com mais a enviar podem 
+receber mais tempo
+
+--- PAGE 20 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 20
+Protocolos MAC de 
+particionamento de canal: 
+TDMA
+TDMA: Time Division Multiple Access 
+ acesso ao canal em “rodadas” 
+ cada estação recebe intervalo de tamanho fixo 
+(tamanho = tempo transm. pacote) a cada rodada
+ intervalos não usados ficam ociosos
+ exemplo: LAN de 6 estações, 1, 3, 4 têm pacote, 
+intervalos 2, 5, 6 ociosos
+1 3 4 1 3 4
+quadro de
+6 intervalos
+
+--- PAGE 21 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 21
+Protocolos MAC de 
+particionamento de canal: 
+FDMA
+FDMA: Frequency Division Multiple Access  
+ espectro do canal dividido em bandas de frequência
+ cada estação recebe banda de frequência fixa
+ tempo de transmissão não usado nas bandas de frequência 
+fica ocioso
+ exemplo: LAN de 6 estações, 1, 3, 4 têm pacote, bandas de 
+frequência 2, 5, 6 ociosas
+bandas de freq.
+tempo
+cabo FDM
+
+--- PAGE 22 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 22
+Protocolos de acesso 
+aleatório
+ Quando o nó tem um pacote a enviar
+ transmite na velocidade de dados R total do canal.
+ sem coordenação a priori entre os nós
+ dois ou mais nós transmitindo ➜ “colisão”,
+ protocolo MAC de acesso aleatório especifica: 
+ como detectar colisões
+ como recuperar-se de colisões (p. e., via retransmissões 
+adiadas)
+ Exemplos de protocolos MAC de acesso aleatório:
+ slotted ALOHA
+ ALOHA
+ CSMA, CSMA/CD, CSMA/CA
+
+--- PAGE 23 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 23
+Slotted ALOHA
+Suposições:
+ todos os quadros do mesmo 
+tamanho
+ tempo dividido em intervalos 
+de mesmo tamanho (tempo 
+para transmitir 1 quadro)
+ nós começam a transmitir 
+somente no início dos 
+intervalos
+ nós são sincronizados
+ se 2 ou mais nós transmitem 
+no intervalo, todos os nós 
+detectam colisão
+Operação:
+ quando nó obtém quadro novo, 
+transmite no próximo intervalo
+ se não há colisão: nó pode 
+enviar novo quadro no 
+próximo intervalo
+ se há colisão: nó retransmite 
+quadro em cada intervalo 
+subsequente com prob. até 
+que haja sucesso
+
+--- PAGE 24 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 24
+Prós
+ único nó ativo pode transmitir 
+continuamente na velocidade 
+plena do canal
+ altamente descentralizado: 
+somente intervalos nos nós 
+precisam estar em sincronismo
+ simples
+Contras
+ colisões, intervalos 
+desperdiçados
+ intervalos ociosos
+ nós podem ser capazes de 
+detectar colisão em menos 
+tempo do que para transmitir 
+pacote
+ sincronismo de clock
+
+--- PAGE 25 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 25
+Eficiência do Slotted Aloha
+ suponha: N nós com muitos 
+quadros a enviar, cada um 
+transmitindo no intervalo  
+com probabilidade p
+ prob de um nó ter sucesso 
+em um intervalo = p(1-p)N-1
+ prob de qualquer nó ter 
+sucesso = Np(1-p)N-1
+          
+ eficiência máxima: ache 
+p* que maximiza 
+Np(1-p)N-1
+ para muitos nós, com 
+limite de Np*(1-p*)N-1 
+enquanto N tende a 
+infinito, temos:
+Eficiência máxima = 1/e = 0,37
+Eficiência: fração durante longo 
+tempo de intervalos bem 
+sucedidos (muitos nós, todos com 
+muitos quadros para enviar)
+Na melhor das 
+hipóteses: canal usado 
+para transmissões úteis 
+37% do tempo!
+!
+
+--- PAGE 26 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 26
+ALOHA puro (não slotted)
+ Aloha não slotted: mais simples, sem sincronismo
+ quando quadro chega primeiro
+ transmite imediatamente
+ probabilidade de colisão aumenta:
+ quadro enviado em t0 colide com outros quadros enviados em 
+[t0-1,t0+1]
+
+--- PAGE 27 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 27
+Eficiência do Aloha puro
+P(sucesso por determinado nó) = P(nó transmite)
+                                         P(nenhum outro nó transmite em [p0-1,p0].
+                                         P(nenhum outro nó transmite em [p0-1,p0] 
+                                      = p . (1-p)N-1 . (1-p)N-1
+                                        = p . (1-p)2(N-1) 
+                      … escolhendo p ideal e depois considerando n -> infinito ...
+                                        
+                                    = 1/(2e) = 0,18 
+ainda pior que slotted Aloha!
+
+--- PAGE 28 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 28
+CSMA (Carrier Sense 
+Multiple Access)
+CSMA: ouça antes de falar:
+se perceber canal ocioso: transmite quadro inteiro
+ se perceber canal ocupado, adia transmissão
+ analogia humana: não interrompa os outros!
+
+--- PAGE 29 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 29
+Colisões CSMA
+colisões ainda podem ocorrer:
+atraso de propagação significa que 
+dois nós podem não ouvir a 
+transmissão um do outro
+colisão:
+tempo de transmissão de 
+pacote inteiro desperdiçado
+layout espacial dos nós
+nota:
+papel da distância & atraso de 
+propagação determinando 
+probabilidade de colisão
+
+--- PAGE 30 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 30
+CSMA/CD 
+(Collision Detection)
+CSMA/CD: detecção de portadora, adiada como no 
+CSMA
+ colisões detectadas dentro de pouco tempo
+ transmissões colidindo abortadas, reduzindo desperdício do 
+canal
+ detecção de colisão: 
+ fácil em LANs com fio: mede intensidades de sinal, compara 
+sinais transmitidos, recebidos
+ difícil nas LANs sem fio: intensidade do sinal recebido 
+abafada pela intensidade da transmissão local
+ analogia humana: o interlocutor educado
+
+--- PAGE 31 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 31
+Detecção de colisão CSMA/CD
+
+--- PAGE 32 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 32
+“Revezando” protocolos MAC
+protocolos MAC de particionamento de canal:
+ compartilham canal de modo eficaz e justo com 
+alta carga
+ ineficaz com baixa carga: atraso no acesso ao 
+canal, 1/N largura de banda alocada mesmo que 
+apenas 1 nó ativo! 
+Protocolos MAC de acesso aleatório
+ eficaz com baixa carga: único nó pode utilizar o 
+canal totalmente
+ alta carga: sobrecarga de colisão
+“revezando” protocolos
+procure o melhor dos dois mundos!
+
+--- PAGE 33 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 33
+Polling (seleção): 
+ nó mestre “convida” nós escra- 
+vos a alterarem a transmissão
+ normalmente usado com dispo- 
+sitivos escravos “burros”
+ preocupações:
+ sobrecarga da seleção
+ latência
+ único ponto de falha (mestre)
+ Ex.: 802.15 e Bluetooth
+mestre
+escravos
+poll
+dados
+dados
+
+--- PAGE 34 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 34
+Passagem de permissão:
+ permissão de controle 
+passada de um nó para o 
+próximo sequencialmente.
+ mensagem de permissão
+ preocupações:
+ sobrecarga da permissão 
+ latência
+ único ponto de falha 
+(permissão)
+ 
+T
+dados
+(nada a
+ enviar)
+T
+
+--- PAGE 35 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 35
+ Resumo de protocolos MAC
+ particionamento de canal, por tempo, frequência ou 
+código
+ Time Division, Frequency Division
+ acesso aleatório (dinâmico), 
+ ALOHA, S-ALOHA, CSMA, CSMA/CD
+ percepção de portadora: fácil em algumas tecnologias 
+(com fio), difícil em outras (sem fio)
+ CSMA/CD usado na Ethernet
+ CSMA/CA usado na 802.11
+ revezamento
+ polling do site central, passagem de permissão
+ Bluetooth, FDDI, IBM Token Ring 
+
+--- PAGE 36 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 36
+Camada de enlace
+ 5.1 Introdução e 
+serviços
+ 5.2 Detecção e 
+correção de erros 
+ 5.3 Protocolos de 
+acesso múltiplo
+ 5.4 Endereçamento na 
+camada de enlace
+ 5.5 Ethernet
+ 5.6 Comutadores de 
+camada de enlace
+ 5.7 PPP
+ 5.8 Virtualização de 
+enlace: MPLS
+ 5.9 Um dia na vida de 
+uma solicitação de 
+página Web
+
+--- PAGE 37 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 37
+Endereçamento MAC e ARP
+Endereço IP de 32 bits: 
+ endereço da camada de rede
+ usado para obter datagrama até sub-rede IP de 
+destino
+ Endereço MAC (ou LAN ou físico ou 
+Ethernet) : 
+ função: levar quadro de uma interface para outra 
+interface conectada fisicamente (na mesma rede)
+ Endereço MAC de 48 bits (para maioria das LANs)
+• queimado na ROM da NIC, às vezes também configurável 
+por software
+
+--- PAGE 38 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 38
+Endereços de LAN e ARP
+Cada adaptador na LAN tem endereço de LAN exclusivo
+Endereço de broadcast =
+FF-FF-FF-FF-FF-FF
+ = adaptador
+1A-2F-BB-76-09-AD
+58-23-D7-FA-20-B0
+0C-C4-11-6F-E3-98
+71-65-F7-2B-08-53
+   LAN
+(com ou
+sem fio)
+
+--- PAGE 39 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 39
+Endereços de LAN (mais)
+ alocação de endereço MAC administrada pelo IEEE
+ fabricante compra parte do espaço de endereços 
+MAC (para garantir exclusividade)
+ analogia:
+         (a) Endereço MAC: como o CPF
+         (b) Endereço IP: como o endereço postal
+ endereço MAC plano  ➜ portabilidade
+ pode mover placa de LAN de uma LAN para outra
+ endereço IP hierárquico NÃO portável
+ endereço depende da sub-rede IP à qual o nó está 
+conectado
+
+--- PAGE 40 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 40
+ARP: Address Resolution 
+Protocol
+ Cada nó IP (hosp., 
+roteador) na LAN tem 
+tabela ARP
+ Tabela ARP: 
+mapeamentos de 
+endereço IP/MAC para 
+alguns nós da LAN
+    <endereço IP; endereço MAC; 
+TTL>
+  TTL (Time To Live): 
+tempo após o qual o 
+mapeamento de endereço 
+será esquecido 
+(normalmente, 20 min)
+Pergunta: Como determinar
+endereço MAC de B sabendo
+o endereço IP de B?
+1A-2F-BB-76-09-AD
+58-23-D7-FA-20-B0
+0C-C4-11-6F-E3-98
+71-65-F7-2B-08-53
+   LAN
+137.196.7.23
+137.196.7.78
+137.196.7.14
+137.196.7.88
+
+--- PAGE 41 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 41
+Protocolo ARP: mesma LAN 
+(rede)
+ A quer enviar datagrama a B, 
+e endereço MAC de B não 
+está na tabela ARP de A.
+ A envia por broadcast pacote 
+de consulta ARP, contendo 
+endereço IP de B
+ endereço MAC de destino 
+= FF-FF-FF-FF-FF-FF
+ todas as máquinas na LAN 
+recebem consulta ARP
+ B recebe pacote ARP, 
+responde para A com seu 
+endereço MAC (de B)
+ quadro enviado ao endereço 
+MAC de A (unicast)
+ A salva em cache par de 
+endereços IP-para-MAC em 
+sua tabela ARP até a 
+informação expirar
+ estado soft: informação 
+que expira (desaparece) 
+se não for renovada
+ ARP é “plug-and-play”:
+ nós criam suas tabelas 
+ARP sem intervenção do 
+administrador de rede
+
+--- PAGE 42 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 42
+Endereçamento: roteando 
+para outra LAN
+R
+1A-23-F9-CD-06-9B
+222.222.222.220
+111.111.111.110
+E6-E9-00-17-BB-4B
+CC-49-DE-D0-AB-7D
+111.111.111.112
+111.111.111.111
+A
+74-29-9C-E8-FF-55
+222.222.222.221
+88-B2-2F-54-1A-0F
+B
+222.222.222.222
+49-BD-D2-C7-56-2A
+acompanhamento: enviar datagrama de A para B via R
+                     suponha que A saiba o endereço IP de B
+ duas tabelas ARP no roteador R, uma para cada 
+rede IP (LAN)
+
+--- PAGE 43 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 43
+ A cria datagrama IP com origem A, destino B 
+ A usa ARP para obter endereço MAC de R para 
+     111.111.111.110
+ A cria quadro da camada de enlace com endereço MAC de R como 
+destino, quadro contém datagrama IP A-para-B
+ NIC de A envia quadro
+ NIC de R recebe quadro 
+ R remove datagrama IP do quadro Ethernet, vê o seu destinado a B
+ R usa ARP para obter endereço MAC de B
+ R cria quadro contendo datagrama IP A-para-B e envia para B
+R
+1A-23-F9-CD-06-9B
+222.222.222.220
+111.111.111.110
+E6-E9-00-17-BB-4B
+CC-49-DE-D0-AB-7D
+111.111.111.112
+111.111.111.111
+A
+74-29-9C-E8-FF-55
+222.222.222.221
+88-B2-2F-54-1A-0F
+B
+222.222.222.222
+49-BD-D2-C7-56-2A
+Este é um exemplo realmente 
+importante – procure entender bem!
+
+--- PAGE 44 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 44
+Camada de enlace
+ 5.1 Introdução e 
+serviços
+ 5.2 Detecção e 
+correção de erros 
+ 5.3 Protocolos de 
+acesso múltiplo
+ 5.4 Endereçamento na 
+camada de enlace
+ 5.5 Ethernet
+ 5.6 Comutadores de 
+camada de enlace
+ 5.7 PPP
+ 5.8 Virtualização de 
+enlace: MPLS
+ 5.9 Um dia na vida de 
+uma solicitação de 
+página Web
+
+--- PAGE 45 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 45
+Ethernet
+Tecnologia de LAN com fio “dominante”: 
+ barata: US$ 20 para NIC
+ primeira tecnologia de LAN utilizada em larga escala
+ mais simples e mais barata que as LANs de permissão e ATM
+ acompanhou corrida da velocidade: 10 Mbps – 10 Gbps 
+Projeto original da 
+Ethernet de Metcalfe
+
+--- PAGE 46 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 46
+Topologia de estrela
+ topologia de barramento popular até
+     meados dos anos 90
+ todos os nós no mesmo domínio de colisão (podem colidir uns 
+com os outros)
+ hoje: topologia de estrela prevalece
+ comutador ativo no centro
+ cada “ponta” roda um protocolo Ethernet (separado) – nós não 
+colidem uns com os outros
+comutador
+barramento: cabo coaxial estrela
+
+--- PAGE 47 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 47
+Estrutura do quadro Ethernet
+Adaptador enviando encapsula datagrama IP (ou 
+outro pacote de protocolo da camada de rede) no 
+quadro Ethernet
+Preâmbulo: 
+ 7 bytes com padrão 10101010 seguido por um byte 
+com padrão 10101011
+ usado para sincronizar taxas de clock do receptor 
+e emissor
+
+--- PAGE 48 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 48
+ Endereços: 6 bytes
+ se adaptador recebe quadro com endereço de destino 
+combinando, ou com endereço de broadcast (p. e., pacote 
+ARP), passa dados do quadro ao protocolo da camada de rede
+ caso contrário, adaptador descarta quadro
+ Tipo: indica protocolo da camada mais alta 
+(principalmente IP, mas outros são possíveis, p. e., 
+Novell IPX, AppleTalk)
+ CRC: verificado no receptor; se detectar erro, quadro 
+é descartado
+
+--- PAGE 49 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 49
+Ethernet: não confiável, 
+sem conexão
+ sem conexão: sem apresentação entre NICs de origem 
+e destino
+ não confiável: NIC de destino não envia confirmações 
+ou não confirmações à NIC de origem
+ fluxo de datagramas passados à camada de rede pode ter 
+lacunas (datagramas faltando)
+ lacunas serão preenchidas se aplicação estiver usando TCP
+ caso contrário, aplicação verá lacunas
+ Protocolo MAC da Ethernet: CSMA/CD não slotted
+
+--- PAGE 50 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 50
+Algoritmo CSMA/CD da
+ Ethernet 
+1. NIC recebe datagrama da 
+camada de rede e cria 
+quadro
+2. Se NIC sentir canal 
+ocioso, inicia transmissão 
+do quadro; canal ocupado, 
+espera até estar ocioso, 
+depois transmite
+3. Se NIC transmitir quadro 
+inteiro sem detectar 
+outra transmissão, NIC 
+terminou com o quadro!
+4. Se NIC detectar outra 
+transmissão enquanto 
+transmite, aborta e envia 
+sinal de congestionamento
+5. Depois de abortar, NIC 
+entra em backoff 
+exponencial: após m 
+colisões, NIC escolhe K 
+aleatoriamente dentre 
+{0,1,2,…,2m-1}. NIC espera 
+    K · 512 tempos de bit, 
+retorna à Etapa 2
+  
+
+--- PAGE 51 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 51
+CSMA/CD da Ethernet (mais)
+Sinal de congestionamento: 
+cuide para que todos os 
+outros transmissores 
+saibam da colisão; 48 bits
+Tempo de bit: 0,1 µs para 
+Ethernet de 10 Mbps;
+para K = 1023, tempo de 
+espera cerca de 50 ms
+ 
+Backoff exponencial: 
+ Objetivo: adaptar tentativas de 
+retransmissão à carga estimada
+ carga pesada: espera 
+aleatória será maior
+ primeira colisão: escolha K a 
+partir de {0,1}; atraso é K · 512 
+tempos de transmissão de bit
+ após segunda colisão: escolha K 
+dentre {0,1,2,3}…
+ após dez colisões, escolha K 
+dentre {0,1,2,3,4,…,1023}
+Veja/interaja com applet
+Java no site Web da AWL:
+altamente recomendado!
+
+--- PAGE 52 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 52
+Eficiência do CSMA/CD
+ Tprop = atraso máx. propag. entre 2 nós na LAN
+ ttrans = tempo para transmitir quadro de tamanho 
+máximo
+ eficiência vai para 1 
+ quando tprop vai para 0
+ quando ttrans vai para infinito
+ melhor desempenho que ALOHA: é simples, barato, 
+descentralizado!
+transprop /tt
+eficiência
+51
+1
++
+=
+
+--- PAGE 53 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 53
+Padrões Ethernet 802.3: 
+camadas de enlace e física
+ muitos padrões Ethernet diferentes
+ protocolo MAC e formato de quadro comuns
+ diferentes velocidades: 2 Mbps, 10 Mbps, 100 
+Mbps, 1Gbps, 10G bps
+ diferentes meios da camada física: fibra, cabo
+aplicação
+transporte
+rede
+enlace
+física
+protocolo MAC
+e formato de quadro
+100BASE-TX
+100BASE-T4
+100BASE-FX100BASE-T2
+100BASE-SX 100BASE-BX
+camada física fibracamada física
+cobre (par trançado)
+
+--- PAGE 54 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 54
+Codificação Manchester
+ usado no 10BaseT
+ cada bit tem uma transição
+ permite que clocks nos nós emissor e receptor sejam 
+sincronizados entre si
+ desnecessário para um clock centralizado, global entre os nós!
+ Ei, isso é coisa da camada física!
+
+--- PAGE 55 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 55
+Camada de enlace
+ 5.1 Introdução e 
+serviços
+ 5.2 Detecção e 
+correção de erros 
+ 5.3 Protocolos de 
+acesso múltiplo
+ 5.4 Endereçamento na 
+camada de enlace
+ 5.5 Ethernet
+ 5.6 Comutadores de 
+camada de enlace
+ 5.7 PPP
+ 5.8 Virtualização de 
+enlace: MPLS
+ 5.9 Um dia na vida de 
+uma solicitação de 
+página Web
+
+--- PAGE 56 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 56
+Hubs
+… repetidores da camada física (“burros”) :
+ todos os nós conectados ao hub podem colidir uns com os 
+outros
+ sem buffering de quadros
+ sem CSMA/CD no hub: NICs do hospedeiro detectam 
+colisões
+ bits chegando a um enlace saem em todos os outros enlaces 
+na mesma velocidade
+par trançado
+hub
+
+--- PAGE 57 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 57
+Comutador (switch)
+ dispositivo da camada de enlace: mais 
+inteligente que os hubs, têm papel ativo
+ armazenam e repassam quadros Ethernet
+ examinam endereço MAC do quadro que chega, 
+repassam seletivamente o quadro para um ou mais 
+enlaces de saída quando o quadro deve ser repassado 
+no segmento, usa CSMA/CD para acessar segmento
+ transparente
+ hosps. não sabem da presença de comutadores
+ plug-and-play, autodidata
+ comutadores não precisam ser configurados
+
+--- PAGE 58 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 58
+Comutador: permite múltiplas 
+transmissões simultâneas
+ hosps. têm conexão dedicada, 
+direta com comutador
+ comutadores mantêm pacotes
+ Protocolo Ethernet usado em 
+cada enlace de chegada, mas 
+sem colisões; full duplex
+ cada enlace é seu próprio 
+domínio de colisão
+ comutação: A-para-A’ e 
+B-para-B’ simultaneamente, 
+sem colisões
+ não é possível com hub burro
+A
+A’
+B
+B’
+C
+C’
+comutador com seis interfaces
+(1,2,3,4,5,6)  
+1 2
+3
+45
+6
+
+--- PAGE 59 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 59
+Tabela de comutação
+ P: Como o comutador sabe que 
+A’ se encontra na interface 4, 
+B’ se encontra na interface 5?
+ R:  Cada comutador tem uma 
+tabela de comutação, cada 
+entrada:
+ (endereço MAC do nó, interface 
+para alcançar nó, horário)
+ parece com tab. de roteamento!
+ P: Como as entradas são 
+criadas, mantidas na tabela 
+comutação? 
+ algo como um prot. de roteamento?
+A
+A’
+B
+B’
+C
+C’
+comutador com 6 interfaces
+(1,2,3,4,5,6)  
+1 2
+3
+45
+6
+
+--- PAGE 60 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 60
+Comutador: autodidata
+ comutador descobre 
+quais nós podem ser 
+alcançados por quais 
+interfaces
+ quando quadro recebido, 
+comutador “aprende”  local 
+do emissor: segmento de 
+LAN de chegada
+ registra par emissor/local 
+na tabela de comutação
+A
+A’
+B
+B’
+C
+C’
+1 2
+3
+45
+6
+A A’
+Source: A
+Dest: A’
+end. MAC   interface   TTL
+A 1 60
+Tabela comutação
+(inicialmente vazia)
+
+--- PAGE 61 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 61
+Switch: filtragem/repasse 
+de quadros
+Quando quadro recebido:
+1. Registra enlace associado ao host emissor
+2. Indexa tabela de comutação usando endereço MAC de 
+destino
+3. if entrada encontrada para o destino
+  then {
+     if dest no segmento do qual o quadro chegou
+       then remove o quadro
+           else repassa o quadro na interface indicada
+       }   
+      else inunda
+  
+repassa para todas as interfaces, 
+menos aquela em que o quadro chegou
+
+--- PAGE 62 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 62
+Autoaprendizagem, repasse: 
+exemplo
+A
+A’
+B
+B’
+C
+C’
+1 2
+3
+45
+6
+A A’
+Origem: A
+Destino: A’
+end. MAC   interface   TTL
+Tabela comutação
+(inicialmente 
+vazia)
+A 1 60
+A A’A A’
+ destino do quadro 
+desconhecido: inunda
+A’ A
+ local de destino A 
+conhecido: envio 
+seletivo
+A’ 4 60
+
+--- PAGE 63 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 63
+Interconectando 
+comutadores
+ comutadores podem ser conectados
+A
+B
+ P: Enviando de A p/G - como S1 sabe repassar 
+quadro destinado a F por S4 e S3?
+ R: Autoaprendizagem! (funciona da mesma forma 
+que no caso do único comutador!)
+S1
+C
+ D
+E
+F
+S2
+S4
+S3
+H
+I
+G
+
+--- PAGE 64 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 64
+Multicomutação com
+autoaprendizagem
+Suponha que C envie quadro para I, I responde a C
+ P: Mostre tabelas de comutação e repasse de 
+pacotes em S1, S2, S3, S4 
+A
+B
+S1
+C
+ D
+E
+F
+S2
+S4
+S3
+H
+I
+G
+1
+2
+
+--- PAGE 65 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 65
+Rede institucional
+à rede
+externa
+roteador
+sub-rede IP
+servidor correio
+servidor Web
+
+--- PAGE 66 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 66
+Comutadores versus 
+roteadores
+ ambos dispositivos de armazenamento e repasse
+ roteadores: dispositivos da camada de rede (examinam cabeçalhos 
+da camada de rede)
+ comutadores são dispositivos da camada de enlace
+ roteadores mantêm tabelas de roteamento, implementam 
+algoritmos de roteamento
+ switches mantêm tabelas de comutação, implementam filtragem, 
+algoritmos de aprendizagem
+
+--- PAGE 67 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 67
+VLANs: motivação
+O que acontece se:
+ usuário da CC muda para EE, 
+mas quer se conectar ao 
+comutador CC?
+ único domínio de broadcast:
+ todo tráfego de broadcast 
+da camada 2 (ARP, DHCP) 
+cruza a LAN inteira 
+(questões de eficiência, 
+segurança/privacidade)
+ cada comutador de nível 
+mais baixo tem apenas 
+algumas portas em uso
+Ciência da
+Computação Engenharia
+Elétrica
+Engenharia 
+da Computação
+O que há de errado nesta figura?
+
+--- PAGE 68 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 68
+VLANs
+VLAN baseada em porta: 
+portas de comutador agrupadas 
+(por software de gerenciamento de 
+comutador) para que único 
+comutador físico ……
+Comutador(es) 
+admitindo capacidades 
+de VLAN podem ser 
+configurados para 
+definir múltiplas LANs 
+virtuais por única 
+infraestrutura de LAN 
+física.
+Virtual Local 
+Area Network
+1
+8
+9
+16102
+7
+…
+Engenharia Elétrica
+(VLAN portas 1-8)
+Ciência da Computação
+(VLAN portas 9-15)
+15
+…
+Engenharia Elétrica
+(VLAN portas 1-8)
+…
+1
+82
+7 9
+1610
+15
+…
+Ciência da Computação
+(VLAN portas 9-16)
+… opere como múltiplos comutadores 
+virtuais
+
+--- PAGE 69 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 69
+VLAN baseada em porta
+1
+8
+9
+16102
+7
+…
+Engenharia Elétrica
+(VLAN portas 1-8)
+Ciência da Computação
+(VLAN portas 9-15)
+15
+…
+ isolamento de tráfego: quadros 
+de/para portas 1-8 só podem 
+alcançar portas 1-8
+ também podem definir VLAN com 
+base em endereços MAC das 
+extremidades, em vez de porta do 
+comutador
+ inclusão dinâmica: portas 
+podem ser atribuídas 
+dinamicamente entre VLANs
+roteador
+ repasse entre VLANS:
+feito por roteamento (assim como em 
+comutadores separados)
+ na prática, fornecedores vendem uma 
+combinação de comutador e roteador
+
+--- PAGE 70 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 70
+VLANS spanning multiple 
+switches
+ porta de tronco: carrega quadros entre VLANS 
+definidas sobre vários comutadores físicos
+ quadros repassados dentro da VLAN entre comutadores não 
+podem ser quadros 802.1 comuns (devem ter informação de 
+VLAN ID)
+ protocolo 802.1q inclui campos de cabeçalho adicionais para 
+quadros repassados entre portas de tronco
+1
+8
+9
+102
+7
+…
+Engenharia Elétrica
+(VLAN portas 1-8)
+Ciência da Computação
+(VLAN portas 9-15)
+15
+…
+2
+7
+3
+Portas 2,3,5 pertencem a EE VLAN
+Portas 4,6,7,8 pertencem a CS VLAN
+5
+4 6 816
+1
+
+--- PAGE 71 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 71
+Formato de quadro 
+802.1Q VLAN
+quadro 802.1
+quadro 802.1Q
+
+--- PAGE 72 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 72
+Camada de enlace
+ 5.1 Introdução e 
+serviços
+ 5.2 Detecção e 
+correção de erros 
+ 5.3 Protocolos de 
+acesso múltiplo
+ 5.4 Endereçamento na 
+camada de enlace
+ 5.5 Ethernet
+ 5.6 Comutadores de 
+camada de enlace
+ 5.7 PPP
+ 5.8 Virtualização de 
+enlace: MPLS
+ 5.9 Um dia na vida de 
+uma solicitação de 
+página Web
+
+--- PAGE 73 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 73
+Controle de enlace de dados
+ponto a ponto
+ um remetente, um destinatário, um enlace: mais 
+fácil que enlace de broadcast:
+ sem Media Access Control
+ desnecessário endereçamento MAC explícito
+ p. e., enlace discado, linha ISDN
+ protocolos DLC ponto a ponto populares:
+ PPP (Point-to-Point Protocol)
+ HDLC: High level Data Link Control (enlace de 
+dados era considerada “camada alta” na pilha de 
+protocolos!)
+
+--- PAGE 74 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 74
+Requisitos de projeto do 
+PPP [RFC 1557]
+ enquadramento de pacote: encapsulamento de datagrama da 
+camada de rede no quadro da camada de enlace de dados
+ transporta dados camada de rede de qualquer protocolo 
+da camada de rede (não só IP) ao mesmo tempo
+ capacidade de demultiplexar para cima
+ transparência de bit: deve transportar qualquer padrão de 
+bits no campo de dados
+ detecção de erro (sem correção)
+ vida da conexão: detectar, sinalizar falha do enlace à camada 
+de rede
+ negociação de endereço da camada de rede: extremidades 
+podem descobrir/configurar endereço de rede umas da 
+outras
+
+--- PAGE 75 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 75
+Não requisitos do PPP
+ sem correção/recuperação de erro
+ sem controle de fluxo
+ entrega fora de ordem OK 
+ sem necessidade de suporte a enlaces multiponto 
+(p. e., protocolo de seleção)
+Recuperação de erro, controle de fluxo, reordenação 
+de dados, todos relegados a camadas mais altas!
+
+--- PAGE 76 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 76
+Quadro de dados PPP
+ flag: delimitador (enquadramento)
+ endereço: não faz anda (só uma opção)
+ controle: não faz nada; no futuro, possíveis campos de controle 
+múltiplo
+ protocolo: protocolo da camada superior ao qual o quadro é 
+entregue (p. e., PPP-LCP, IP, IPCP etc.) 
+
+--- PAGE 77 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 77
+ informação: dados da camada superior sendo transportados
+ verificação: CRC para detecção de erro
+
+--- PAGE 78 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 78
+Byte Stuffing
+ requisito de “transparência de dados”: campo de 
+dados deve poder incluir padrão de flag <01111110>
+ P: <01111110> recebido é dado ou é flag?
+ remetente: inclui (“enche”) byte < 01111110> extra 
+após cada byte de dados < 01111110>
+ destinatário: 
+ dois bytes 01111110 em sequência: descarta 
+primeiro byte, continua recebimento de dados
+ único 01111110: byte de flag
+
+--- PAGE 79 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 79
+padrão de
+byte de flag
+nos dados
+a enviar
+padrão de byte de flag
+mais byte incluído nos 
+dados transmitidos
+
+--- PAGE 80 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 80
+Protocolo de controle de 
+dados PPP
+Antes de trocar dados da camada 
+de rede, pares do enlace de 
+dados devem
+ configurar enlace PPP (tamanho 
+de quadro máximo, 
+autenticação)
+ descobrir/configurar 
+informação da camada de rede
+ para IP: transportar msgs do 
+IP Control Protocol (IPCP) 
+(campo do protocolo: 8021) 
+para configurar/descobrir 
+endereço IP
+
+--- PAGE 81 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 81
+Camada de enlace
+ 5.1 Introdução e 
+serviços
+ 5.2 Detecção e 
+correção de erros 
+ 5.3 Protocolos de 
+acesso múltiplo
+ 5.4 Endereçamento na 
+camada de enlace
+ 5.5 Ethernet
+ 5.6 Comutadores de 
+camada de enlace
+ 5.7 PPP
+ 5.8 Virtualização de 
+enlace: MPLS
+ 5.9 Um dia na vida de 
+uma solicitação de 
+página Web
+
+--- PAGE 82 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 82
+Virtualização de redes
+Virtualização de recursos: abstração poderosa na 
+engenharia de sistemas:
+ exemplos da computação: memória virtual, 
+dispositivos virtuais
+ máquinas virtuais: p. e., java
+ sist. Op. IBM VM dos anos 1960/70
+ camadas de abstrações: não se preocupe com os 
+detalhes da camada inferior, apenas trate das 
+camadas inferiores de forma abstrata
+
+--- PAGE 83 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 83
+A Internet: virtualizando 
+redes
+1974: múltiplas redes 
+desconectadas
+ ARPAnet
+ redes de dados-sobre-cabo
+ rede de pacotes por satélite (Aloha)
+ rede de pacotes por rádio
+… diferindo em:
+ convenções de
+endereçamento
+ formatos de pacote
+ recuperação de erro
+ roteamento
+ARPAnet rede por satélite
+"A Protocol for Packet Network Intercommunication", 
+V. Cerf, R. Kahn, IEEE Transactions on Communications,
+ maio de 1974, pp. 637-648.
+
+--- PAGE 84 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 84
+ARPAnet rede por satélite
+gateway
+camada de inter-rede (IP): 
+ endereçamento: inter-rede 
+aparece como única entidade 
+uniforme, apesar da 
+heterogeneidade da rede local 
+subjacente
+ rede de redes
+Gateway: 
+ “embute pacotes inter-rede no 
+formato de pacote local ou os 
+extrai”
+ rota (no nível de inter-rede) 
+para próximo gateway
+
+--- PAGE 85 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 85
+Arquitetura de inter-rede 
+de Cerf & Kahn
+O que é virtualizado?
+ duas camadas de endereçamento: inter-rede e 
+rede local
+ nova camada (IP) torna tudo homogêneo na camada 
+da inter-rede
+ tecnologia da rede local subjacente
+ cabo
+ satélite
+ modem telefônico 56K
+ hoje: ATM, MPLS
+   … “invisível” na camada de inter-rede. Parece com 
+uma tecnologia da camada de enlace para IP!
+
+--- PAGE 86 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 86
+ATM e MPLS
+ ATM, MPLS separam duas redes por conta 
+própria
+ modelos de serviço, endereçamento, roteamento 
+diferentes da Internet
+ visto pela Internet como enlace lógico 
+conectando roteadores IP
+ assim como enlace discado realmente faz parte da 
+rede separada (rede telefônica)
+ ATM, MPLS: de interesse técnico por si só
+
+--- PAGE 87 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 87
+Asynchronous Transfer 
+Mode: ATM
+ Padrão das décadas de 1990/2000 para alta 
+velocidade (155 Mbps a 622 Mbps e mais) 
+arquitetura Broadband Integrated Service Digital 
+Network
+ Objetivo: transporte integrado, de fim a fim, de 
+voz, vídeo e dados
+ atendendo requisitos de temporização/QoS de 
+voz, vídeo (contra modelo de melhor esforço da  
+Internet)
+ telefonia da “próxima geração”: raízes técnicas 
+no mundo do telefone
+ comutação de pacotes (pacotes de tamanho fixo, 
+chamados “células”) usando circuitos virtuais
+
+--- PAGE 88 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 88
+Multiprotocol Label 
+Switching (MPLS)
+ objetivo inicial: agilizar o repasse do IP usando 
+rótulo de tamanho fixo (em vez de endereço IP) 
+para fazer o repasse 
+ ideias apanhadas da técnicas de Virtual Circuit (VC)
+ mas datagrama IP ainda mantém endereço IP!
+cabeçalho
+PPP ou Ethernet
+cabec. IP restante do quadro da
+camada de enlace
+cabec. MPLS
+rótulo Exp S TTL
+20 3 1 5
+
+--- PAGE 89 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 89
+Roteadores capazes de usar
+MPLS
+ também chamado roteador comutado por rótulo
+ encaminha pacotes à interface de saída com base 
+apenas no valor do rótulo (não inspeciona endereço IP)
+ tabela de repasse MPLS distintas das tabelas de repasse
+do IP
+ protocolo de sinalização necessário para configurar 
+repasse
+ RSVP-TE
+ repasse possível ao longo de caminhos que o IP sozinho não 
+permitiria (p. e., roteamento específico da origem) !!
+ usa MPLS para engenharia de tráfego
+ deve coexistir com roteadores apenas IP
+
+--- PAGE 90 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 90
+Tabelas de repasse MPLS
+
+--- PAGE 91 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 91
+Camada de enlace
+ 5.1 Introdução e 
+serviços
+ 5.2 Detecção e 
+correção de erros 
+ 5.3 Protocolos de 
+acesso múltiplo
+ 5.4 Endereçamento na 
+camada de enlace
+ 5.5 Ethernet
+ 5.6 Comutadores de 
+camada de enlace
+ 5.7 PPP
+ 5.8 Virtualização de 
+enlace: MPLS
+ 5.9 Um dia na vida de 
+uma solicitação de 
+página Web
+
+--- PAGE 92 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 92
+Síntese: um dia na vida de 
+uma solicitação Web
+ viagem pela pilha de protocolos completa!
+ aplicação, transporte, rede, enlace
+ juntando tudo: síntese!
+ objetivo: identificar, analisar, entender os 
+protocolos (em todas as camadas) envolvidos no 
+cenário aparentemente simples: solicitar página 
+WWW
+ cenário: aluno conecta laptop à rede do campus, 
+solicita/recebe www.google.com
+
+--- PAGE 93 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 93
+Um dia na vida: cenário
+rede comcast
+68.80.0.0/13
+rede da Google
+64.233.160.0/19 64.233.169.105
+servidor Web
+servidor DNS
+rede da escola 
+68.80.2.0/24
+navegador
+página Web
+
+--- PAGE 94 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 94
+Um dia na vida… conectando 
+à Internet
+ o laptop conectando precisa 
+obter seu próprio endereço IP, 
+end. do roteador do 1o salto e 
+do servidor DNS: use DHCP
+roteador
+(roda DHCP)
+DHCP
+UDP
+IP
+Ethernet
+Física
+DHCP
+DHCP
+DHCP
+DHCP
+DHCP
+DHCP
+UDP
+IP
+Ethernet
+Física
+DHCP
+DHCP
+DHCP
+DHCPDHCP
+ Solicitação DHCP encapsulada 
+no UDP, encapsulada no IP, 
+encapsulada na Ethernet 802.1
+ Quadro Ethernet enviado por 
+broadcast (dest.: FFFFFFFFFFFF) 
+na LAN, recebido no roteador 
+rodando servidor DHCP
+ Ethernet demultiplexado para 
+IP demultiplexado, UDP 
+demultiplexado para DHCP 
+
+--- PAGE 95 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 95
+ Servidor DHCP formula ACK 
+DHCP contendo endereço IP 
+do cliente, IP do roteador no 
+1o salto para cliente, nome & 
+endereço IP do servidor DNS
+roteador
+(roda DHCP)
+DHCP
+UDP
+IP
+Ethernet
+Física
+DHCP
+DHCP
+DHCP
+DHCP
+DHCP
+UDP
+IP
+Ethernet
+Física
+DHCP
+DHCP
+DHCP
+DHCP
+DHCP
+ Encapsulamento no servidor 
+DHCP, quadro repassado 
+(aprendizagem do 
+comutador) através da LAN, 
+demultiplexando no cliente
+Cliente agora tem endereço IP, sabe nome e endereço 
+do servidor DNS, endereço IP do seu roteador no 
+primeiro salto
+ Cliente DHCP recebe 
+resposta ACK do DHCP
+
+--- PAGE 96 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 96
+Um dia na vida… ARP (antes 
+do DNS, antes do HTTP)
+ Antes de enviar solicitação HTTP, 
+precisa de endereço IP de 
+www.google.com:  DNS
+DNS
+UDP
+IP
+Ethernet
+Física
+DNS
+DNS
+DNS
+ Consulta DNS criada, encap. no UDP, 
+no IP, na Ethernet. Para enviar quadro 
+ao roteador, precisa de endereço 
+MAC da interface do roteador: ARP
+ Broadcast da consulta ARP, 
+recebido pelo roteador, que 
+responde com resposta ARP dando 
+endereço MAC da interface do 
+roteador
+ cliente agora sabe endereço MAC 
+do roteador no 1o salto, e agora 
+pode enviar quadro contendo 
+consulta DNS
+cons. ARP
+Ethernet
+Física
+ARP
+ARP
+resp. ARP
+
+--- PAGE 97 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 97
+Um dia na vida… usando DNS
+DNS
+UDP
+IP
+Ethernet
+Física
+DNS
+DNS
+DNS
+DNS
+DNS
+ Datagrama IP contendo consulta 
+DNS repassada via comutador da 
+LAN do cliente ao roteador do 1o 
+salto
+ Datagrama IP repassado da rede do 
+campus para rede comcast, roteado 
+(tabelas criadas por RIP, OSPF, 
+IS-IS e/ou protocolos de 
+roteamento BGP) ao servidor DNS
+ demultiplexado ao servidor DNS
+ Servidor DNS responde ao cliente com 
+endereço IP de www.google.com
+rede comcast
+68.80.0.0/13
+servidor DNS
+DNS
+UDP
+IP
+Ethernet
+Física
+DNS
+DNS
+DNS
+DNS
+
+--- PAGE 98 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 98
+Um dia na vida… conexão TCP 
+transportando HTTP
+HTTP
+TCP
+IP
+Ethernet
+Física
+HTTP
+ para enviar solicitação 
+HTTP, cliente primeiro 
+abre socket TCP com 
+servidor Web
+ segmento SYN TCP (etapa 1 
+na apresentação de 3 vias) 
+roteado interdomínio com 
+servidor Web
+ Conexão TCP estabelecida!64.233.169.105
+servidor Web
+SYN
+SYN
+SYN
+SYN
+TCP
+IP
+Ethernet
+Física
+SYN
+SYN
+SYN
+SYNACK
+SYNACK
+SYNACK
+SYNACK
+SYNACK
+SYNACK
+SYNACK
+ servidor Web responde com 
+SYNACK TCP (etapa 2 na 
+apresentação de 3 vias)
+
+--- PAGE 99 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 99
+Um dia na via… solicitação/
+resposta HTTP
+HTTP
+TCP
+IP
+Ethernet
+Física
+HTTP
+ solicitação HTTP 
+enviada ao socket TCP
+ datagrama IP contendo 
+solicitação HTTP roteado 
+para www.google.com
+ datagrama IP contendo 
+resposta HTTP roteada de 
+volta ao cliente64.233.169.105
+servidor Web
+HTTP
+TCP
+IP
+Ethernet
+Física
+ servidor Web responde 
+com resposta HTTP 
+(contendo página Web)
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+HTTP
+ página Web finalmente (!!!) 
+exibida
+
+--- PAGE 100 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 100
+Capítulo 5: Resumo
+  princípios por trás dos serviços da camada de enlace 
+de dados:
+ detecção e correção de erro
+ compartilhamento de canal de broadcast: acesso múltiplo
+ endereçamento da camada de enlace
+ instanciação e implementação de várias tecnologias da 
+camada de enlace
+ Ethernet
+ LANS, VLANs comutadas
+ PPP
+ redes virtualizadas como camada de enlace: MPLS
+ síntese: um dia na vida de uma solicitação Web
+
+--- PAGE 101 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 101
+Capítulo 5: vamos fazer
+uma pausa
+ viagem pela pilha de protocolos completa (exceto a 
+camada física)
+ conhecimento sólido dos princípios de rede e da 
+prática
+ ….. poderíamos parar aqui… mas há muitos tópicos 
+interessantes!
+ redes sem fio
+ multimídia
+ segurança
+ gerenciamento de rede

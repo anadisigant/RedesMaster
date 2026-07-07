@@ -1,0 +1,3396 @@
+
+--- PAGE 1 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 1
+Capítulo 4
+Camada de rede
+Nota sobre o uso destes slides ppt:
+Estamos disponibilizando estes slides gratuitamente a todos
+(professores, alunos, leitores). Eles estão em formato do 
+PowerPoint para que você possa incluir, modificar e excluir 
+slides (incluindo este) e o conteúdo do slide, de acordo com 
+suas necessidades. Eles obviamente representam muito 
+trabalho da nossa parte. Em retorno pelo uso, pedimos apenas 
+o seguinte:
+ Se você usar estes slides (por exemplo, em sala de aula) 
+sem muita alteração, que mencione sua fonte (afinal, gostamos 
+que as pessoas usem nosso livro!).
+Se você postar quaisquer slides sem muita alteração em um 
+site Web, que informe que eles foram adaptados dos (ou talvez 
+idênticos aos) nossos slides, e inclua nossa nota de direito 
+autoral desse material.
+Obrigado e divirta-se!  JFK/KWR
+Todo o material copyright 1996-2009
+J. F Kurose e K. W. Ross, Todos os direitos reservados.
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 1
+
+--- PAGE 2 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 2
+Capítulo 4: 
+Camada de rede
+Objetivos do capítulo: 
+ entender os princípios por trás dos serviços da 
+camada de rede:
+ modelos de serviço da camada de rede
+ repasse versus roteamento
+ como funciona um roteador
+ roteamento (seleção de caminho)
+ lidando com escala
+ tópicos avançados: IPv6, mobilidade
+ instanciação, implementação na Internet
+
+--- PAGE 3 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 3
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 4 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 4
+Camada de rede
+ segmento de transporte do 
+hosp. emissor ao receptor
+ o lado emissor encapsula 
+segmentos em datagramas
+ o lado receptor entrega 
+segmentos à camada de 
+transporte
+ protocolos da camada de 
+rede em cada hosp., 
+roteador
+ roteador examina campos 
+de cabeçalho em todos os 
+datagramas IP que passam 
+por ele
+aplicação
+transporte
+rede
+enlace
+física
+aplicação
+transporte
+rede
+enlace
+física
+rede
+enlace
+física rede
+enlace
+física
+rede
+enlace
+física
+rede
+enlace
+física
+rede
+enlace
+física
+rede
+enlace
+física
+rede
+enlace
+física
+rede
+enlace
+física
+rede
+enlace
+física
+rede
+enlace
+físicarede
+enlace
+física
+
+--- PAGE 5 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 5
+Duas importantes funções 
+da camada de rede
+ repasse: mover 
+pacotes da entrada 
+do roteador para a 
+saída apropriada do 
+roteador
+ roteamento: 
+determinar rota 
+seguida pelos pacotes 
+da origem ao destino
+ algoritmos de roteamento
+analogia:
+ roteamento: processo 
+de planejamento da 
+viagem da origem ao 
+destino
+ repasse: processo de  
+passar por um único 
+cruzamento
+
+--- PAGE 6 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 6
+1
+23
+0111
+valor no cab. do
+pacote chegando
+algoritmo de roteamento
+tabela de repasse local
+valor do cab. enlace saída
+0100
+0101
+0111
+1001
+3
+2
+2
+1
+Interação entre roteamento
+ e repasse
+
+--- PAGE 7 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 7
+Estabelecimento de conexão
+ 3a função importante em algumas arquiteturas de rede:
+ ATM, frame relay, X.25
+ antes que os datagramas fluam, dois hospedeiros finais 
+e roteadores entre eles estabelecem conexão virtual
+ roteadores são envolvidos
+ serviço de conexão da camada de rede versus 
+transporte:
+ rede: entre dois hospedeiros (também pode 
+envolver roteadores entre eles, no caso de VCs)
+ transporte: entre dois processos
+
+--- PAGE 8 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 8
+Modelo de serviço de rede
+P: Que modelo de serviço é o melhor para o “canal” que 
+transporta datagramas do remetente ao destinatário?
+exemplo de serviços para 
+datagramas 
+individuais:
+ entrega garantida
+ entrega garantida com 
+atraso limitado
+exemplo de serviços para 
+fluxo de datagramas:
+ entrega de datagrama 
+na ordem
+ largura de banda 
+mínima garantida
+ jitter máximo 
+garantido
+Camada de Rede (Internet): melhor esforço, ou seja, 
+não há garantia de temporização, ordem ou entrega.
+
+--- PAGE 9 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 9
+Modelos de serviço da 
+camada de rede:
+Arquitetura de Rede ATM: define e implementa modelos 
+de serviço que vão além do serviço de melhor esforço da 
+Arquitetura TCP/IP.
+
+--- PAGE 10 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 10
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 11 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 11
+Serviço com e sem conexão 
+da camada de rede
+ rede de datagrama fornece serviço sem 
+conexão da camada de rede
+ rede VC fornece serviço com conexão da 
+camada de rede
+ análogo aos serviços da camada de 
+transporte, mas:
+ serviço: hospedeiro a hospedeiro
+ sem escolha: a rede oferece um ou outro
+ implementação: no núcleo da rede
+
+--- PAGE 12 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 12
+Circuitos virtuais
+ estabelecimento e término para cada chamada antes que os 
+dados possam fluir
+ cada pacote carrega identificador VC (não endereço do 
+hospedeiro de destino)
+ cada roteador no caminho origem-destino mantém “estado” 
+para cada conexão que estiver passando
+ recursos do enlace e roteador (largura de banda, buffers) 
+podem ser alocados ao VC (recursos dedicados = serviço 
+previsível)
+“Caminho da origem ao destino comporta-se como um 
+circuito telefônico”
+ com respeito ao desempenho
+ ações da rede ao longo do caminho da origem ao destino
+
+--- PAGE 13 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 13
+Implementação do VC
+um VC consiste em:
+1. caminho da origem ao destino
+2. números de VC, um número para cada enlace ao 
+longo do caminho
+3. entradas em tabelas de repasse nos 
+roteadores ao longo do caminho
+ pacote pertencente ao VC carrega número 
+do VC (em vez do endereço de destino)
+ número do VC pode ser alterado em cada 
+enlace
+ novo número de VC vem da tabela de repasse
+
+--- PAGE 14 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 14
+Tabela de repasse
+12 22 32
+1 2
+3
+número do VC
+número da
+interface
+tabela de repasse no
+roteador noroeste:
+Roteadores mantêm informação de estado da conexão!
+
+--- PAGE 15 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 15
+Circuitos virtuais:
+ protocolos de sinalização
+ usados para estabelecer, manter e terminar VC
+ usados em ATM, frame-relay, X.25
+ não usados na Internet de hoje
+aplicação
+transporte
+rede
+enlace
+física
+aplicação
+transporte
+rede
+enlace
+física
+1. Inicia chamada 2. Chamada chegando
+3. Chamada aceita4. Chamada conectada
+5. Fluxo de dados iniciado 6. Recebe dados
+
+--- PAGE 16 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 16
+Redes de datagrama
+ sem estabelecimento de chamada 
+na camada de rede
+ roteadores: sem estado sobre conexões fim a fim
+ sem conceito em nível de rede da “conexão”
+ pacotes repassados usando endereço do hospedeiro 
+de destino
+ pacotes entre mesmo par origem-destino podem tomar 
+caminhos diferentes
+aplicação
+transporte
+rede
+enlace
+física
+aplicação
+transporte
+rede
+enlace
+física
+1. Envia dados 2. Recebe dados
+
+--- PAGE 17 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 17
+Tabela de repasse
+                    Faixa de endereços de destino                                 Interface de enlace
+         11001000 00010111 00010000 00000000
+                                       até                                                                         0  
+         11001000 00010111 00010111 11111111
+         11001000 00010111 00011000 00000000
+                                      até                                                                          1
+         11001000 00010111 00011000 11111111  
+         11001000 00010111 00011001 00000000
+                                      até                                                                         2
+         11001000 00010111 00011111 11111111  
+                                      senão                                                                     3
+4 bilhões de entradas 
+possíveis
+
+--- PAGE 18 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 18
+Concordância do prefixo 
+mais longo
+                 Concordância do prefixo                        Interface do enlace
+          11001000 00010111 00010                                       0 
+          11001000 00010111 00011000                                 1
+          11001000 00010111 00011                                       2
+                            senão                                                        3
+DA: 11001000  00010111  00011000  10101010 
+Exemplos
+DA: 11001000  00010111  00010110  10100001 Qual interface?
+Qual interface?
+
+--- PAGE 19 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 19
+Rede de datagramas ou VC: 
+por quê?
+Internet (datagrama)
+ troca de dados entre 
+computadores
+ serviço “elástico”, sem 
+requisitos de temporização 
+estritos 
+ sistemas finais “inteligentes” 
+(computadores)
+ pode adaptar, realizar 
+controle, recup. de erros
+ simples dentro da rede, 
+complexidade na “borda”
+ muitos tipos de enlace 
+ diferentes características
+ serviço uniforme difícil
+ATM (VC)
+ evoluída da telefonia
+ conversação humana: 
+ requisitos de 
+temporização estritos, 
+confiabilidade
+ necessário para serviço 
+garantido
+ sistemas finais “burros”
+ telefones
+ complexidade dentro da 
+rede
+
+--- PAGE 20 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 20
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 21 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 21
+Visão geral da arquitetura
+do roteador
+Duas funções principais do roteador: 
+ executar algoritmos/protocolo de roteamento (RIP, OSPF, BGP)
+ repassar datagramas do enlace de entrada para saída
+
+--- PAGE 22 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 22
+Funções da porta de entrada
+Comutação descentralizada: 
+ dado destino do datagrama, porta de 
+saída de pesquisa usando tabela de 
+repasse na memória da porta de entrada
+ objetivo: processamento completo da 
+porta de entrada na ‘velocidade de linha’
+ fila: se datagramas chegarem mais 
+rápido que taxa de repasse no elemento 
+de comutação
+Camada física:
+recepção por bit
+Camada de enlace
+de dados:
+p. e., Ethernet
+ver Capítulo 5
+
+--- PAGE 23 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 23
+Comutação por memória
+Roteadores de primeira geração:
+  computadores tradicionais com a comutação via 
+controle direto da CPU
+  pacote copiado para a memória do sistema
+  velocidade limitada pela largura de banda da 
+memória (2 travessias de barramento por datagrama)
+porta
+entrada
+porta
+saída
+memória
+Barramento do sistema
+
+--- PAGE 24 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 24
+Comutação por um 
+barramento
+ datagrama da memória da porta de 
+entrada à memória da porta de saída 
+por um barramento compartilhado
+ disputa pelo barramento:  velocidade 
+da comutação limitada pela largura de 
+banda do barramento
+ barramento Cisco 5600 de 32 Gbps: 
+velocidade suficiente para roteadores 
+de acesso e corporativos
+
+--- PAGE 25 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 25
+Comutação por uma rede de 
+interconexão
+ contorna limitações de largura de banda do 
+barramento
+ redes Banya, outras redes de interconexão 
+desenvolvidas inicialmente para conectar 
+processadores no multiprocessador
+ projeto avançado: fragmenta datagrama em células 
+de tamanho fixo, comuta células através do 
+elemento de comutação
+ Cisco 12000: comuta 60 Gbps através da rede de 
+interconexão
+
+--- PAGE 26 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 26
+Portas de saída
+ Buffering exigido quando os datagramas chegam do elemento 
+de comutação mais rápido que a taxa de transmissão
+ Disciplina de escalonamento escolhe entre os datagramas 
+enfileirados para transmissão
+
+--- PAGE 27 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 27
+Enfileiramento na porta
+de saída
+ buffering quando a taxa de chegada via comutador excede a 
+velocidade da linha de saída
+ enfileiramento (atraso) e perda devidos a estouro de buffer na 
+porta de saída!
+
+--- PAGE 28 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 28
+Quanto armazenamento 
+em buffer?
+ regra prática da RFC 3439: armazenamento 
+médio em buffer igual à RTT “típica” 
+(digamos, 250 ms) vezes capacidade do 
+enlace C
+ p. e., C = enlace de 10 Gbs: buffer de 2,5 Gbit
+ recomendação recente: com N fluxos, 
+armazenamento deve ser igual a 
+RTT  C.
+N
+
+--- PAGE 29 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 29
+Enfileiramento da porta 
+de entrada
+ elemento de comutação 
+mais lento que portas de 
+entrada combinadas -> 
+enfileiramento possível nas 
+filas de entrada 
+ bloqueio de cabeça de fila 
+(HOL) : datagrama 
+enfileirado na frente da 
+fila impede que outros na 
+fila sigam adiante
+ atraso de enfileiramento
+e perda devidos a estouro 
+no buffer de entrada
+
+--- PAGE 30 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 30
+Capítulo 4: 
+Camada de rede
+ 4.1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 31 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 31
+A camada de rede da 
+Internet
+tabela de
+repasse
+Funções na camada de rede do hospedeiro e roteador:
+prots. roteamento
+•seleção caminho
+•RIP, OSPF, BGP
+protocolo IP
+•convs. de endereçamento
+•formato de datagrama
+•convs. manuseio de pacote
+protocolo ICMP
+•informe de erro
+•“sinalização” do roteador
+Camada de transporte: TCP, UDP
+Camada de enlace
+Camada física
+Camada
+de rede
+
+--- PAGE 32 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 32
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 33 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 33
+Formato do datagrama IP
+Quanto overhead com TCP?
+ 20 bytes de TCP
+ 20 bytes de IP
+ = 40 bytes + overhead da camada de aplicação
+
+--- PAGE 34 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 34
+Fragmentação
+ e reconstrução do IP
+ enlaces de rede têm MTU 
+(tamanho máx. transferência) – 
+maior quadro em nível de enlace 
+possível.
+ diferentes tipos de enlace, 
+diferentes MTUs 
+ grande datagrama IP dividido 
+(“fragmentado”) dentro da rede
+ um datagrama torna-se 
+vários datagramas
+ “reconstruído” somente no 
+destino final
+ bits de cabeçalho IP usados 
+para identificar, ordenar 
+fragmentos relacionados
+
+--- PAGE 35 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 35
+ID
+ = x
+desloc.
+ = 0
+fragflag
+ = 0
+tam.
+ = 4000
+ID
+ = x
+desloc.
+ = 0
+fragflag
+ = 1
+tam.
+ = 1500
+ID
+ = x
+desloc.
+ = 185
+fragflag
+ = 1
+tam.
+ = 1500
+ID
+ = x
+desloc.
+ = 370
+fragflag
+ = 0
+tam.
+ = 1040
+Um datagrama grande torna-se
+vários datagramas menores
+Exemplo
+ datagrama de 4000 
+bytes
+ MTU = 1500 bytes
+1480 bytes no
+campo de dados
+deslocamento  = 
+1480/8 
+
+--- PAGE 36 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 36
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 37 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 37
+Endereçamento IP: 
+introdução
+ endereço IP: 
+identificador de 32 
+bits para interface de 
+hospedeiro e roteador
+ interface: conexão 
+entre hospedeiro/ 
+roteador e enlace físico
+ roteadores normalmente 
+têm várias interfaces
+ hospedeiro normalmente 
+tem uma interface
+ endereços IP associados 
+a cada interface
+223.1.1.1
+223.1.1.2
+223.1.1.3
+223.1.1.4 223.1.2.9
+223.1.2.2
+223.1.2.1
+223.1.3.2223.1.3.1
+223.1.3.27
+223.1.1.1 = 11011111 00000001 00000001 00000001
+223 1 11
+
+--- PAGE 38 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 38
+Sub-redes
+ endereço IP: 
+ parte da sub-rede (bits 
+de alta ordem)
+ parte do host (bits de 
+baixa ordem) 
+ O que é uma sub-rede?
+ dispositivo se conecta à 
+mesma parte da sub-     
+-rede do endereço IP
+ pode alcançar um ao 
+outro fisicamente sem 
+roteador intermediário
+223.1.1.1
+223.1.1.2
+223.1.1.3
+223.1.1.4 223.1.2.9
+223.1.2.2
+223.1.2.1
+223.1.3.2223.1.3.1
+223.1.3.27
+rede consistindo em 3 sub-redes
+sub-rede
+
+--- PAGE 39 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 39
+223.1.1.0/24
+223.1.2.0/24
+223.1.3.0/24
+Receita
+ para determinar as 
+sub-redes, destaque 
+cada interface de seu 
+hospedeiro ou 
+roteador, criando ilhas 
+de redes isoladas. 
+Cada rede isolada é 
+denominada sub-red
+Máscara de sub-rede: /24
+
+--- PAGE 40 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 40
+Quantas? 223.1.1.1
+223.1.1.3
+223.1.1.4
+223.1.2.2223.1.2.1
+223.1.2.6
+223.1.3.2223.1.3.1
+223.1.3.27
+223.1.1.2
+223.1.7.0
+223.1.7.1
+223.1.8.0223.1.8.1
+223.1.9.1
+223.1.9.2
+
+--- PAGE 41 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 41
+Endereçamento IP: CIDR
+CIDR: Classless InterDomain Routing (roteamento 
+interdomínio sem classes)
+ parte de sub-rede do endereço de tamanho 
+arbitrário
+ formato do endereço: a.b.c.d/x, onde x é # bits na 
+parte de sub-rede do endereço
+11001000  00010111  00010000  00000000
+parte de
+sub-rede
+parte do
+hosp.
+200.23.16.0/23
+
+--- PAGE 42 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 42
+Endereços IP: 
+como obter um?
+P: Como um hospedeiro obtém endereço IP?
+ fornecido pelo administrador do sistema em um 
+arquivo
+ Windows: painel de controle->rede
+->configuração->tcp/ip->propriedades
+ UNIX: /etc/rc.config
+ DHCP: Dynamic Host Configuration Protocol: recebe 
+endereço dinamicamente do servidor
+ “plug-and-play” 
+
+--- PAGE 43 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 43
+DHCP: Dynamic Host
+ Configuration Protocol
+Objetivo: permitir que o hospedeiro obtenha dinamicamente 
+seu endereço IP do servidor de rede quando se conectar à 
+rede
+pode renovar seu prazo no endereço utilizado
+permite reutilização de endereços (só mantém endereço enquanto 
+conectado e “ligado”)
+aceita usuários móveis que queiram se juntar à rede (mais adiante)
+Visão geral do DHCP:
+ host broadcasts “DHCP discover” msg [optional]
+ servidor DHCP responde com msg “DHCP offer” [opcional]
+ hospedeiro requer endereço IP: msg “DHCP request”
+ servidor DHCP envia endereço: msg “DHCP ack”
+
+--- PAGE 44 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 44
+DHCP – cenário 
+cliente/servidor
+223.1.1.1
+223.1.1.2
+223.1.1.3
+223.1.1.4 223.1.2.9
+223.1.2.2
+223.1.2.1
+223.1.3.2223.1.3.1
+223.1.3.27
+A
+B
+E
+ 
+servidor  
+DHCP 
+ 
+cliente DHCP 
+chegando precisa de
+endereço nesta rede
+
+--- PAGE 45 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 45
+servidor DHCP: 223.1.2.5
+cliente
+chegando
+tempo
+Descoberta DHCP
+src : 0.0.0.0, 68     
+dest.: 255.255.255.255,67
+yiaddr:    0.0.0.0
+transaction ID: 654
+Oferta DHCP
+src: 223.1.2.5, 67      
+dest:  255.255.255.255, 68
+yiaddrr: 223.1.2.4
+transaction ID: 654
+Lifetime: 3600 secs
+Solicitação DHCP
+src:  0.0.0.0, 68     
+dest::  255.255.255.255, 67
+yiaddrr: 223.1.2.4
+transaction ID: 655
+Lifetime: 3600 secs
+DHCP ACK
+src: 223.1.2.5, 67      
+dest:  255.255.255.255, 68
+yiaddrr: 223.1.2.4
+transaction ID: 655
+Lifetime: 3600 secs
+
+--- PAGE 46 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 46
+DHCP: 
+mais do que endereço IP
+DHCP pode retornar mais do que apenas o 
+endereço IP alocado na sub-rede:
+ endereço do roteador do primeiro salto para o 
+cliente
+ nome e endereço IP do servidor DNS
+ máscara de rede (indicando parte de rede 
+versus hospedeiro do endereço)
+
+--- PAGE 47 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 47
+DHCP: exemplo
+ conexão de laptop precisa do 
+seu endereço IP, endereço do 
+roteador do primeiro salto, 
+endereço do servidor DNS: 
+use DHCP
+ solicitação DHCP encapsulada 
+no UDP, encapsulada no IP, 
+encapsulado no Ethernet 
+802.1 
+ broadcast de quadro 
+Ethernet (dest: FFFFFFFFFFFF) 
+na LAN, recebido no roteador 
+rodando DHCP
+ Ethernet demultiplexado para 
+IP demultiplexado, UDP 
+demultiplexado para DHCP
+roteador
+(roda DHCP)
+DHCP
+UDP
+IP
+Eth
+Phy
+DHCP
+DHCP
+DHCP
+DHCP
+DHCP
+DHCP
+UDP
+IP
+Eth
+Phy
+DHCP
+DHCP
+DHCP
+DHCPDHCP
+168.1.1.1
+
+--- PAGE 48 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 48
+ servidor DCP formula 
+DHCP ACK contendo 
+endereço IP do cliente, 
+endereço IP do 
+roteador do primeiro 
+salto para cliente, nome 
+& endereço IP do 
+servidor DNS
+roteador
+(roda DHCP)
+DHCP
+UDP
+IP
+Eth
+Phy
+DHCP
+DHCP
+DHCP
+DHCP
+DHCP
+UDP
+IP
+Eth
+Phy
+DHCP
+DHCP
+DHCP
+DHCP
+DHCP
+ encapsulamento do 
+servidor DHCP, quadro 
+repassado ao cliente, 
+demultiplexando para 
+DHCP no cliente
+ cliente agora sabe seu 
+endereço IP, nome e 
+endereço IP do servidor 
+DSN, endereço IP do seu 
+roteador do primeiro salto
+
+--- PAGE 49 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 49
+DHCP: Saída 
+wireshark (LAN 
+doméstica)
+Message type: Boot Reply (2)
+Hardware type: Ethernet
+Hardware address length: 6
+Hops: 0
+Transaction ID: 0x6b3a11b7
+Seconds elapsed: 0
+Bootp flags: 0x0000 (Unicast)
+Client IP address: 192.168.1.101 (192.168.1.101)
+Your (client) IP address: 0.0.0.0 (0.0.0.0)
+Next server IP address: 192.168.1.1 (192.168.1.1)
+Relay agent IP address: 0.0.0.0 (0.0.0.0)
+Client MAC address: Wistron_23:68:8a (00:16:d3:23:68:8a)
+Server host name not given
+Boot file name not given
+Magic cookie: (OK)
+Option: (t = 53,l = 1) DHCP Message Type = DHCP ACK
+Option: (t = 54,l = 4) Server Identifier = 192.168.1.1
+Option: (t = 1,l = 4) Subnet Mask = 255.255.255.0
+Option: (t = 3,l = 4) Router = 192.168.1.1
+Option: (6) Domain Name Server
+     Length: 12; Value: 445747E2445749F244574092; 
+      IP Address: 68.87.71.226;
+      IP Address: 68.87.73.242; 
+      IP Address: 68.87.64.146
+Option: (t = 15,l = 20) Domain Name = "hsd1.ma.comcast.net."
+resposta
+Message type: Boot Request (1)
+Hardware type: Ethernet
+Hardware address length: 6
+Hops: 0
+Transaction ID: 0x6b3a11b7
+Seconds elapsed: 0
+Bootp flags: 0x0000 (Unicast)
+Client IP address: 0.0.0.0 (0.0.0.0)
+Your (client) IP address: 0.0.0.0 (0.0.0.0)
+Next server IP address: 0.0.0.0 (0.0.0.0)
+Relay agent IP address: 0.0.0.0 (0.0.0.0)
+Client MAC address: Wistron_23:68:8a (00:16:d3:23:68:8a)
+Server host name not given
+Boot file name not given
+Magic cookie: (OK)
+Option: (t = 53,l = 1) DHCP Message Type = DHCP Request
+Option: (61) Client identifier
+     Length: 7; Value: 010016D323688A; 
+     Hardware type: Ethernet
+     Client MAC address: Wistron_23:68:8a (00:16:d3:23:68:8a)
+Option: (t = 50,l = 4) Requested IP Address = 192.168.1.101
+Option: (t = 12,l = 5) Host Name = "nomad"
+Option: (55) Parameter Request List
+     Length: 11; Value: 010F03062C2E2F1F21F92B
+     1 = Subnet Mask; 15 = Domain Name
+     3 = Router; 6 = Domain Name Server
+     44 = NetBIOS over TCP/IP Name Server
+     ……
+solicitação
+
+--- PAGE 50 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 50
+Endereços IP: 
+como obter um?
+P: Como a rede obtém a parte de sub-rede do endereço 
+IP?
+R: Recebe parte alocada do espaço de endereços do seu 
+ISP
+Bloco do ISP      11001000  00010111  00010000  00000000    200.23.16.0/20 
+Organização 0    11001000  00010111  00010000  00000000    200.23.16.0/23 
+Organização 1    11001000  00010111  00010010  00000000    200.23.18.0/23 
+Organização 2    11001000  00010111  00010100  00000000    200.23.20.0/23 
+   ...                                          …..                                   ….                ….
+Organização 7    11001000  00010111  00011110  00000000    200.23.30.0/23 
+
+--- PAGE 51 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 51
+Endereçamento hierárquico: 
+agregação de rota
+“Envie-me qualquer
+coisa com endereços
+começando com
+200.23.16.0/20”
+200.23.16.0/23
+200.23.18.0/23
+200.23.30.0/23
+Fly-By-Night-ISP
+Organização 0
+Organização 7
+Internet
+Organização 1
+ISPs-R-Us “Envie-me qualquer
+coisa com endereços
+começando com 
+199.31.0.0/16”
+200.23.20.0/23
+Organização 2
+.
+.
+.
+.
+.
+.
+Endereçamento hierárquico permite anúncio eficiente da informação de
+ roteamento:
+
+--- PAGE 52 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 52
+Endereçamento hierárquico:
+rotas mais específicas
+ISPs-R-Us tem uma rota mais específica para Organização 1
+“Envie-me qualquer
+coisa com endereços
+começando com 
+200.23.16.0/20”
+200.23.16.0/23
+200.23.18.0/23
+200.23.30.0/23
+Fly-By-Night-ISP
+Organização 0
+Organização 7
+Internet
+Organização 1
+ISPs-R-Us “Envie-me qualquer
+coisa com endereços
+começando com 199.31.0.0/16
+ou 200.23.18.0/23”
+200.23.20.0/23
+Organização 2
+.
+.
+.
+.
+.
+.
+
+--- PAGE 53 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 53
+Endereçamento IP: 
+a última palavra...
+P: Como um ISP recebe bloco de endereços?
+R: ICANN: Internet Corporation for Assigned 
+     Names and Numbers
+ aloca endereços
+ administra o DNS
+ atribui nomes de domínio e resolve disputas
+
+--- PAGE 54 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 54
+NAT: Network Address 
+Translation
+10.0.0.1
+10.0.0.2
+10.0.0.3
+10.0.0.4
+138.76.29.7
+rede local
+(p. e., rede doméstica)
+10.0.0/24
+restante da
+Internet
+datagramas com origem ou
+destino nesta rede têm
+endereço 10.0.0/24 para
+origem/destino (como sempre)
+todos os datagramas saindo  da rede 
+local têm mesmo endereço IP NAT 
+de origem: 138.76.29.7, mas
+diferentes números de porta de 
+origem
+
+--- PAGE 55 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 55
+ motivação: rede local usa apenas um endereço IP no que 
+se refere ao mundo exterior:
+ intervalo de endereços não necessário pelo ISP: 
+apenas um endereço IP para todos os dispositivos
+ pode mudar os endereços dos dispositivos na rede 
+local sem notificar o mundo exterior
+ pode mudar de ISP sem alterar os endereços dos 
+dispositivos na rede local
+ dispositivos dentro da rede local não precisam ser 
+explicitamente endereçáveis ou visíveis pelo mundo 
+exterior (uma questão de segurança).
+
+--- PAGE 56 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 56
+Implementação: roteador NAT deve:
+ enviando datagramas: substituir (endereço IP de 
+origem, # porta) de cada datagrama saindo por 
+(endereço IP da NAT, novo # porta)
+. . . clientes/servidores remotos responderão usando 
+(endereço IP da NAT, novo # porta) como endereço 
+de destino
+ lembrar (na tabela de tradução NAT) de cada par de 
+tradução (endereço IP de origem, # porta) para 
+(endereço IP da NAT, novo # porta) 
+ recebendo datagramas: substituir (endereço IP da 
+NAT, novo # porta) nos campos de destino de cada 
+datagrama chegando por (endereço IP origem, # porta) 
+correspondente, armazenado na tabela NAT
+
+--- PAGE 57 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 57
+1: hospedeiro 10.0.0.1 
+envia datagrama para 
+128.119.40.186, 80
+2: roteador NAT 
+muda endereço de 
+origem do 
+datagrama de
+10.0.0.1, 3345 para
+138.76.29.7, 5001,
+atualiza tabela
+3: Resposta chega
+endereço destino:
+ 138.76.29.7, 5001
+4: roteador NAT muda endereço
+de destino do datagrama de
+138.76.29.7, 5001 para 10.0.0.1, 3345 
+
+--- PAGE 58 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 58
+ campo de número de porta de 16 bits: 
+ 60.000 conexões simultâneas com um único 
+endereço no lado da LAN!
+ NAT é controvertido:
+ roteadores só devem processar até a camada 3
+ viola argumento de fim a fim
+• a possibilidade de NAT deve ser levada em conta pelos 
+projetistas da aplicação, p. e., aplicações P2P
+ a falta de endereços deverá ser resolvida pelo 
+IPv6
+
+--- PAGE 59 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 59
+Problema da travessia 
+da NAT
+ cliente quer se conectar ao 
+servidor com endereço 
+10.0.0.1
+ endereço do servidor 10.0.0.1 
+local à LAN (cliente não pode 
+usá-lo como endereço destino)
+ apenas um endereço NAT visível 
+externamente: 138.76.29.7
+ solução 1: configure a NAT 
+estaticamente para repassar 
+as solicitações de conexão 
+que chegam a determinada 
+porta ao servidor
+ p. e., (123.76.29.7, porta 2500) 
+sempre repassado para 10.0.0.1 
+porta 25000
+10.0.0.1
+10.0.0.4
+roteador
+NAT
+138.76.29.7
+Client
+?
+
+--- PAGE 60 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 60
+ solução 2: Universal Plug and 
+Play (UPnP) Internet Gateway 
+Device (IGD) Protocol.  Permite 
+que o hospedeiro com NAT:
+ descubra endereço IP 
+público (138.76.29.7)
+ inclua/remova mapeamentos 
+de porta (com tempos de 
+posse)
+ou seja, automatizar 
+configuração estática do 
+mapa de porta NAT
+10.0.0.1
+10.0.0.4
+NAT 
+router
+138.76.29.7
+IGD
+
+--- PAGE 61 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 61
+ solução 3: repasse (usado no Skype)
+ cliente com NAT estabelece conexão com repasse
+ cliente externo se conecta ao repasse
+ repasse liga pacotes entre duas conexões
+138.76.29.7
+Cliente
+10.0.0.1
+roteador
+NAT
+1. conexão com
+relay iniciado
+pelo hospedeiro 
+de NAT
+2. conexão com
+relay iniciado
+pelo cliente
+3. relaying 
+estabelecido
+
+--- PAGE 62 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 62
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 63 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 63
+ICMP: Internet Control 
+Message Protocol
+ usado por hospedeiros & 
+roteadores para comunicar 
+informações em nível de rede
+ relato de erro: hospedeiro, 
+rede, porta, protocolo 
+inalcançável
+ eco de solicitação/ 
+resposta (usado por ping)
+ camada de rede “acima” do IP:
+ msgs ICMP transportadas 
+em datagramas IP
+ mensagem ICMP: tipo, código 
+mais primeiros 8 bytes do 
+datagrama IP causando erro
+Tipo  Cód,    Descrição
+0        0         resposta de eco (ping)
+3        0         rede de destino inalcançável
+3        1         hosp. de destino inalcançável
+3        2         protocolo de destino inalcançável
+3        3         porta de destino inalcançável
+3        6         rede de destino desconhecida
+3        7         hosp. de destino desconhecido
+4        0         redução da fonte (controle de
+                     congestionamento – não usado)
+8        0         solicitação de eco (ping)
+9        0         anúncio de rota
+10      0         descoberta do roteador
+11      0         TTL expirado
+12      0         cabeçalho IP inválido
+
+--- PAGE 64 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 64
+ICMP: Internet Control 
+Message Protocol
+
+--- PAGE 65 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 65
+Traceroute e ICMP
+ origem envia série de 
+segmentos UDP ao destino
+ primeiro tem TTL = 1
+ segundo tem TTL = 2 etc.
+ número de porta 
+improvável
+ quando no datagrama chegar 
+no no roteador:
+ roteador descarta 
+datagrama 
+ e envia à origem uma msg 
+ICMP (tipo 11, código 0)
+ mensagem inclui nome do 
+roteador & endereço IP
+ quando a mensagem ICMP 
+chega, origem calcula RTT
+ traceroute faz isso 3 vezes
+Critério de término
+ segmento UDP por fim chega 
+no hospedeiro de destino
+ destino retorna pacote ICMP 
+“host inalcançável” (tipo 3, 
+código 3)
+ quando origem recebe esse 
+ICMP, termina.
+
+--- PAGE 66 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 66
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 67 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 67
+IPv6
+ motivação inicial: espaço de endereço de 32 
+bit logo estará completamente alocado
+ motivação adicional:
+ formato de cabeçalho ajuda a agilizar 
+processamento e repasse
+ mudanças no capítulo para facilitar QoS 
+formato de datagrama IPv6: 
+ cabeçalho de 40 bytes de tamanho fixo
+ fragmentação não permitida
+
+--- PAGE 68 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 68
+Cabeçalho IPv6
+prioridade:  identificar prioridade entre datagramas no fluxo
+rótulo de fluxo: identificar datagramas no mesmo “fluxo.” 
+                         (conceito de “fluxo” não bem definido)
+próximo cabeçalho: identificar protocolo da camada superior
+                               para dados
+
+--- PAGE 69 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 69
+Outras mudanças do IPv4
+ soma de verificação: removida inteiramente 
+para reduzir tempo de processamento em cada 
+salto
+ opões: permitidas, mas fora do cabeçalho, 
+indicadas pelo campo de “Próximo Cabeçalho”
+ ICMPv6: nova versão do ICMP
+ tipos de mensagem adicionais, p. e. “Pacote Muito 
+Grande”
+ funções de gerenciamento de grupo multicast
+
+--- PAGE 70 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 70
+Transição de IPv4 para IPv6
+ nem todos os roteadores podem ser 
+atualizados simultaneamente
+ sem “dia de conversão”
+ como a rede operará com roteadores IPv4 e IPv6 
+misturados? 
+ implantação de túnel: IPv6 transportado como 
+carga útil no datagrama IPv4 entre roteadores 
+IPv4
+
+--- PAGE 71 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 71
+Implantação de túnel
+A B E F
+IPv6 IPv6 IPv6 IPv6
+túnelVisão lógica:
+Visão física:
+A B E F
+IPv6 IPv6 IPv6 IPv6IPv4 IPv4
+
+--- PAGE 72 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 72
+Visão lógica:
+Visão física:
+
+--- PAGE 73 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 73
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 74 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 74
+1
+23
+0111
+valor no cabeçalho
+do pacote de chegada
+algoritmo de 
+roteamento
+tabela de repasse local
+valor cab. enlace saída
+0100
+0101
+0111
+1001
+3
+2
+2
+1
+Interação entre roteamento 
+e repasse
+
+--- PAGE 75 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 75
+u
+yx
+wv
+z
+2
+2
+1
+3
+1
+1
+2
+5
+3
+5
+Grafo: G = (N,E)
+N = conjunto de roteadores = { u, v, w, x, y, z }
+E = conjunto de enlaces  = { (u,v), (u,x), (v,x), (v,w), (x,w), (x,y), (w,y), (w,z), (y,z) }
+Abstração de grafo
+Comentário: Abstração de grafo é útil em outros contextos de rede
+Exemplo: P2P, onde N é conj. de pares e E é conj. de conexões TCP
+
+--- PAGE 76 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 76
+Abstração de grafo: custos
+u
+yx
+wv
+z
+2
+2
+1
+3
+1
+1
+2
+5
+3
+5 • c(x,x’) = custo do enlace (x,x’)
+   - p. e., c(w,z) = 5
+• custo poderia ser sempre 1, ou 
+inversamente relacionado à largura
+ou inversamente relacionado ao
+congestionamento
+Custo do caminho (x1, x2, x3,…, xp) = c(x1,x2) + c(x2,x3) + … + c(xp-1,xp)  
+Pergunta: Qual é o caminho de menor custo entre u e z?
+algoritmo de roteamento: algoritmo que encontra o
+caminho de menor custo
+
+--- PAGE 77 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 77
+Classificação do algoritmo 
+de roteamento
+informação global ou 
+descentralizada?
+global:
+ todos os roteadores têm topologia 
+completa, informação de custo do 
+enlace
+ algoritmos de “estado do enlace”
+descentralizada: 
+ roteador conhece vizinhos 
+conectados fisicamente, custos de 
+enlace para vizinhos
+ processo de computação iterativo, 
+troca de informações com vizinhos
+ algoritmos de “vetor de distância”
+Estático ou dinâmico?
+estático: 
+ rotas mudam lentamente 
+com o tempo
+dinâmico: 
+ rotas mudam mais 
+rapidamente
+ atualização periódica
+ em resposta a 
+mudanças no custo do 
+enlace
+
+--- PAGE 78 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 78
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 79 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 79
+Algoritmo de roteamento 
+de estado do enlace
+algoritmo de Dijkstra
+ nova topologia, custos de enlace 
+conhecidos de todos os nós
+ realizado por “broadcast de 
+estado do enlace” 
+ todos os nós têm a mesma 
+informação
+ calcula caminhos de menor 
+custo de um nó (“origem”) para 
+todos os outros nós
+ da tabela de repasse para 
+esse nó
+ iterativo: após k iterações, 
+sabe caminho de menor custo 
+para k destinos
+notação:
+ c(x,y): custo do enlace 
+do nó x até y;  = ∞ se não 
+forem vizinhos diretos
+ D(v): valor atual do 
+custo do caminho da 
+origem ao destino v
+ p(v): nó predecessor ao 
+longo do caminho da 
+origem até v
+ N': conjunto de nós cujo 
+caminho de menor custo 
+é definitivamente 
+conhecido
+
+--- PAGE 80 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 80
+Algoritmo de Dijkstra
+1  Inicialização: 
+2    N' = {u} 
+3    para todos os nós v 
+4      se v adjacente a u 
+5          então D(v) = c(u,v) 
+6      senão D(v) = ∞ 
+7 
+8   Loop 
+9     acha w não em N' tal que D(w) é mínimo 
+10    acrescenta w a N' 
+11    atualiza D(v) para todo v adjacente a w e não em N' : 
+12       D(v) = min( D(v), D(w) + c(w,v) ) 
+13    /* novo custo para v é custo antigo para v ou custo conhecido
+14     do caminho mais curto para w + custo de w para v */ 
+15  até todos os nós em N' 
+
+--- PAGE 81 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 81
+Algoritmo de Dijkstra: 
+exemplo
+Etapa
+0
+1
+2
+3
+4
+5
+N'
+u
+ux
+uxy
+uxyv
+uxyvw
+uxyvwz
+D(v),p(v)
+2,u
+2,u
+2,u
+D(x),p(x)
+1,u
+D(y),p(y)
+∞
+2,x
+D(z),p(z)
+∞ 
+∞ 
+4,y
+4,y
+4,y
+u
+yx
+wv
+z
+2
+2
+1
+3
+1
+1
+2
+5
+3
+5
+D(w),p(w)
+5,u
+4,x
+3,y
+3,y
+
+--- PAGE 82 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 82
+Algoritmo de Dijkstra: 
+exemplo (2) 
+u
+yx
+wv
+z
+árvore resultante do caminho mais curto a partir de u:
+v
+x
+y
+w
+z
+(u,v)
+(u,x)
+(u,x)
+(u,x)
+(u,x)
+destino enlace
+tabela de repasse resultante em u:
+
+--- PAGE 83 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 83
+Algoritmo de Dijkstra,
+discussão
+complexidade do algoritmo: n nós
+ cada iteração: precisa verificar todos os nós, w, não em N
+ n(n+1)/2 comparações: O(n2)
+ implementações mais eficientes possíveis: O(nlogn)
+oscilações possíveis:
+ p. e., custo do enlace = quantidade de tráfego transportado
+A
+D
+C
+B
+1 1+e
+e0
+e
+1 1
+0 0
+A
+D
+C
+B
+2+e 0
+00
+1+e 1
+A
+D
+C
+B
+0 2+e
+1+e1
+0 0
+A
+D
+C
+B
+2+e 0
+e0
+1+e 1
+inicialmente … recalcula
+roteamento
+… recalcula … recalcula
+
+--- PAGE 84 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 84
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 85 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 85
+Algoritmo de vetor de 
+distância 
+Equação de Bellman-Ford (programação dinâmica)
+defina
+dx(y) : =  custo do caminho de menor custo de x 
+para y
+depois
+dx(y) = min {c(x,v) + dv(y) }
+onde min assume todos os vizinhos v de x
+v
+
+--- PAGE 86 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 86
+Exemplo de Bellman-Ford
+u
+yx
+wv
+z
+2
+2
+1
+3
+1
+1
+2
+5
+3
+5 claramente, dv(z) = 5, dx(z) = 3, dw(z) = 3
+du(z) = min { c(u,v) + dv(z),
+                    c(u,x) + dx(z),
+                    c(u,w) + dw(z) }
+         = min {2 + 5,
+                    1 + 3,
+                    5 + 3}  = 4
+nó que alcança mínimo é o próximo salto
+no caminho mais curto ➜ tabela de repasse
+equação B-F diz:
+
+--- PAGE 87 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 87
+Algoritmo de vetor 
+de distância 
+ Dx(y) = estimativa do menor custo de x para y
+ nó x sabe custo de cada vizinho v: c(x,v)
+ nó x mantém vetor de distância Dx = [Dx(y): y є 
+N ]
+ nó x também mantém vetor de distância de 
+seus vizinhos
+ para cada vizinho v, x mantém 
+Dv = [Dv(y): y є N ]
+
+--- PAGE 88 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 88
+Algoritmo de vetor
+ de distância (4)
+ideia básica: 
+ de tempos em tempos, cada nó envia sua própria 
+estimativa de vetor de distância aos vizinhos
+ assíncrono
+ quando um nó x recebe nova estimativa DV do 
+vizinho, ele atualiza seu próprio DV usando a 
+equação de B-F:
+Dx(y)  min← v{c(x,v) + Dv(y)}    para cada nó y ∊ N
+ sob condições modestas, naturais, a estimativa 
+Dx(y) converge para o menor custo real  dx(y) 
+
+--- PAGE 89 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 89
+Algoritmo de vetor de
+distância (5)
+iterativo, assíncrono: cada 
+iteração local causada por: 
+ mudança de custo do enlace 
+local
+ mensagem de atualização do 
+DV do vizinho
+distribuído:
+ cada nó notifica os vizinhos 
+apenas quando seu DV muda
+ vivinhos, então, notificam 
+seus vizinhos, se necessário
+espera (mudança no custo 
+do enlace local ou msg do 
+vizinho)
+recalcula estimativas
+se DV a qualquer destino 
+tiver mudado, notifica 
+vizinhos 
+Cada nó:
+
+--- PAGE 90 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 90
+x   y   z
+x
+y
+z
+0  2   7
+∞ ∞ ∞
+∞ ∞ ∞
+de
+custo para
+de
+de
+x   y   z
+x
+y
+z
+0
+de
+custo para
+x   y   z
+x
+y
+z
+∞ ∞
+∞ ∞ ∞
+custo para
+x   y   z
+x
+y
+z
+∞ ∞ ∞
+7 1 0
+custo para
+∞
+2   0   1
+∞ ∞  ∞
+2   0   1
+7   1   0
+tempo
+x z
+12
+7
+y
+tabela nó x
+tabela nó y
+tabela nó z
+Dx(y) = min{c(x,y) + Dy(y), c(x,z) + Dz(y)} 
+             = min{2+0 , 7+1} = 2
+Dx(z) = min{c(x,y) + 
+      Dy(z), c(x,z) + Dz(z)} 
+ =  min{2+1 , 7+0} = 3
+32 
+
+--- PAGE 91 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 91
+x   y   z
+x
+y
+z
+0  2   7
+∞ ∞ ∞
+∞ ∞ ∞
+de
+custo para
+de
+de
+x   y   z
+x
+y
+z
+0  2   3
+de
+x   y   z
+x
+y
+z
+0  2   3
+de
+x   y   z
+x
+y
+z
+∞ ∞
+∞ ∞ ∞
+x   y   z
+x
+y
+z
+0  2   7
+de
+x   y   z
+x
+y
+z
+0  2   3
+de
+x   y   z
+x
+y
+z
+0  2   3
+de
+x   y   z
+x
+y
+z
+0  2   7
+de
+x   y   z
+x
+y
+z
+∞ ∞ ∞
+7 1 0
+∞
+2   0   1
+∞ ∞  ∞
+2   0   1
+7   1   0
+2  0   1
+7   1   0
+2  0   1
+3  1   0
+2   0   1
+3  1   0
+2  0   1
+3  1   0
+2  0   1
+3  1   0
+tempo
+x z
+12
+7
+y
+tabela nó x
+tabela nó y
+tabela nó z
+Dx(y) = min{c(x,y) + Dy(y), c(x,z) + Dz(y)} 
+             = min{2+0 , 7+1} = 2
+     Dx(z) = min{c(x,y) + 
+      Dy(z), c(x,z) + Dz(z)} 
+      = min{2+1 , 7+0} = 3
+custo para custo para
+custo para custo para custo para
+custo para custo para custo para
+
+--- PAGE 92 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 92
+Vetor de distância: 
+mudanças de custo do enlace
+mudanças de custo do enlace:
+ nó detecta mudança de custo no enlace local
+ atualiza informação de roteamento, recalcula 
+vetor de distância
+ se DV mudar, notifica vizinhos 
+“boas
+notícias
+correm
+rápido”
+x z
+14
+50
+y
+1
+no tempo t0, y detecta a mudança do custo do enlace, atualiza
+seu DV e informa aos seus vizinhos.
+no tempo t1, z recebe a atualização de y e atualiza sua tabela. 
+Calcula um novo custo mínimo para x e envia seu DV aos vizinhos.
+no tempo t2, y recebe a atualização de z e atualiza sua tabela 
+de distância. Menores custos de y não mudam, e daí y  não 
+envia qualquer mensagem a z. 
+
+--- PAGE 93 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 93
+mudanças de custo do enlace:
+ boas notícias correm rápido 
+ más notícias correm lento – problema 
+da “contagem até o infinito”!
+ 44 iterações antes que o algoritmo 
+estabilize: ver texto
+reverso envenenado: 
+ se Z passa por Y para chegar a X:
+ Z diz a Y que sua distância (de Z) até 
+X é infinita (de modo que Y não 
+roteará para X passando por Z)
+ isso solucionará completamente o 
+problema da contagem até o infinito?
+x z
+14
+50
+y
+60
+
+--- PAGE 94 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 94
+Comparação dos algoritmos
+LS e DV
+complexidade da mensagem
+ LS: com n nós, E enlaces, O(nE) 
+mensagens enviadas  
+ DV: troca apenas entre vizinhos
+ tempo de convergência varia
+velocidade de convergência
+ LS: algoritmo O(n2) requer O(nE) 
+mensagens
+ pode ter oscilações
+ DV: tempo de convergência varia
+ podem ser loops de 
+roteamento
+ problema da contagem até o 
+infinito
+robustez: o que acontece 
+se roteador der 
+defeito?
+LS: 
+ nó pode anunciar custo 
+do enlace incorreto
+ cada nó calcula apenas 
+sua própria tabela
+DV:
+ nó DV pode anunciar 
+custo do caminho 
+incorreto
+ tabela de cada nó usada 
+por outros
+• erro se propaga pela 
+rede
+
+--- PAGE 95 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 95
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 96 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 96
+Roteamento hierárquico
+escala: com 200 milhões 
+de destinos:
+ não pode armazenar todos 
+os destinos nas tabelas de 
+roteamento!
+ troca de tabela de 
+roteamento atolaria os 
+enlaces! 
+autonomia administrativa
+ Internet = rede de redes
+ cada administrador de rede 
+pode querer controlar o 
+roteamento em sua própria 
+rede
+nosso estudo de roteamento até aqui – o ideal: 
+ todos os roteadores idênticos
+ rede “achatada”
+… não acontece na prática
+
+--- PAGE 97 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 97
+ roteadores agregados em 
+regiões, “sistemas 
+autônomos” (AS)
+ roteadores no mesmo AS 
+rodam o mesmo protocolo 
+de roteamento
+ protocolo de roteamento 
+“intra-AS”
+ roteadores em ASes 
+diferentes podem 
+executar protocolo de 
+roteamento intra-AS 
+diferente
+roteador de borda
+ Enlace direto com roteador 
+em outro AS
+
+--- PAGE 98 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 98
+3b
+1d
+3a
+1c
+2a
+AS3
+AS1
+AS2
+1a
+2c
+2b
+1b
+algoritmo
+de roteamento
+intra-AS
+tabela de
+repasse
+3c
+ASes interconectados
+ tabela de repasse 
+configurada por algoritmo 
+de roteamento intra e 
+inter-AS
+ intra-AS define entradas 
+para destinos internos
+ inter-AS & intra-AS 
+definem entradas para 
+destinos externos
+algoritmo
+de roteamento
+inter-AS
+
+--- PAGE 99 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 99
+3b
+1d
+3a
+1c
+2a
+AS3
+AS1
+AS2
+1a
+2c
+2b
+1b
+3c
+Tarefas inter-AS
+ suponha que roteador 
+no AS1 recebe 
+datagrama destinado 
+para fora do AS1:
+ roteador deve 
+encaminhar pacote 
+ao roteador de 
+borda, mas qual?
+AS1 deve:
+1. descobrir quais 
+destinos são 
+alcançáveis por AS2 e 
+quais por AS3
+2. propagar essa 
+informação de 
+acessibilidade a todos 
+os roteadores no AS1
+Tarefa do roteamento 
+inter-AS!
+
+--- PAGE 100 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 100
+Exemplo: definindo tabela de 
+repasse no roteador 1d
+ suponha que AS1 descubra (pelo protocolo inter-AS) que a sub-      
+-rede x é alcançável via AS3 (gateway 1c), mas não via AS2.
+ protocolo inter-AS propaga informação de acessibilidade a todos 
+os roteadores internos.
+ roteador 1d determina pelo roteamento intra-AS informação de 
+que sua interface I  está no caminho de menor custo para 1c.
+ instala entrada da tabela de repasse (x,I)
+3b
+1d
+3a
+1c
+2a
+AS3
+AS1
+AS2
+1a
+2c
+2b
+1b
+3c
+x
+…
+
+--- PAGE 101 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 101
+Exemplo: escolhendo entre 
+múltiplos ASes
+ agora suponha que o AS1 descubra pelo protocolo 
+inter-AS que a sub-rede x pode ser alcançada por 
+AS3 e por AS2.
+ para configurar a tabela de repasse, roteador 1d 
+deve determinar para que gateway ele deve repassar 
+os pacotes para o destino x. 
+ isso também é tarefa do protocolo de roteamento 
+inter-AS!
+3b
+1d
+3a
+1c
+2a
+AS3
+AS1
+AS2
+1a
+2c
+2b
+1b
+3c
+x
+…
+…
+
+--- PAGE 102 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 102
+Pelo protocolo inter- 
+-AS, descobre que 
+sub-rede x é 
+alcançável por 
+vários gateways
+Use informação de 
+roteamento do prot. 
+intra-AS para 
+determinar custos de 
+caminhos de menor 
+custo a cada gateway
+Roteamento da 
+batata quente:
+escolha o gateway
+que tem o menor 
+custo
+Determine pela tabela
+de repasse a interface
+I que leva ao gateway
+de menor custo. Inclua
+ (x,I) na tabela de 
+repasse
+ agora suponha que AS1 descubra pelo protocolo inter-AS que 
+sub-rede x pode ser alcançada por AS3 e por AS2.
+ para configurar a tabela de repasse, o roteador 1d deve 
+determinar para qual gateway deve repassar pacotes para 
+destino x. 
+ isso também é tarefa do protocolo de roteamento inter-AS!
+ roteamento da batata quente: envia pacote para o mais próximo 
+dos dois roteadores.
+
+--- PAGE 103 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 103
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 104 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 104
+Roteamento intra-AS
+ também conhecido como Interior Gateway 
+Protocols (IGP)
+ protocolos de roteamento  intra-AS mais comuns:
+ RIP: Routing Information Protocol
+ OSPF: Open Shortest Path First
+ IGRP: Interior Gateway roteamento Protocol 
+(proprietário da Cisco)
+
+--- PAGE 105 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 105
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 106 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 106
+RIP (Routing
+Information Protocol)
+ algoritmo de vetor de distância
+ incluído na distribuição BSD-UNIX em 1982
+ métrica de distância: # de saltos (máx. = 15 saltos)
+DC
+BA
+u v
+w
+x
+y
+z
+destino       saltos
+      u                1
+      v                2
+      w               2
+      x                3
+      y                3
+      z                2
+  
+Do roteador A às sub-redes:
+
+--- PAGE 107 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 107
+Anúncios RIP
+ vetores de distância: trocados entre vizinhos a 
+cada 30 s por meio de mensagem de resposta 
+(também conhecida como anúncio);
+ cada anúncio: lista de até 25 sub-redes de destino 
+dentro do AS … bem como as distâncias entre o 
+remetente e cada uma dessas sub-redes;
+ r oteador: mantém Tabela RIP (Tabela de 
+Roteamento) que inclui o Vetor de Distâncias e a 
+Tabela de Repasse desse roteador.
+
+--- PAGE 108 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 108
+RIP: Exemplo 
+Rede de destino       Roteador seguinte    Núm. saltos até dest. 
+w A 2
+y B 2
+ z B 7
+x -- 1
+…. …. ....
+w x y
+z
+A
+C
+D B
+tabela de roteamento/repasse em D
+
+--- PAGE 109 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 109
+Rede de destino       Roteador seguinte    Núm. saltos 
+até dest.
+ w A 2
+y B 2
+ z B    A 7   5
+x -- 1
+…. …. ....
+tabela de roteamento/repasse em D
+w x y
+z
+A
+C
+D B
+ Destino  Próx. saltos
+   w   -     1
+   x   -     1
+   z   C     4
+   ….   …    ...
+anúncio de A para D
+
+--- PAGE 110 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 110
+RIP: falha e recuperação
+ do enlace 
+se nenhum anúncio for ouvido após 180 s --> 
+vizinho/enlace declarado morto
+ rotas via vizinho invalidadas
+ novos anúncios enviados aos vizinhos
+ vizinhos por sua vez enviam novos anúncios (se não 
+houver tabelas alteradas)
+ informação de falha do enlace rapidamente (?) se 
+propaga para rede inteira
+ reversão envenenada usada para impedir loops de 
+pingue-pongue (distância infinita = 16 saltos)
+
+--- PAGE 111 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 111
+Processamento de tabela RIP
+ tabelas de roteamento RIP controladas por 
+processo em nível de aplicação chamado routed 
+(daemon)
+ anúncios enviados em pacotes UDP, repetidos 
+periodicamente
+física
+enlace
+rede              tabela
+(IP)              repasse
+transporte
+(UDP)
+routed
+física
+enlace
+rede
+   (IP)
+transporte
+  (UDP)
+routed
+tabela
+repasse
+
+--- PAGE 112 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 112
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 113 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 113
+OSPF 
+(Open Shortest Path First)
+ “open”: publicamente disponível em ISPs de níveis + 
+altos, ao passo que o RIP em ISPs (níveis + baixos);
+ usa algoritmo Link State
+ disseminação de pacote LS
+ mapa de topologia em cada nó
+ cálculo de rota usando algoritmo de Dijkstra
+ OSPF – provê os mecanismos para determinar o 
+caminho de roteamento de menor custo para um dado 
+conjunto de pesos de enlaces;
+ Anúncios disseminados ao AS inteiro (com inundação- 
+broadcasting) - transportados nas mensagens OSPF 
+diretamente por IP (em vez de TCP ou UDP)
+
+--- PAGE 114 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 114
+Recursos “avançados” do 
+OSPF (não no RIP)
+ segurança: todas as mensagens OSPF autenticadas 
+(para impedir intrusão maliciosa) 
+ múltiplos caminhos de mesmo custo permitidos 
+(apenas um caminho no RIP)
+ para cada enlace, múltiplas métricas de custo para 
+diferentes TOS (p. e., custo de enlace de satélite 
+definido “baixo” para melhor esforço; alto para tempo 
+real)
+ suporte integrado para uni e multicast: 
+ Multicast OSPF (MOSPF) usa mesma base de dados 
+de topologia que o OSPF
+ OSPF hierárquico em grandes domínios
+
+--- PAGE 115 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 115
+ OSPF – implementa funcionalidades como transf. 
+confiável de mensagem e transmissão broadcasting de 
+estado de enlace;
+ hierarquia em dois níveis: área local, backbone.
+ anúncios de estado do enlace somente na área;
+ cada nó tem topologia de área detalhada; somente 
+direção conhecida (caminho mais curto) para redes 
+em outras áreas.
+ roteadores de borda: “resumem” distâncias às redes 
+na própria área, anunciam para outros roteadores de 
+borda.
+ roteadores de backbone: executam roteamento OSPF 
+limitado ao backbone – cujo papel principal é rotear 
+tráfego entre as outras áreas do AS.
+
+--- PAGE 116 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 116
+ … roteamento entre áreas (interáreas) requer 
+primeiramente que o pacote seja roteado até um 
+roteador de borda da área, em seguida segue pelo 
+roteador de backbone até o roteador de borda da 
+área de destino … e aí até o destino final.
+ segurança: roteadores são autenticados, garantido 
+que apenas roteadores de confiança participem do 
+Protocolo OSPF dentro de um AS;
+ caminhos múltiplos de igual custo: se há vários 
+caminhos até o destino, não é preciso escolher um 
+caminho único para carregar todo o tráfego;
+ suporte para unicast e multicast: OSPF Multicast 
+fornece extensões simples ao OSPF para prover 
+Roteamento Multicast;
+
+--- PAGE 117 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 117
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 118 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 118
+Roteamento inter-AS da 
+Internet: BGP
+ BGP (Border Gateway Protocol): padrão de facto p/ 
+roteamento entre ASs na Internet. 
+ BGP oferece a cada AS um meio de:
+1. obter informação de acessibilidade da sub-rede a 
+partir de ASs vizinhos.
+2. propagar informação de acessibilidade a todos os 
+roteadores internos ao AS.
+3. determinar rotas “boas” para sub-redes com base 
+na informação e política de acessibilidade.
+ permite que a sub-rede anuncie sua existência ao 
+resto da Internet: “Eu existo e estou aqui !”
+
+--- PAGE 119 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 119
+Fundamentos do BGP
+ pares de roteadores (pares BGP) trocam informações de 
+roteamento nas conexões TCP semipermanentes: sessões BGP
+ sessões BGP não precisam corresponder a enlaces físicos;
+ sessão BGP – é a conexão TCP juntamente com todas as 
+mensagens BGP trocadas na conexão.
+ quando AS2 anuncia um prefixo para AS1:
+ AS2 promete que repassará datagramas para esse prefixo
+ AS2 pode agregar prefixos em seu anúncio
+3b
+1d
+3a
+1c
+2a
+AS3
+AS1
+AS2
+1a
+2c
+2b
+1b
+3c
+sessão eBGP
+sessão iBGP
+
+--- PAGE 120 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 120
+Distribuindo informações 
+de atingibilidade
+ usando sessão eBGP entre 3a e 1c, AS3 envia 
+informação de atingibilidade do prefixo a AS1.
+ 1c pode então usar iBGP para distribuir nova infor- 
+mação de prefixo a todos os roteadores em AS1;
+ 1b pode então reanunciar nova informação de 
+atingibilidade para AS2 por sessão 3BGP 1b-para-2a
+ quando roteador descobre novo prefixo, ele cria 
+entrada para prefixo em sua tabela de repasse.
+3b
+1d
+3a
+1c
+2a
+AS3
+AS1
+AS2
+1a
+2c
+2b
+1b
+3c
+sessão eBGP
+sessão iBGP
+
+--- PAGE 121 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 121
+Atributos de caminho & 
+rotas BGP
+ prefixo anunciado inclui atributos BGP.
+ prefixo + atributos = “rota”
+ BGP – ASs são identificados por um nro. de AS 
+globalmente exclusivo (ICANN de Registros).
+ 02 atributos importantes:
+ AS-PATH: contém ASs através dos quais o anúncio do 
+prefixo passou: p. e., AS 67, AS 17 
+ NEXT-HOP: indica roteador específico do AS interno para 
+AS do próximo salto (podem ser múltiplos enlaces para AS 
+atual até AS do próximo salto)
+ quando o roteador de borda recebe anúncio de rota, 
+usa política de importação para aceitar/declinar.
+
+--- PAGE 122 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 122
+Seleção de rota BGP
+ roteador pode aprender sobre mais de 1 rota para 
+algum prefixo – necessário escolher uma rota;
+ Regras de Eliminação:
+1. rotas recebem, como um dos seus atributos, um valor de 
+preferência local - decisão política;
+2. no caso de rotas remanescentes, seleciona-se a rota que 
+tenha o AS-PATH mais curto;
+3. dentre as remanescentes, seleciona-se a que tenha o 
+roteador NEXT-HOP mais próximo – menor custo de 
+caminho de menor custo (roteamento batata quente);
+4. critérios adicionais – roteador usa identificadores BGP 
+para selecionar a rota.
+
+--- PAGE 123 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 123
+Mensagens BGP
+ Mensagens BGP trocadas usando TCP.
+ Mensagens BGP:
+ OPEN: abre conexão TCP com par e autentica 
+remetente
+ UPDATE: anuncia novo caminho (ou retira antigo)
+ KEEPALIVE mantém conexão viva na ausência de 
+UPDATES; também envia ACK para solicitação 
+OPEN
+ NOTIFICATION: informa erros na msg anterior; 
+também usada para fechar conexão
+
+--- PAGE 124 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 124
+Política de roteamento BGP
+ A, B, C são redes do provedor
+ X, W, Y são clientes (de redes do provedor)
+ X é dual-homed: conectada a duas redes
+ X não quer rotear a partir de B por meio de X para C
+ .. logo, X não anunciará a B uma rota para C (Política 
+Seletiva de Anúncio de Rota).
+A
+B
+C 
+W 
+X
+Y
+legenda: 
+rede do
+cliente 
+rede do 
+provedor 
+
+--- PAGE 125 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 125
+Política de roteamento BGP (2)
+ A anuncia caminho AW  para B
+ B anuncia caminho BAW para X 
+ B deve anunciar caminho BAW para C?
+ de forma alguma! B não recebe “retorno” para roteamento 
+CBAW; nem W nem C são clientes de B
+ B quer forçar C a rotear para W por meio de A
+ B quer rotear apenas para/de seus clientes!
+A
+B
+C 
+W 
+X
+Y
+legenda: 
+rede do
+cliente: 
+rede do 
+provedor 
+
+--- PAGE 126 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 126
+Por que roteamento intra 
+e inter-AS diferente? 
+política: 
+ inter-AS: admin deseja controle sobre como seu 
+tráfego é roteado, quem roteia através de sua rede 
+ intra-AS: único admin, de modo que nenhuma decisão 
+política é necessária
+escala:
+ roteamento hierárquico salva tamanho de tabela, 
+tráfego de atualização reduzido
+desempenho: 
+ intra-AS: pode focalizar no desempenho
+ inter-AS: política pode dominar sobre desempenho
+
+--- PAGE 127 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 127
+Capítulo 4: 
+Camada de rede
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast
+
+--- PAGE 128 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 128
+R1
+R2
+R3 R4
+duplicação
+de fonte
+R1
+R2
+R3 R4
+duplicação
+na rede
+criação/transmissão
+de duplicataduplicata
+duplicata
+Roteamento broadcast
+ entrega pacotes da fonte para todos os outros nós
+ duplicação de fonte é ineficaz:
+ duplicação de fonte: como a fonte determina 
+endereços de destinatário?
+
+--- PAGE 129 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 129
+Duplicação dentro da rede
+ inundação: quando o nó recebe pacote de 
+broadcast, envia cópia para todos os vizinhos
+ problemas: ciclos & tempestade de broadcast
+ inundação controlada: nó só transmite pacote se 
+não tiver transmitido algum pacote antes
+ nó registra ids de pacote já transmitidos por broadcast
+ ou repasse pelo caminho inverso (RPF): só repassa pacote 
+se chegasse no caminho mais curto entre nó e fonte
+ spanning tree
+ nenhum pacote redundante recebido por qualquer nó
+
+--- PAGE 130 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 130
+A
+B
+G
+D
+E
+c
+F
+A
+B
+G
+D
+E
+c
+F
+(a) broadcast iniciado em A (b) broadcast iniciado em D
+Spanning Tree
+ primeiro construa uma spanning tree – dado G = (N, 
+E) obtenha G'= (N, E') tal que E' é subconjunto de 
+E de modo que G' não contenha nenhum ciclo.
+ nós repassam cópias apenas ao longo da spanning 
+tree
+
+--- PAGE 131 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 131
+A
+B
+G
+D
+E
+c
+F
+1
+2
+3
+4
+5
+(a) construção passo a 
+passo da spanning tree
+A
+B
+G
+D
+E
+c
+F
+(b) spanning tree construída
+Spanning Tree: criação
+ nó central – ponto de encontro – núcleo;
+ nós transmitem em unicast mensagens de adesão à 
+àrvore endereçadas ao nó central ... 
+ … mensagem encaminhada até que chegue a um nó já 
+pertencente à spanning tree
+
+--- PAGE 132 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 132
+Roteamento multicast: 
+declaração do problema
+ serviço multicast – pacote multicast é entregue a 
+apenas um subgrupo de nós da rede:
+ Internet – pacote multicast é endereçado usando endereço 
+indireto, ou seja, um único identificador é utilizado para o 
+grupo de destinatários;
+ … uma cópia do pacote que é endereçada ao grupo usando esse 
+único identificador é entregue a todos os destinatários 
+multicast associados ao grupo em questão.
+ Dificuldade – o host tem um endereço unicast exclusivo que é 
+completamente independente do endereço do grupo multicast 
+do qual ele está participando.
+ Na Internet a solução envolve o IGMP (Internet Group 
+Management Protocol).
+
+--- PAGE 133 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 133
+Roteamento multicast: 
+declaração do problema
+ objetivo: achar uma árvore (ou árvores) conectando 
+roteadores que têm membros do grupo multicast local 
+ árvore: nem todos os caminhos entre roteadores são usados
+ baseado em fonte: árvore diferente de cada emissor aos 
+receptores
+ árvore compartilhada: mesma árvore usada por todos os 
+membros do grupo
+árvore compartilhada árvores baseadas na fonte
+
+--- PAGE 134 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 134
+Técnicas para criação de
+árvores mcast
+ árvore baseada na fonte: uma árvore por fonte
+ árvores de caminho mais curto
+ repasse pelo caminho inverso
+ árvore compartilhada pelo grupo: grupo usa uma árvore
+ spanning mínimo (Steiner) 
+ árvores baseadas no centro
+… primeiro vemos as técnicas básicas, depois protocolos 
+específicos que adotam essas técnicas
+
+--- PAGE 135 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 135
+Árvore de caminho mais curto
+ árvore de repasse multicast: árvore de rotas do 
+caminho mais curto da fonte a todos os receptores
+ algoritmo de Dijkstra
+R1
+R2
+R3
+R4
+R5
+R6 R7
+2
+1
+6
+3 4
+5
+i
+roteador com membro de
+grupo conectado
+roteador sem membro de
+grupo conectado
+enlace usado para repasse,
+i indica enlace de ordem
+acrescentado pelo algoritmo
+LEGENDAS: fonte
+
+--- PAGE 136 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 136
+Repasse de caminho 
+mais curto
+se (datagrama mcast recebido no enlace de chegada 
+no caminho mais curto de volta ao centro)
+   então inunda datagrama em todos os enlaces saindo
+   senão ignora datagrama
+ conta com conhecimento do roteador do caminho de 
+unicast mais curto dele para o remetente
+ cada roteador tem comportamento de repasse 
+simples:
+
+--- PAGE 137 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 137
+Repasse de caminho inverso:
+exemplo
+• resultado é uma SPT inversa específica da fonte
+– pode ser uma escolha ruim com enlaces 
+assimétricos
+R1
+R2
+R3
+R4
+R5
+R6 R7
+roteador com membro
+de grupo conectado
+roteador sem membro
+de grupo conectado
+datagrama será  repassado
+LEGENDAS: fonte
+datagrama não será
+repassado
+
+--- PAGE 138 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 138
+Reverse Path repasse: poda
+ árvore de repasse contém subárvores sem membros de grupo 
+de multicast
+ não precisa repassar datagramas adiante dele na subárvore
+ msgs de “poda” enviadas antes dele pelo roteador sem 
+membros de grupo adiante dele
+R1
+R2
+R3
+R4
+R5
+R6 R7
+roteador com membro
+de grupo conectado
+roteador sem membro
+de grupo conectado
+mensagem de poda
+LEGENDAS: fonte
+enlaces com repasse multicast
+P
+P
+P
+
+--- PAGE 139 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 139
+Árvore compartilhada: 
+árvore de Steiner
+ árvore de Steiner: árvore de custo mínimo 
+conectando todos os roteadores com membros de 
+grupo conectados
+ Problema sendo NP-completo
+ existe excelente heurística
+ não usada na prática:
+ complexidade computacional
+ necessário informações sobre a rede inteira
+ monolítica: executada novamente sempre que um 
+roteador precisa se juntar/sair
+
+--- PAGE 140 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 140
+Árvores baseadas no centro
+ uma árvore de distribuição compartilhada por todos
+ um roteador identificado como “centro” da árvore
+ para se juntar:
+ roteador de borda envia msg de ingresso unicast 
+endereçada ao roteador do centro
+ msg de ingresso “processada” por roteadores 
+intermediários e repassada para o centro
+ msg de ingresso ou alcança rama da árvore existente 
+para este centro ou chega no centro
+ caminho tomado pela msg de ingresso torna-se novo 
+ramo da árvore para este roteador
+
+--- PAGE 141 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 141
+Árvores baseadas no centro: 
+exemplo
+considere R6 escolhido como centro:
+R1
+R2
+R3
+R4
+R5
+R6 R7
+roteador com membro de
+grupo conectado
+roteador sem membro de
+grupo conectado
+ordem do caminho em que 
+mensagens de ingresso são 
+geradas
+LEGENDA
+2
+1
+3
+1
+
+--- PAGE 142 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 142
+Roteamento multicasting 
+da Internet: DVMRP
+ DVMRP: Distance Vector Multicast Routing 
+Protocol, RFC1075
+ inundação e poda:  repasse de caminho inverso, 
+árvore baseada na fonte
+ árvore RPF baseada nas próprias tabelas de 
+roteamento do DVMRP construídas pela comunicação 
+de roteadores DVMRP;
+ sem suposições sobre unicast subjacente
+ datagrama inicial para grupo multicast inundado para 
+toda parte por meio de RPF;
+ roteadores não querendo agrupar: enviam mensagens 
+de poda para roteadores antes dele.
+
+--- PAGE 143 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 143
+ estado soft: roteador DVMRP periodicamente (1 min.) 
+“esquece”  que os ramos são podados: 
+ dados multicast novamente fluem pelo ramo não podado
+ roteador adiante: poda novamente ou então continua a receber 
+dados
+ roteadores podem rapidamente ser enxertados à 
+árvore
+ seguindo ingresso IGMP na folha
+ alguns detalhes
+ normalmente implementado em roteadores comerciais
+ roteamento Mbone é feito usando DVMRP
+
+--- PAGE 144 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 144
+Tunelamento
+P: Como conectar “ilhas” de roteadores 
+multicast em um “mar” de roteadores unicast? 
+ datagrama multicast encapsulado dentro do datagrama 
+“normal” (não endereçado por multicast)
+ datagrama IP normal enviado por “túnel” via unicast IP regular 
+ao roteador multicast receptor
+ roteador multicast receptor encapsula para receber datagrama 
+multicast
+topologia física topologia lógica
+
+--- PAGE 145 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 145
+PIM: Protocol Independent 
+Multicast
+ não depende de qualquer algoritmo de roteamento 
+unicast específico (funciona com todos)
+ dois cenários de distribuição multicast diferentes:
+denso:
+ membros do grupo 
+densamente 
+compactados, muito 
+próximos
+ largura de banda mais 
+farta
+esparso:
+ # redes com membros do 
+grupo pequeno em relação 
+ao # total de redes
+ membros do grupo 
+“bastante dispersos”
+ largura de banda não farta
+
+--- PAGE 146 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 146
+Consequências da dicotomia 
+esparso-denso: 
+denso
+ inclusão no grupo pelos 
+roteadores assumida até 
+que roteadores se 
+juntem explicitamente
+ construção sobre árvore 
+multicast controlada por 
+dados (p. e., RPF)
+ largura de banda e 
+processamento de 
+roteador não são no 
+grupo desperdiçadores
+esparso:
+ membros não incluídos 
+até que roteadores se 
+juntem explicitamente
+ construção de árvore 
+multicast controlada pelo 
+destinatário (p. e., 
+baseada no centro)
+ largura de banda e 
+processamento de 
+roteador não são no grupo 
+conservadores
+
+--- PAGE 147 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 147
+PIM - modo denso
+RPF inundar e podar, semelhante ao DVMRP mas
+ protocolo unicast subjacente oferece informação de 
+RPF para datagrama que chega
+ fluxo adiante menos complicado (menos eficiente) que 
+DVMRP reduz dependência do algoritmo de roteamento 
+subjacente
+ tem mecanismo de protocolo para o roteador detectar 
+que é um roteador de nó folha
+
+--- PAGE 148 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 148
+PIM – modo esparso
+ enfoque baseado em centro
+ roteador envia msg de 
+ingresso ao Rendezvous 
+Point (RP)
+ roteadores intermediários 
+atualizam estado e 
+encaminham ingresso
+ após ingressar via RP, 
+roteador pode passar para 
+árvore específica da fonte
+ maior desempenho: menor 
+concentração, caminhos mais 
+curtos
+R1
+R2
+R3
+R4
+R5
+R6
+R7
+ingresso
+ingresso
+ingresso
+todos os dados
+multicast do ponto
+de rendezvous
+ponto de
+rendezvous
+
+--- PAGE 149 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 149
+remetente(s):
+ dados unicast ao RP, que 
+distribui pela árvore com 
+raiz no RP
+ RP pode estender árvore 
+multicast para antes 
+dele, até a fonte
+ RP pode enviar msg parar 
+se não houver 
+destinatários conectados
+ “ninguém está ouvindo!”
+R1
+R2
+R3
+R4
+R5
+R6
+R7
+ingresso
+ingresso
+ingresso
+todos os dados
+multicast do ponto
+de rendezvous
+ponto de
+rendezvous
+
+--- PAGE 150 ---
+© 2010 Pearson Prentice Hall. Todos os direitos reservados.slide 150
+Capítulo 4: Resumo
+ 4. 1 Introdução
+ 4.2 Redes de circuitos 
+virtuais e de datagramas
+ 4.3 O que há dentro de 
+um roteador?
+ 4.4 IP: Internet 
+Protocol
+ formato do datagrama
+ endereçamento IPv4
+ ICMP
+ IPv6
+ 4.5 Algoritmos de 
+roteamento
+ estado de enlace
+ vetor de distâncias
+ roteamento hierárquico
+ 4.6 Roteamento na 
+Internet
+ RIP
+ OSPF
+ BGP
+ 4.7 Roteamento 
+broadcast e multicast

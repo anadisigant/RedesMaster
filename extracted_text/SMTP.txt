@@ -1,0 +1,200 @@
+
+--- PAGE 1 ---
+REDES DE COMPUTADORES
+Camada de Aplicação
+Correio Eletrônico
+QUESTÃO 1 – Identifique os principais componentes do sistema de correio eletrônico
+QUESTÃO 2 -  Explique uma diferença entre os protocolos POP3 e IMAP , usados na  
+entrega final do sistema de correio eletrônico. 
+QUESTÃO  3  –  Qual  a  diferença  entre  MAIL  FROM:  em  SMTP  e  FROM:  NA  própria 
+mensagem de correio?
+QUESTÃO 4 - Suponha que Alice envie uma mensagem a Bob por meio de uma conta de  
+e-mail  da  web  (gmail)  e  que  Bob  acesse  seu  email  por  seu  servidor  de  correio  
+eletronico usando pop3. descreva como a mensagem vai do hospedeiro de Alice até o  
+hospedeiro de Bob. não se esqueça de relacionar a série de protocolos de camada de  
+aplicação usados para movimentar a mensagem entre os dois hospedeiros 
+QUESTÃO 5 – Qual é a diferença entre os modos “ler-e-guardar” e “ler-e-apagar”, que  
+podem ser usados pelo protocolo POP3? 
+QUESTÃO 6 – Quais as portas utilizadas pelo protocolo SMTP? Explique
+QUESTÃO 7 – Do ponto de vista do usuário, qual a diferença entre o modo ler-e-apagar  
+e o modo ler-e-guardar no POP3?
+QUESTÃO 8 - Qual o padrão que viabiliza a transmissão de dados não ASCII por email  
+por meio da utilização de SMTP? 
+QUESTÃO  9  -  Analise  os  comandos  a  seguir.  Qual  protocolo  poderia  gerar  esses 
+comandos?
+QUESTÃO 10 – Considere acessar seu e-mail com POP3. Suponha que você configure  
+seu cliente de correio POP para funcionar no modo ler-e-apagar. Conclua a seguinte  
+transação:
+C: list
+S: 1 498
+S: 2 912
+C: retr 1
+S: ….
+QUESTÃO 11 – Suponha que você configure seu cliente de correio POP para funcionar  
+no modo ler-e-guardar. Conclua a seguinte transação:
+C: list
+S: 1 498
+--- PAGE 2 ---
+S: 2 912
+C: retr 1
+S: ….
+QUESTÃO 12 - Mostre passo a passo como converte a string "abc" para base64
+QUESTÃO 13-  Você recebeu uma mensagem codificada em Base64. Decodifique seu  
+conteúdo. A mensagem é:
+SGVsbG8sIGJlbmRvLXZpbmRvISBBcHJlbmRhIGJhc2U2NCBlbSBwcm9ncmFtYcOnw6Nv
+Lg==
+QUESTÃO 14 - Qual das alternativas abaixo descreve corretamente o uso do encoding  
+Base64 em mensagens enviadas pelo SMTP?
+a) O Base64 é usado para criptografar o conteúdo da mensagem antes de enviá-la.
+b) O Base64 é usado para comprimir o conteúdo da mensagem, reduzindo o tamanho do 
+email.
+c)  O  Base64  é  usado  para  codificar  anexos  e  dados  não  ASCII,  permitindo  sua  
+transmissão em formato de texto.
+d) O Base64 é usado para separar os cabeçalhos da mensagem do corpo do email.
+e) O Base64 é usado para criptografar os endereços de origem e destino da mensagem
+QUESTÃO 15 -  Quantos caracteres de saída o Base64 gera ao codificar uma sequência  
+de entrada de 9 bytes?
+a) 9 caracteres
+b) 12 caracteres
+c) 16 caracteres
+d) 18 caracteres
+e) 27 caracteres
+QUESTÃO 16 - Enviar uma mensagem no Gmail e visualizar a codificação Base64
+a) Enviar uma mensagem no Gmail
+• Acesse sua conta Gmail.
+• Clique em Escrever e envie uma mensagem normal para você mesmo (ou outro  
+destinatário).
+• Inclua texto e uma imagem jpeg
+b) Visualizar a mensagem codificada em Base64 e estudar o cabeçalho SMTP
+O  Gmail  não  exibe  diretamente  o  conteúdo  Base64  na  interface  web,  pois  ele  é 
+decodificado automaticamente. Para visualizar a mensagem em Base64, você pode  
+usar a opção abaixo:
+Baixar o email em formato raw (original com Base64)
+1. Abra a mensagem enviada.
+2. Clique nos três pontinhos no canto superior direito da mensagem (mais opções).
+3. Selecione Mostrar original (Show original).
+--- PAGE 3 ---
+4. Uma nova aba abrirá mostrando o conteúdo da mensagem em formato raw,  
+incluindo cabeçalhos e corpo codificado.
+5. Procure  pelas  partes  do  corpo  com  cabeçalho  Content-Transfer-Encoding: 
+base64. O conteúdo logo abaixo estará codificado em Base64.
+Exemplo básico de decodificação Base64
+Se  você  copiar  o  texto  codificado  Base64,  pode  usar  sites  como  
+https://www.base64decode.org/ ou um script Python:
+import base64
+      
+base64_message = "Q29udGVudCBkbyBlbWFpbCBjb2RpZmljYWRvIGVtIEJhc2U2NA=="
+decoded = base64.b64decode(base64_message).decode('utf-8')
+print(decoded)
+QUESTÃO 17 - Você foi contratado para configurar uma rede interna para uma pequena  
+empresa, permitindo que seus funcionários troquem mensagens de e-mail entre si. A  
+empresa possui cinco computadores e deseja um servidor interno de e-mail que utilize  
+os protocolos SMTP (envio) e POP3 (recebimento). Utilize o Cisco Packet Tracer  para 
+projetar essa rede.
+Questões Objetivas (Múltipla Escolha)
+1 . Qual protocolo é responsável pelo envio de e-mails?
+A) POP3
+B) IMAP
+C) SMTP
+D) FTP
+2 . o protocolo POP3 é utilizado principalmente para:
+A) Enviar e-mails
+B) Receber e-mails armazenando cópia no servidor
+C) Receber e-mails baixando-os para o cliente
+D) Criptografar e-mails
+3 . Qual protocolo permite acessar e-mails diretamente no servidor, mantendo-os 
+sincronizados entre vários dispositivos?
+A) SMTP
+B) FTP
+C) POP3
+D) IMAP
+4 . Qual das portas padrão abaixo está associada ao SMTP?
+A) 25
+B) 110
+C) 143
+D) 53
+--- PAGE 4 ---
+5 . A porta padrão do POP3 é:
+A) 21
+B) 25
+C) 110
+D) 143
+6 . A porta padrão do IMAP é:
+A) 110
+B) 25
+C) 143
+D) 80
+7 . Qual protocolo normalmente remove os e-mails do servidor após o download?
+A) SMTP
+B) POP3
+C) IMAP
+D) DNS
+8 . Qual das alternativas representa uma vantagem do IMAP em relação ao POP3?
+A) Não precisa de conexão com Internet
+B) Permite sincronização entre múltiplos dispositivos
+C) Usa menos armazenamento no servidor
+D) Não utiliza autenticação
+9 . Qual protocolo é usado entre servidores de e-mail?
+A) SMTP
+B) POP3
+C) IMAP
+D) HTTP
+10. Qual das portas abaixo corresponde ao IMAP seguro (IMAPS)?
+A) 993
+B) 995
+C) 587
+D) 443
+Questões Objetivas (Múltipla Escolha)
+1 . Qual é a principal função do MIME?
+A) Criptografar e-mails
+B) Permitir o envio de arquivos multimídia em e-mails
+C) Controlar o roteamento de mensagens
+--- PAGE 5 ---
+D) Enviar e-mails entre servidores
+2 . O MIME é utilizado principalmente para permitir o envio de:
+A) Apenas texto simples
+B) Arquivos binários como imagens e vídeos
+C) Somente mensagens criptografadas
+D) Mensagens DNS
+3 . Qual protocolo é responsável pelo envio de e-mails entre servidores?
+A) POP3
+B) IMAP
+C) SMTP
+D) FTP
+4 . Qual comando SMTP é usado para iniciar a comunicação com o servidor informando 
+o domínio do cliente?
+A) MAIL FROM
+B) RCPT TO
+C) HELO
+D) DATA
+5 . Qual comando SMTP é utilizado para informar o remetente da mensagem?
+A) RCPT TO
+B) DATA
+C) MAIL FROM
+D) QUIT
+6 . Qual comando SMTP indica o destinatário da mensagem?
+A) HELO
+B) RCPT TO
+C) DATA
+D) RSET
+7 . Qual comando SMTP é utilizado para enviar o conteúdo da mensagem?
+A) DATA
+B) MAIL FROM
+C) RCPT TO
+D) QUIT
+8 . Qual das alternativas descreve corretamente a porta 25?
+A) Usada somente para criptografia
+B) Porta padrão tradicional para envio SMTP entre servidores
+C) Porta usada apenas para IMAP
+D) Porta exclusiva para POP3
+--- PAGE 6 ---
+9 . A porta 587 é normalmente utilizada para:
+A) Recebimento de e-mails
+B) Envio autenticado de e-mails por clientes
+C) Transferência de arquivos
+D) DNS
+10. Qual das opções representa corretamente uma diferença entre as portas 25 e 587?
+A) A porta 25 usa POP3
+B) A porta 587 não permite autenticação
+C) A porta 587 é usada para envio autenticado por clientes
+D) Não há diferença

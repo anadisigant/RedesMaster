@@ -1,0 +1,33 @@
+
+--- PAGE 1 ---
+Síntese do capítulo 1: Redes de Computadores
+REDES DE 
+COMPUTADORES
+Simplex
+Half-Duplex
+Full-Duplex
+INTRODUÇÃO A REDES DE COMPUTADORES
+Quanto à distribuição 
+geográfica
+Utilizam meio físico
+Apresentam formas 
+para transmitir dados classificam-se emFormas de 
+transmissão
+Meios de 
+transmissão
+Tipos de redes
+podem ser
+podem ser
+Guiados
+Não guiados
+WAN
+LAN
+MAN
+Par trançado
+Cabo coaxial
+Fibra ópticapodem ser
+podem ser Micro-onda
+Onda de rádio
+Infravermelho
+Onda de luz
+Satélites

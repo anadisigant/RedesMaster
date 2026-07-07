@@ -1,0 +1,28 @@
+
+--- PAGE 1 ---
+Síntese do capítulo 3: Protocolos de Rede
+PROTOCOLOS 
+DE REDE
+INTRODUÇÃO A REDES DE COMPUTADORES
+Compõem modelo OSI Dividido em 
+Camadas
+Sessão
+Apresentação
+Transporte
+Aplicação
+Rede
+Enlace
+Físico
+Utiliza Protocolo
+TCP/IP
+Aplicação
+Rede
+Interface de Rede
+Transporte
+dividido em 
+camadas
+permite 
+endereçamento IP
+Classe A Classe B Classe C
+faixa de 
+endereçamentos

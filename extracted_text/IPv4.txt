@@ -1,0 +1,825 @@
+
+--- PAGE 1 ---
+1. Endereçamento Classful (Classes A, B e C)
+No início do IPv4, o endereçamento era fixo por classes.
+Classes principais:
+• Classe A → redes muito grandes
+• Classe B → redes médias
+• Classe C → redes pequenas
+Exemplo:
+Classe Faixa Máscara padrão
+A 1.0.0.0 – 126.0.0.0 /8
+B 128.0.0.0 – 191.255.0.0 /16
+C 192.0.0.0 – 223.0.0.0 /24
+Problema do Classfull
+O grande problema era o desperdício de IPs:
+• Empresas pequenas recebiam Classe B → milhares de IPs sobrando
+• Classe C era pequena demais para muitos casos
+• Não havia flexibilidade
+2. Subnetting (Subnetting clássico)
+Para resolver o desperdício dentro das redes, surgiu o subnetting.
+Ele permitiu:
+• dividir uma rede grande em redes menores
+• “emprestar bits” da parte de host
+Melhorias do subnetting
+• melhor organização interna da rede
+• redução de broadcast
+--- PAGE 2 ---
+• mais controle administrativo
+Limitação
+Mesmo com subnetting:
+• todas as sub-redes tinham o mesmo tamanho
+• ainda havia desperdício quando redes tinham necessidades diferentes
+Sub-redes IPv4
+O que é Sub-rede no IPv4?
+Uma sub-rede (subnetwork) é uma divisão lógica de uma rede IP maior 
+em redes menores.
+No IPv4, o subnetting é utilizado para:
+• organizar melhor a rede 
+• reduzir tráfego de broadcast 
+• melhorar desempenho 
+• facilitar administração 
+• aumentar segurança 
+• aproveitar melhor os endereços IP
+Criando 4 Sub-redes a partir do endereço IPv4 200.223.226.0/24
+Dividir a rede 200.223.226.0/24 em 4 sub-redes iguais usando subnetting.
+1. Entendendo a Rede Original
+O endereço dado é:
+• Rede: 200.223.226.0
+• Máscara CIDR: /24
+A máscara /24 significa:
+255.255.255.0
+Isso quer dizer que:
+--- PAGE 3 ---
+• 24 bits pertencem à rede
+• 8 bits pertencem aos hosts
+Quantidade de hosts da rede original:
+28-2=254
+2. Quantas Sub-redes Precisamos?
+Desejamos: 4 sub-redes
+Precisamos emprestar 2 bits da área de hosts.
+3. Nova Máscara
+A máscara original era:
+• /24
+Emprestando 2 bits:
+/24+2=/26
+Nova máscara:
+255.255.255.192
+4. Quantidade de Hosts por Sub-rede
+Agora sobraram 6 bits para hosts
+Então: 26-2=62
+Cada sub-rede terá:
+• 62 hosts válidos
+5. 4 Sub-redes
+--- PAGE 4 ---
+Sub-
+rede Endereço de Rede Primeiro Host Último Host Broadcast
+1 200.223.226.0/26 200.223.226.1 200.223.226.62 200.223.226.63
+2 200.223.226.64/26 200.223.226.65 200.223.226.126 200.223.226.127
+3 200.223.226.128/26 200.223.226.129 200.223.226.190 200.223.226.191
+4 200.223.226.192/26 200.223.226.193 200.223.226.254 200.223.226.255
+6. Representação Binária
+Máscara /26:
+11111111.11111111.11111111.11000000
+Último octeto:
+192 = 11000000
+Os dois primeiros bits do último octeto identificam as sub-redes:
+Sub-rede Bits
+0 00
+64 01
+128 10
+192 11
+Exercícios Propostos
+Exercício 1
+Divida a rede:
+192.168.10.0/24
+em 8 sub-redes.
+Exercício 2
+Determine:
+• endereço de rede
+• broadcast
+• primeiro host
+--- PAGE 5 ---
+• último host
+da sub-rede:
+192.168.1.128/26
+3. CIDR (Classless Inter-Domain Routing)
+O CIDR eliminou o conceito de classes fixas.
+Benefícios do CIDR:
+• elimina classes A, B e C
+• permite prefixos flexíveis (/13, /21, /27 etc.)
+• melhora o roteamento na Internet
+• reduz tamanho das tabelas de roteamento
+Estudo de uma rede CIDR /27
+Vamos analisar uma rede completa usando: 192.168.10.0/27
+1. O que significa /27?
+/27
+• 27 bits são de rede
+• 5 bits são de host
+2. Máscara de sub-rede
+255.255.255.224
+3. Tamanho da sub-rede
+256-224=32
+Cada sub-rede possui 32 endereços IP
+4. Quantidade de hosts válidos
+2^5-2=30
+30 hosts utilizáveis
+--- PAGE 6 ---
+5. Estudo completo da rede 192.168.10.0/27
+Endereço da rede
+192.168.10.0
+Faixa de IPs válidos
+192.168.10.1  até  192.168.10.30
+Broadcast
+192.168.10.31
+Máscara de sub-rede
+255.255.255.224
+Resumo 
+Uma rede CIDR /27:
+• possui 32 endereços no total
+• permite 30 hosts utilizáveis
+• usa máscara 255.255.255.224
+• é ideal para redes pequenas (setores, laboratórios, IoT)
+4. VLSM (Variable Length Subnet Mask)
+O VLSM é uma evolução do subnetting dentro do CIDR.
+Ele permite:
+• sub-redes de tamanhos diferentes na mesma rede
+Vantagem do VLSM
+• máximo aproveitamento de IPs
+• redes sob medida
+• menos desperdício
+O que é VLSM?
+VLSM significa: Variable Length Subnet Mask
+--- PAGE 7 ---
+Em português: Máscara de Sub-rede de Tamanho 
+Variável
+É uma técnica utilizada no IPv4 para criar sub-
+redes com tamanhos diferentes dentro da mesma  
+rede.
+Objetivo do VLSM
+O principal objetivo do VLSM é:
+• evitar desperdício de endereços IP;
+• permitir melhor aproveitamento da rede;
+• criar sub-redes de acordo com a necessidade de 
+hosts;
+Como Funciona?
+No VLSM:
+• cada sub-rede pode ter uma máscara diferente
+• redes maiores recebem mais IPs
+• redes menores recebem menos IPs
+Utilizando VLSM na rede 200.223.226.0/24
+Vamos dividir a rede:
+200.223.226.0/24
+para criar:
+• 1 rede para a matriz com 100 máquinas
+• 2 redes para filiais, cada uma com 50 máquinas
+--- PAGE 8 ---
+Agora o cenário é possível utilizando VLSM.
+1. Relembrando o que é VLSM
+VLSM (Variable Length Subnet Mask) permite criar  
+sub-redes  de  tamanhos  diferentes,  evitando  
+desperdício de IPs.
+A ideia principal é:
+• criar primeiro a maior rede
+• depois utilizar os blocos restantes
+2. Ordenando as Redes
+Ordenamos da maior para a menor:
+Local Hosts necessários
+Matriz 100
+Filial 1 50
+Filial 2 50
+3. Calculando a Rede da Matriz
+Precisamos de pelo menos 100 hosts.
+Testando:
+2^6-2=62
+Não serve.
+Então:
+2^7-2=126
+Serve.
+--- PAGE 9 ---
+Precisamos de:
+• 7 bits para hosts
+• sobra 25 bits para rede
+Máscara:
+/25
+Máscara decimal:
+255.255.255.128
+4. Alocando a Rede da Matriz
+Primeiro bloco disponível:
+Item Valor
+Rede 200.223.226.0/25
+Primeiro host 200.223.226.1
+Último host 200.223.226.126
+Broadcast 200.223.226.127
+Hosts válidos 126
+5. Calculando as Redes das Filiais
+Cada filial precisa de 50 hosts.
+Testando:
+2^5-2=30
+Não serve.
+Então:
+2^6-2=62
+--- PAGE 10 ---
+Serve.
+Precisamos de:
+• 6 bits para hosts
+• máscara /26
+Máscara decimal:
+255.255.255.192
+6. Alocando a Filial 1
+Após a matriz, o próximo bloco livre começa em:
+200.223.226.128
+Rede da Filial 1:
+Item Valor
+Rede 200.223.226.128/26
+Primeiro host 200.223.226.129
+Último host 200.223.226.190
+Broadcast 200.223.226.191
+Hosts válidos 62
+7. Alocando a Filial 2
+Próximo bloco livre:
+200.223.226.192
+Rede da Filial 2:
+Item Valor
+Rede 200.223.226.192/26
+Primeiro host 200.223.226.193
+Último host 200.223.226.254
+--- PAGE 11 ---
+Item Valor
+Broadcast 200.223.226.255
+Hosts válidos 62
+8. Resultado Final do VLSM
+Local Rede Máscara Hosts 
+válidos
+Matriz 200.223.226.0/25 255.255.255.128 126
+Filial 1 200.223.226.128/26 255.255.255.192 62
+Filial 2 200.223.226.192/26 255.255.255.192 62
+Exercício 1
+Usando:
+192.168.10.0/24
+crie redes para:
+• 120 hosts
+• 60 hosts
+• 30 hosts
+Exercício 2
+Utilize VLSM para dividir:
+172.16.0.0/24
+em:
+• 80 hosts
+• 40 hosts
+• 20 hosts
+--- PAGE 12 ---
+• 10 hosts
+12. Regra de Ouro do VLSM
+Sempre:
+1.Ordene da maior rede para a menor
+2.Aloque a maior primeiro
+3.Use o menor bloco possível
+4.Continue com o próximo endereço disponível
+--- PAGE 14 ---
+Endereçamento IPv6
+O IPv6 (Internet Protocol version 6) foi criado 
+para substituir o IPv4, principalmente por causa 
+da falta de endereços disponíveis no IPv4.
+Enquanto o IPv4 usa 32 bits, o IPv6 usa 128 bits, 
+permitindo uma quantidade gigantesca de endereços.
+1. Estrutura do Endereço IPv6
+Um endereço IPv6 possui:
+• 128 bits
+• Representação hexadecimal
+• 8 grupos de 16 bits
+• Cada grupo separado por :
+Exemplo:
+2001:0db8:85a3:0000:0000:8a2e:0370:7334
+Cada bloco possui 4 dígitos hexadecimais.
+2. Sistema Hexadecimal no IPv6
+O IPv6 utiliza hexadecimal:
+Decimal Hexadecimal
+10 A
+11 B
+12 C
+13 D
+14 E
+15 F
+--- PAGE 15 ---
+Assim:
+000A
+00FF
+ABCD
+são valores válidos.
+3. Simplificação de Endereços IPv6
+Os endereços IPv6 podem ser simplificados.
+Regra 1 — Remover zeros à esquerda
+2001:0db8:0000:0000:0000:ff00:0042:8329
+fica:
+2001:db8:0:0:0:ff00:42:8329
+Regra 2 — Substituir sequências de zeros por ::
+2001:db8:0:0:0:ff00:42:8329
+fica:
+2001:db8::ff00:42:8329
+Importante
+O :: só pode aparecer uma vez no endereço.
+Errado:
+2001::db8::1
+Correto:
+--- PAGE 16 ---
+2001:db8::1
+4. Prefixo IPv6
+No IPv6 usamos prefixo CIDR, parecido com IPv4.
+Exemplo:
+2001:db8:abcd:0012::0/64
+O /64 indica que:
+• primeiros 64 bits = rede
+• últimos 64 bits = host/interface
+5. Divisão do Endereço IPv6
+Normalmente:
+Parte Tamanho
+Prefixo da rede 64 bits
+Interface ID 64 bits
+6. Tipos de Endereços IPv6
+A) Unicast
+Identifica uma única interface.
+Pacote enviado para um único destino.
+Exemplo:
+2001:db8::1
+--- PAGE 17 ---
+B) Multicast
+Pacote enviado para vários hosts.
+Começa com:
+FF00::/8
+Exemplo:
+FF02::1
+Todos os hosts da rede local.
+C) Anycast
+Mesmo endereço configurado em vários dispositivos.
+O pacote é entregue ao dispositivo mais próximo.
+Muito usado em:
+• DNS
+• CDN
+• balanceamento
+7. Principais Tipos de Endereços IPv6
+Link-Local
+Usado apenas na rede local.
+Prefixo:
+FE80::/10
+Exemplo:
+FE80::1
+--- PAGE 18 ---
+Características:
+• não roteável na Internet
+• criado automaticamente
+• usado pelo Neighbor Discovery
+Global Unicast
+Equivalente ao IPv4 público.
+Prefixo:
+2000::/3
+Exemplo:
+2001:db8::100
+Roteável na Internet.
+Unique Local Address (ULA)
+Semelhante aos IPs privados do IPv4.
+Prefixo:
+FC00::/7
+Mais comum:
+FD00::/8
+Exemplo:
+FD12:3456:789A::1
+Usado em redes internas.
+--- PAGE 19 ---
+8. Endereço Loopback
+Equivalente ao:
+127.0.0.1
+do IPv4.
+IPv6:
+::1
+9. Endereço Não Especificado
+Representa ausência de endereço.
+::
+Equivale a:
+0.0.0.0
+no IPv4.
+10. Comparação IPv4 x IPv6
+Característica IPv4 IPv6
+Tamanho 32 bits 128 bits
+Notação Decimal Hexadecimal
+Exemplo 192.168.0.1 2001:db8::1
+Broadcast Sim Não
+NAT Muito usado Quase desnecessário
+Configuração automática Limitada Forte suporte
+11. Exemplos de Endereços IPv6
+Tipo Exemplo
+Global 2001:db8::1
+Link-local fe80::1
+Multicast ff02::1
+Loopback ::1
+--- PAGE 20 ---
+Tipo Exemplo
+ULA fd00::10
+12. Exemplo de Interpretação
+Endereço:
+2001:0db8:abcd:0012:0000:0000:0000:0001/64
+Forma simplificada:
+2001:db8:abcd:12::1/64
+Rede:
+2001:db8:abcd:12::/64
+Host/interface:
+::1
+Sub-redes no IPv6
+É possível criar sub-redes no IPv6.
+1. Como funciona o subnetting no IPv6
+No IPv4 normalmente dividimos:
+• rede
+• sub-rede
+• host
+No IPv6 ocorre algo semelhante.
+--- PAGE 21 ---
+Um endereço IPv6 possui 128 bits:
+Parte Tamanho comum
+Prefixo global 48 bits
+Sub-rede 16 bits
+Interface ID 64 bits
+Modelo comum:
+2001:db8:abcd:0012::/64
+Onde:
+Parte Valor
+Prefixo global 2001:db8:abcd
+Sub-rede 0012
+Host/interface ::
+2. Prefixo /64
+O padrão mais usado no IPv6 é:
+/64
+Isso significa:
+• primeiros 64 bits → rede
+• últimos 64 bits → host/interface
+O IPv6 foi desenhado para que praticamente toda 
+LAN tenha um /64.
+3. Exemplo de criação de sub-redes
+Imagine que uma empresa recebeu:
+2001:db8:abcd::/48
+--- PAGE 22 ---
+Ela possui:
+• 48 bits de rede
+• pode usar mais 16 bits para sub-redes
+4. Criando sub-redes
+Rede principal
+2001:db8:abcd::/48
+Sub-redes possíveis
+Sub-rede Prefixo
+Rede 1 2001:db8:abcd:0001::/64
+Rede 2 2001:db8:abcd:0002::/64
+Rede 3 2001:db8:abcd:0003::/64
+Rede 10 2001:db8:abcd:000A::/64
+5. Quantidade de sub-redes
+Com um /48:
+• temos 16 bits para subnetting
+• então:
+216 = 65536
+São possíveis 65.536 sub-redes /64.
+6. Estrutura visual
+Prefixo /48 recebido
+2001:db8:abcd::/48
+--- PAGE 23 ---
+Divisão
+Parte Bits
+Prefixo global 48
+Sub-rede 16
+Host 64
+Representação
+2001:db8:abcd:SUBREDE:HOST:HOST:HOST:HOST
+7. Exemplo completo
+Sub-rede de TI
+2001:db8:abcd:1::/64
+Hosts:
+2001:db8:abcd:1::10
+2001:db8:abcd:1::20
+Sub-rede Financeiro
+2001:db8:abcd:2::/64
+Sub-rede RH
+2001:db8:abcd:3::/64
+--- PAGE 24 ---
+Cabeçalho IPv6 e Cabeçalhos de Extensão
+O IPv6 possui um cabeçalho mais simples e 
+eficiente que o IPv4.
+No IPv4:
+• o cabeçalho possui tamanho variável
+• existem muitos campos opcionais
+No IPv6:
+• o cabeçalho principal é fixo
+• funcionalidades extras foram movidas para 
+cabeçalhos de extensão
+Isso melhora:
+• desempenho
+• roteamento
+• processamento dos pacotes
+1. Estrutura do Cabeçalho IPv6
+O cabeçalho IPv6 possui tamanho fixo de:
+40 bytes
+--- PAGE 25 ---
+2. Formato do Cabeçalho IPv6
+3. Campos do Cabeçalho IPv6
+A) Version
+Indica a versão do protocolo.
+Valor:
+6
+Tamanho:
+4 bits
+B) Traffic Class
+Semelhante ao campo ToS do IPv4.
+Usado para:
+• QoS
+
+--- PAGE 26 ---
+• prioridade
+• controle de congestionamento
+Tamanho:
+8 bits
+C) Flow Label
+Permite identificar fluxos de tráfego.
+Muito usado para:
+• aplicações multimídia
+• VoIP
+• streaming
+Tamanho:
+20 bits
+D) Payload Length
+Indica o tamanho da carga útil.
+Não inclui o cabeçalho principal.
+Tamanho:
+16 bits
+E) Next Header
+Campo extremamente importante.
+Indica:
+--- PAGE 27 ---
+• protocolo da camada superior
+OU
+• próximo cabeçalho de extensão
+Equivale ao campo Protocol do IPv4.
+Exemplos:
+Valor Significado
+6 TCP
+17 UDP
+58 ICMPv6
+0 Hop-by-Hop
+43 Routing Header
+44 Fragment Header
+F) Hop Limit
+Equivale ao TTL do IPv4.
+Cada roteador decrementa o valor.
+Quando chega em zero:
+• pacote descartado
+Tamanho:
+8 bits
+G) Source Address
+Endereço IPv6 de origem.
+Tamanho:
+128 bits
+--- PAGE 28 ---
+H) Destination Address
+Endereço IPv6 de destino.
+Também possui:
+128 bits
+4. Simplificação do IPv6 em relação ao IPv4
+Campos removidos:
+• checksum
+• fragmentação no roteador
+• opções no cabeçalho principal
+Resultado:
+• roteamento mais rápido
+• processamento mais eficiente
+5. Cabeçalhos de Extensão
+O IPv6 utiliza cabeçalhos adicionais chamados:
+Extension Headers
+Eles ficam:
+• entre o cabeçalho IPv6
+• e o protocolo da camada superior
+6. Cadeia de Cabeçalhos
+Exemplo:
+IPv6 Header -> Routing Header -> Fragment Header -> TCP
+--- PAGE 29 ---
+O campo:
+• Next Header
+• aponta para o próximo cabeçalho
+7. Principais Cabeçalhos de Extensão
+Cabeçalho Função
+Hop-by-Hop opções processadas por todos os roteadores
+Routing roteamento especial
+Fragment fragmentação
+Destination Options opções do destino
+Authentication Header IPSec autenticação
+ESP criptografia IPSec
+8. Hop-by-Hop Options Header
+Tipo:
+0
+Processado por:
+• todos os roteadores no caminho
+Usado para:
+• QoS
+• jumbograms
+• controle especial
+9. Routing Header
+Tipo:
+43
+--- PAGE 30 ---
+Permite:
+• definir rotas específicas
+• semelhante ao source routing
+10. Fragment Header
+Tipo:
+44
+No IPv6:
+• roteadores NÃO fragmentam pacotes
+• apenas o host origem fragmenta
+Isso melhora desempenho.
+11. Fragmentação no IPv6
+No IPv4:
+• roteadores podiam fragmentar
+No IPv6:
+• origem descobre MTU usando PMTU Discovery
+Se necessário:
+• origem envia fragmentos
+12. Destination Options Header
+Usado para:
+• opções lidas apenas pelo destino
+Tipo:
+--- PAGE 31 ---
+60
+13. Authentication Header (AH)
+Relacionado ao IPSec.
+Fornece:
+• autenticação
+• integridade
+14. Encapsulating Security Payload (ESP)
+Também do IPSec.
+Fornece:
+• criptografia
+• confidencialidade
+15. Ordem dos Cabeçalhos de Extensão
+A RFC recomenda:
+IPv6 Header
+Hop-by-Hop
+Destination Options
+Routing
+Fragment
+Authentication
+ESP
+Destination Options
+--- PAGE 32 ---
+TCP/UDP/ICMPv6
+16. Exemplo Completo
+Pacote IPv6 com TCP
+IPv6 Header -> TCP -> Dados
+Pacote com fragmentação
+IPv6 Header -> Fragment Header -> UDP -> Dados
+Pacote com IPSec
+IPv6 Header -> AH -> ESP -> TCP
+17. Comparação IPv4 x IPv6
+Característica IPv4 IPv6
+Cabeçalho variável fixo
+Tamanho 20–60 bytes 40 bytes
+Checksum possui removido
+Opções no cabeçalho principal cabeçalhos de extensão
+Fragmentação roteadores podem fazer apenas origem
+IPSec opcional suporte integrado
+18. Vantagens do Cabeçalho IPv6
+• menor processamento
+• roteamento mais rápido
+• mais eficiente
+• modularidade
+• melhor suporte a QoS
+• melhor suporte a segurança
+--- PAGE 33 ---
+Protocolos de Roteamento
+Os protocolos de roteamento permitem que 
+roteadores:
+• descubram redes
+• escolham melhores caminhos
+• atualizem tabelas de roteamento 
+automaticamente
+Sem eles:
+• seria necessário configurar rotas manualmente.
+1. Objetivo dos Protocolos de Roteamento
+Os protocolos ajudam os roteadores a responder:
+Qual o melhor caminho até a rede de destino?
+2. Principais Tipos de Protocolos
+Existem dois modelos clássicos:
+Tipo Ideia principal
+Vetor de Distância envia distância e direção
+Estado de Enlace divulga estado da rede
+3. Vetor de Distância (Distance Vector)
+No modelo vetor de distância:
+• cada roteador conhece apenas seus vizinhos
+• envia periodicamente sua tabela de rotas
+--- PAGE 34 ---
+• informa:
+• distância
+• direção
+4. Ideia Básica do Vetor de Distância
+Cada roteador pergunta aos vizinhos:
+Quais redes você conhece?
+5. Métrica
+A decisão normalmente usa:
+• número de saltos (hops)
+Quanto menor:
+• melhor a rota.
+6. Funcionamento do Vetor de Distância
+Exemplo:
+A ----- B ----- C
+• B informa a A que conhece C
+• A aprende rota para C via B
+7. Atualizações Periódicas
+Os roteadores:
+• enviam tabelas completas periodicamente
+• mesmo sem mudanças
+Isso gera:
+--- PAGE 35 ---
+• tráfego extra
+• convergência mais lenta
+8. Algoritmo Bellman-Ford
+Os protocolos vetor de distância usam:
+D(x,y)= min_v{c(x,v)+D(v,y)}
+Ideia:
+• escolher o menor custo através dos vizinhos.
+ Exemplo: RIP
+O principal protocolo vetor de distância é:
+RIP
+Características:
+• usa hops
+• máximo: 15 hops
+• convergência lenta
+• simples
+12. Atualização RIP
+O RIP envia atualizações:
+• a cada 30 segundos
+Usando:
+• UDP porta 520
+--- PAGE 36 ---
+13. Limitação do RIP
+Se a rota tiver:
+16 hops
+Ela é considerada:
+• inalcançável.
+14. Estado de Enlace (Link State)
+No modelo estado de enlace:
+• cada roteador constrói um mapa completo da 
+rede
+15. Ideia Básica
+Cada roteador:
+• descobre vizinhos
+• mede custo dos enlaces
+• divulga informações para todos
+16. Banco de Dados Topológico
+Todos os roteadores mantêm:
+• mesma visão da topologia
+17. Flooding
+As informações são espalhadas pela rede usando:
+Flooding
+--- PAGE 37 ---
+18. Algoritmo de Dijkstra
+Protocolos estado de enlace usam:
+Shortest Path First (SPF)
+Também chamado:
+• algoritmo de Dijkstra
+19. Funcionamento do Dijkstra
+O roteador calcula:
+• menor custo até todos os destinos
+A partir do mapa completo da rede.
+Exemplo: OSPF
+Principal protocolo estado de enlace:
+OSPF
+Características:
+• rápido
+• eficiente
+• suporta grandes redes
+22. Características do OSPF
+Característica Valor
+Algoritmo Dijkstra
+Transporte IP protocolo 89
+Métrica custo
+Convergência rápida
+--- PAGE 38 ---
+23. Métrica do OSPF
+Baseada normalmente em:
+largura de banda
+Quanto maior a banda:
+• menor o custo.
+24. Áreas no OSPF
+O OSPF suporta:
+• roteamento hierárquico
+Usa:
+• áreas
+Principal: Area 0
+Comparação Vetor de Distância x Estado de Enlace
+Característica Vetor de Distância Estado de Enlace
+Conhecimento da rede parcial completo
+Atualização periódica por evento
+Convergência lenta rápida
+Complexidade baixa maior
+Uso de CPU menor maior
+Escalabilidade limitada alta
+RIP x OSPF
+Característica RIP OSPF
+Tipo vetor de distância estado de enlace
+Algoritmo Bellman-Ford Dijkstra
+Métrica hops custo
+Escalabilidade pequena grande
+Convergência lenta rápida

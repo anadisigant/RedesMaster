@@ -1,0 +1,461 @@
+
+--- PAGE 1 ---
+LISTA DE EXERCÍCIOS 
+QUESTÃO 1 –  Quais são as camadas do OSI que não estão na pilha TCP/IP?  
+                                          
+QUESTÃO 2 – Considere dois roteadores conectados diretamente através de um link de  
+5000 km, velocidade de propagação 2,5 x 10 8   m/s e velocidade de transmissão de 1  
+Mbps. Quanto tempo leva para mover um pacote de 1000 bytes de um roteador para o  
+outro? 
+QUESTÃO 3 – Quanto tempo leva para transmitir um arquivo de 843.435 bits de um host  
+A a um host B em uma rede de comutação de circuitos com TDM, sabendo que: todos  
+os enlaces possuem taxa de 2 Mbps, são 20 slots por quadro TDM e são necessários  
+1,1 seg para estabelecer um circuito. 
+QUESTÃO 4 – Nos problemas seguintes enviaremos um arquivo MP3 de 30 Mbit de um  
+hospedeiro fonte até um hospedeiro de destino. Todos os enlaces no percurso entre  
+fonte e destino têm uma taxa de transmissão de 10 Mbps. Suponha que a velocidade de 
+propagação é 2 * 108 metros/seg, e que a distância entre fonte e destino é 10.000 km. 
+a) Suponha inicialmente que há apenas um enlace entre fonte e destino. Suponha  
+também que é usada comutação de mensagem e que a mensagem consiste no arquivo  
+MP3 inteiro. O atraso de transmissão é? 
+b) O atraso fim-a-fim é? 
+c) Quantos bits a fonte terá enviado quando o primeiro bit chegar no seu destino?
+d)  Agora  suponha  que  há  dois  enlaces  entre  fonte  e  destino  com  um  roteador 
+conectando os dois enlaces. Cada enlace tem 5.000 km de comprimento. Suponha  
+novamente que o arquivo MP3 seja enviado como uma mensagem. Suponha que não há  
+congestionamento, de modo que a mensagem é transmitida ao segundo enlace assim  
+que o roteador receber a mensagem inteira. O atraso fim a fim é?
+e) Suponha agora que há apenas um enlace entre fonte e destino e que há 10 canais  
+TDM no enlace. O arquivo MP3 é enviado por um dos canais. O atraso fim a fim é?
+QUESTÃO  5  –  A  telefonia  por  Internet  roda  tipicamente  sobre  qual  protocolo  de 
+transporte? 
+QUESTÃO 6 - Cite as camadas do modelo de referência OSI. O roteador implementa até  
+qual camada do modelo de referência OSI? 
+QUESTÃO 7- Determine qual das camadas do modelo OSI trata de cada uma das tarefas 
+a seguir:
+a. Dividir o fluxo de bits transmitidos em quadros.
+b. Definir a rota que será utilizada na sub-rede.
+--- PAGE 2 ---
+QUESTÃO 8 -  Uma imagem tem 1024 X 768 pixels com 3 bytes/pixel. Suponha que a  
+imagem  seja  descompactada.  Quanto  tempo  é  necessário  para  transmiti-la  pela 
+Ethernet de 100 Mbps? 
+QUESTÃO  9  -  O  modelo  de  referência  OSI  da  ISO  é  dividido  em  sete  camadas 
+funcionais,  todas  elas  importantes  para  a  interconexão  de  sistemas.  Uma  dessas 
+camadas  define  a  sintaxe  e  a  semântica  das  informações  transmitidas,  tornando 
+possível a comunicação entre equipamentos que utilizam diferentes representações de  
+dados. Qual camada tem essa função? 
+        
+QUESTÃO 10 - Quanto tempo leva para enviar um arquivo de 32 milhões de bits do host 
+A para o host B numa rede de comutação de circuitos em que os enlaces são de 10  
+Mbps,  cada  enlace  usa  TDM  com  100  slots  e  leva-se  250  microssegundos  para 
+estabelecer um circuito fim a fim?
+QUESTÃO 11 - Os modelos de referência TCP/IP e OSI possuem camadas, cabendo a  
+cada uma delas uma função bem definida. A camada Aplicação do modelo TCP/IP  
+corresponde a qual(is) camada(s) do modelo OSI? 
+QUESTÃO  12  -  O  IP  e  o  TCP  são  protocolos  de  amplo  uso  na  internet.  Eles 
+desempenham funções distintas que, combinadas, viabilizam a troca de informações  
+entre  máquinas  e  aplicações.  De  acordo  com  o  modelo  OSI  (Open  Systems 
+Interconnection) de sete camadas, o IP e o TCP são, respectivamente, protocolos de  
+quais camadas?
+QUESTÃO 13 - Considerando o modelo TCP/IP de cinco camadas, o DNS é um protocolo  
+da camada?
+QUESTÃO 14 - Qual o comando é usado para determinar o caminho que os datagramas  
+IP seguem do HOST LOCAL até o HOST REMOTO? 
+QUESTÃO 15 - Em que tipo de comutação os recursos precisam ser reservados durante  
+a  fase  de  estabelecimento  de  conexão;  além  disso,  os  recursos  permanecem 
+dedicados  por  toda  a  duração  da  fase  de  transferência  de  dados  até  a  fase  de 
+encerramento da conexão?
+QUESTÃO 16 - Qual é o número de conexões necessárias, ao considerar uma topologia  
+de rede em malha para N máquinas?
+QUESTÃO 17 -  A taxa de transmissão HFC é dedicada ou compartilhada entre os  
+usuários?
+QUESTÃO 18 - Cite 4 tecnologias de acesso a Internet.
+QUESTÃO 19 - Como podemos classificar os meios de transmissão? 
+--- PAGE 3 ---
+QUESTÃO 20 – Quais os tipos de fibra óptica? Quais os tipos de par trançado? Q uais os 
+tipos de cabos coaxiais?
+QUESTÃO 21 – Qual o tipo de conector é utilizado no par trançado? Qual tipo de  
+contector é utilizado no cabo coaxial?
+QUESTÃO 22 –  Utilizando comutação de mensagem, uma mensagem de 7,5Mbits é  
+enviada  do  computador  origem  (esquerda)  e  para  o  computador  destino  (direita). 
+Calcule o atraso de transmissão. Considere que cada enlace tem a taxa de transmissão 
+de 1,5Mbps.
+                           
+QUESTÃO 23 – Utilizando comutação de pacotes, uma mensagem de 7,5Mbits é enviada 
+do computador origem (esquerda) e para o computador destino (direita). O tamanho do  
+pacote é 1,5Kbits. Calcule o atraso de transmissão. Considere que cada enlace tem a  
+taxa de transmissão de 1,5Mbps. Dê a resposta em milisegundos.
+                           
+Observação: Milissegundo (ms) é uma unidade de medida de tempo.
+Corresponde a 10-3 segundos, ou seja, um milésimo de segundo 
+QUESTÃO 24 – Cite o nome das camadas dos itens 1 até 15 conforme o livro Kurose &  
+Ross
+
+--- PAGE 4 ---
+                                                                                  
+QUESTÃO  25  -   Quanto  a  extensão  geográfica,  uma  rede  formada  via  protocolo 
+bluetooth entre um telefone celular e o sistema viva voz veicular, pode-se classificar  
+como?
+QUESTÃO  26  - Vários  são  os  protocolos  usados  na  troca  de  informações  entre 
+máquinas na Internet. São exemplos os protocolos SSH, UDP e IP . Com base nessa  
+afirmação, quais são, respectivamente, as camadas da Arquitetura TCP/IP em que se  
+enquadram os protocolos exemplificados?
+QUESTÃO  27  -  O  IP  e  o  TCP  são  protocolos  de  amplo  uso  na  internet.  Eles 
+desempenham funções distintas que, combinadas, viabilizam a troca de informações  
+entre  máquinas  e  aplicações.  De  acordo  com  o  modelo  OSI  (Open  Systems 
+Interconnection) de sete camadas, o IP e o TCP são, respectivamente, protocolos de  
+quais camadas?
+QUESTÃO 28 - Considerando o modelo TCP/IP de cinco camadas, o DNS é um protocolo  
+da camada ?
+QUESTÃO 29 - Qual o comando é usado para determinar o caminho que os datagramas  
+IP seguem do <HOST LOCAL> até um <HOST REMOTO>?
+QUESTÃO 30 - No modelo de referência ISO OSI, quais as camadas que formam a sub-
+rede de comunicação?
+QUESTÃO 31 -  Deseja-se enviar  um  arquivo de 640 Kbits  do hospedeiro A para o  
+hospedeiro B por uma rede de comutação de circuitos. Suponha que todos os enlaces  
+usem TDM de 24 compartimentos e tenham uma taxa de 1,536 Mbps. Suponha também  
+que um circuito fim a fim leva 500 milissegundos para ser ativado antes que A possa  
+começar a transmitir o arquivo. Em quanto tempo o arquivo será enviado?
+QUESTÃO  32  -  (POSCOMP  2012)  O  modelo  de  referência  OSI  (Open  Systems 
+Interconnection)  é  composto  por  7  camadas.  Sobre  as  funções  destas  camadas, 
+assinale a alternativa correta. 
+a) A camada física delimita quadros e realiza controle de fluxo antes de entregar os  
+dados para as camadas superiores. 
+b) A camada de transporte define a rota de menor custo que os pacotes percorrerão no  
+percurso entre o transmissor e o receptor. 
+c)  A  camada  de  apresentação  realiza  conversıes  para  permitir  a  interação  entre 
+computadores com diferentes representações de dados.
+d) A camada de sessão É responsável pelo endereçamento dos pacotes que serão  
+transmitidos durante a vigência de uma sessão.
+e) Na hierarquia de camadas do modelo OSI, a camada de rede se posiciona entre a  
+camada de transporte e a camada de sessão. 
+--- PAGE 5 ---
+QUESTÃO 33 - No Modelo de Referência OSI/ISO, cada uma das sete camadas executa  
+uma  função  específica,  como  a  física  que  é  responsável  pelas  especificações  de 
+hardware. As tarefas  de conversão entre caracteres  ASCII e EBCDIC, criptografia,  
+compressão e descompressão de dados, são funções executadas pela camada?
+QUESTÃO  34  -  Cite  entidades  responsáveis  por  criar  padrões  em  Redes  de 
+Computadores e na Internet
+MARQUE A ALTERNATIVA CORRETA:
+1. Com relação à comutação de circuitos, qual das seguintes afirmações é verdadeira?
+   a) A comutação de circuitos requer a alocação dinâmica de recursos a cada pacote  
+transmitido.  
+   b) Na comutação de circuitos, os recursos são reservados de forma fixa ao longo de  
+toda a sessão de comunicação.  
+   c) A comutação de circuitos é amplamente utilizada na Internet moderna. 
+   d) A comutação de circuitos é ideal para transmissões de dados esporádicos e não  
+contínuos.
+2. Na comutação de pacotes, como os dados são enviados?
+   a) Em um único fluxo contínuo, sem divisão em partes menores.  
+   b) Divididos em pacotes que podem ser enviados por diferentes rotas. 
+   c) Sempre através de um caminho fixo, como na comutação de circuitos. 
+   d) Somente se os pacotes forem enviados na mesma ordem em que foram criados.
+3. Em relação ao cabo par trançado, qual das seguintes afirmações está correta?
+   a) Ele é imune a interferências eletromagnéticas.  
+   b) Ele é mais caro e mais difícil de instalar do que a fibra óptica. 
+   c) Ele é comumente usado em redes Ethernet de curta distância.  
+   d) Ele não é adequado para redes de alta velocidade.
+4. Qual é a principal vantagem da fibra óptica em comparação com outros meios de  
+transmissão?
+--- PAGE 6 ---
+   a) Menor custo de instalação  
+   b) Maior imunidade a interferências eletromagnéticas  
+   c) Facilidade de instalação  
+   d) Menor taxa de transmissão de dados
+5.  Qual das  seguintes  camadas  do  modelo OSI  é responsável pelo  roteamento de 
+pacotes entre redes diferentes?
+    a) Camada de enlace  
+    b) Camada de transporte  
+    c) Camada de rede  
+    d) Camada de aplicação
+    e) Camada de roteamento
+6.  Na  arquitetura  TCP/IP ,  a  camada  de  transporte  fornece  quais  dos  seguintes 
+serviços?
+    a) Controle de fluxo, controle de congestionamento e detecção de erros 
+    b) Encaminhamento de pacotes entre redes diferentes  
+    c) Conversão de dados entre diferentes formatos de rede  
+    d) Criação de conexões físicas entre os dispositivos de rede
+7. Em relação à tecnologia ADSL, qual das afirmativas está correta?
+    a) ADSL utiliza a infraestrutura de cabos de fibra óptica para transmissão de dados. 
+    b) ADSL permite uma velocidade de upload maior do que a de download. 
+    c) ADSL utiliza a linha telefônica para fornecer acesso à Internet de banda larga. 
+    d) ADSL exige que os usuários utilizem modems de cabo.
+8. Na camada de transporte do modelo OSI, qual dos seguintes protocolos é mais  
+comumente utilizado para garantir entrega confiável de dados?
+    a) UDP (User Datagram Protocol)  
+    b) ICMP (Internet Control Message Protocol)  
+--- PAGE 7 ---
+    c) IP (Internet Protocol)  
+    d) TCP (Transmission Control Protocol)
+    e) HTTP
+9. Sobre o modelo cliente-servidor e o modelo P2P , qual das afirmativas está correta?
+a) No modelo P2P , há um servidor dedicado para cada cliente.  
+b) No modelo cliente-servidor, o cliente fornece recursos ao servidor. 
+c)  No  modelo  P2P ,  os  dispositivos  funcionam  tanto  como  clientes  quanto  como 
+servidores.  
+d) No modelo cliente-servidor, todos os dispositivos têm o mesmo nível hierárquico. 
+e) No modelo P2P , um único ponto de falha pode derrubar toda a rede.
+10. A comutação de pacotes oferece uma vantagem significativa sobre a comutação de 
+mensagens porque:
+a) Divide as mensagens em pedaços menores, o que permite melhor utilização dos  
+recursos da rede.  
+b) Exige um caminho dedicado entre origem e destino.  
+c) Garante que os pacotes sempre chegam na ordem correta.  
+d) É mais lenta, mas mais confiável que a comutação de mensagens.  
+e) Envia a mensagem inteira de uma vez sem fragmentá-la.
+11. Qual das alternativas abaixo descreve corretamente a diferença entre a camada de  
+enlace e a camada de rede no modelo OSI?
+a) A camada de enlace é responsável pelo roteamento dos pacotes entre diferentes  
+redes.  
+b) A camada de rede é responsável pelo controle de erros e pelo fluxo de dados entre  
+dois nós adjacentes.  
+c) A camada de enlace lida com endereços IP , enquanto a camada de rede lida com  
+endereços MAC.  
+d) A camada de enlace opera na comutação de pacotes, enquanto a camada de rede  
+utiliza comutação de circuitos.  
+e) A camada de rede é responsável por mover pacotes da origem ao destino, passando  
+por múltiplas redes.
+--- PAGE 8 ---
+12.  Qual  das  afirmativas  a  seguir  é  verdadeira  sobre  o  modelo  de  comutação  de 
+pacotes?
+a) O caminho é estabelecido antes da transmissão e permanece reservado até o final. 
+b) Todos os pacotes seguem o mesmo caminho pela rede.  
+c) Os pacotes podem tomar caminhos diferentes e chegar fora de ordem ao destino. 
+d) A comutação de pacotes só funciona em redes de longa distância.  
+e) A comutação de pacotes não permite a fragmentação das mensagens.
+13. Um pacote de dados de 1.000 bytes (1 byte = 8 bits) está sendo transmitido em uma 
+rede de comutação de pacotes através de um enlace de 10 Mbps. A distância entre o  
+nó de origem e o nó de destino é de 500 km, e a velocidade de propagação no meio de  
+transmissão é de 2 x 10^8 metros por segundo. Qual é o atraso atraso de transmissão  
+para enviar o pacote?
+a) 0,8 ms  
+b) 3,3 ms  
+c) 2,5 ms  
+d) 5,0 ms  
+e) 6,0 ms
+14. Um pacote de dados de 1.000 bytes (1 byte = 8 bits) está sendo transmitido em uma 
+rede de comutação de pacotes através de um enlace de 10 Mbps. A distância entre o  
+nó de origem e o nó de destino é de 500 km, e a velocidade de propagação no meio de  
+transmissão é de 2 x 10^8 metros por segundo. Qual é o atraso atraso de propagação  
+para enviar o pacote?
+a) 0,8 ms  
+b) 3,3 ms  
+c) 2,5 ms  
+d) 5,0 ms  
+e) 6,0 ms
+15. Considere o processo de enviar um arquivo de 640Kbits de um sistema final A para  
+um sistema final B por uma rede de comutação de circuitos. Suponha que todos os  
+enlaces usem TDM de 24 compartimentos e tenham uma taxa de 1,536 Mbps. Suponha  
+também que um circuito leva 500 milisegundos para ser ativado antes que A possa  
+começar a transmitir o arquivo. Em quanto tempo o arquivo será enviado?
+--- PAGE 9 ---
+a) 10 segundos
+b) 0,5 segundos
+c) 0,05 segundos
+d) 10,5 segundos
+e) 10,05 segundos
+16.O modelo de referência OSI da ISO é dividido em sete camadas funcionais, todas  
+elas importantes para a interconexão de sistemas. Uma dessas camadas define a  
+sintaxe e a semântica das informações transmitidas, tornando possível a comunicação  
+entre equipamentos que utilizam diferentes representações de dados. Qual camada  
+tem essa função?
+a) Camada de Aplicação
+b) Camada de Sessão
+c) Camada de Transporte
+d) Camada de Apresentação
+e) Camada de Sintaxe
+17. Qual o comando é usado para determinar o caminho que os datagramas IP seguem  
+do HOST LOCAL até o HOST REMOTO?
+a) trace
+b) traceroute
+c) ping
+d) traceIP
+e) tracerouting
+18. Qual é o número de conexões necessárias, ao considerar uma topologia de rede em  
+malha para N máquinas?
+a) N
+b) N+1
+c) (N-1)N/2
+d) (N-1)N
+e) (N-1)(N-1)
+--- PAGE 10 ---
+19. Os modelos de referência TCP/IP e OSI possuem camadas, cabendo a cada uma  
+delas uma função bem definida.Acamada Aplicação do modelo TCP/IP corresponde a  
+qual(is) camada(s) do modelo OSI?
+a) Sessão,Apresentação e Aplicação
+b) Transporte e Rede
+c) Rede, Enlace e Física
+d) Aplicação e Sessão
+e) Aplicação e Apresentação
+20.Uma empresa deseja interligar em rede dois prédios distantes 1 km entre si. Para  
+garantir uma conexão confiável e isolada eletricamente, deve-se utilizar qual meio  
+físico ?
+a) Fibra
+b) Cabo coaxial fino
+c) Par trançado UTP
+d) Cabo coaxial grosso
+e) Par trançado CAT5e
+21.  Qual  é  a  principal  vantagem  do  uso  de  cabos  de  par  trançado  em  redes  de 
+computadores?
+A) Maior largura de banda em comparação com a fibra óptica
+B) Menor custo e facilidade de instalação
+C) Imunidade total a interferências eletromagnéticas
+D) Capacidade de transmitir sinais a longas distâncias sem repetidores
+22. Qual é o conector comumente utilizado em cabos de par trançado para redes  
+Ethernet?
+A) BNC
+B) SC
+C) RJ-45
+D) LC
+E) RJ-11
+--- PAGE 11 ---
+23. Qual é a principal diferença entre cabos UTP (Unshielded Twisted Pair) e STP  
+(Shielded Twisted Pair)?
+A) UTP possui uma camada de blindagem, enquanto STP não possui
+B) STP possui uma camada de blindagem para reduzir interferências, enquanto UTP  
+não possui
+C) UTP é usado apenas para redes internas, enquanto STP é usado para redes externas
+D) STP suporta apenas sinais analógicos, enquanto UTP suporta sinais digitais
+24. Qual é a função do trançamento dos fios em um cabo de par trançado?
+A) Aumentar a resistência física do cabo
+B) Facilitar a instalação do cabo em conduítes
+C) Reduzir a interferência eletromagnética entre os pares de fios
+D) Melhorar a qualidade do sinal transmitido a longas distâncias
+25. Qual é o princípio físico que permite a transmissão de luz através de uma fibra  
+óptica?
+A) Refração da luz
+B) Reflexão total interna
+C) Difração da luz
+D) Polarização da luz
+26. Qual é a principal vantagem das fibras ópticas em comparação com os cabos de  
+cobre?
+A) Maior resistência a interferências eletromagnéticas
+B) Menor custo de instalação
+C) Maior flexibilidade física
+D) Menor necessidade de manutenção
+27. Qual é o material mais comumente utilizado para fabricar o núcleo das fibras  
+ópticas?
+--- PAGE 12 ---
+A) Plástico
+B) Cobre
+C) Vidro (sílica)
+D) Alumínio
+28. Qual é a impedância característica mais comum dos cabos coaxiais utilizados em  
+redes de TV a cabo?
+   
+A) 50 ohms
+B) 75 ohms
+C) 100 ohms
+D) 150 ohms
+29. Qual é a principal característica da arquitetura cliente-servidor?
+A) Todos os nós têm as mesmas funções e responsabilidades.
+B) Um servidor centralizado fornece recursos e serviços para vários clientes.
+C) Cada nó pode atuar como cliente e servidor simultaneamente.
+D) A comunicação é sempre direta entre os nós, sem intermediários.
+30. Qual das seguintes afirmações é verdadeira sobre a arquitetura cliente-servidor?
+A) É mais adequada para redes pequenas e locais.
+B) Depende de um servidor central para gerenciar recursos e serviços.
+C) Não possui um ponto único de falha.
+D) É menos segura do que a arquitetura P2P .
+31. Qual é a principal característica das redes P2P?
+A) Um servidor central gerencia todas as conexões.
+B) Todos os nós têm funções e responsabilidades iguais.
+C) A comunicação é sempre mediada por um servidor.
+D) É mais adequada para aplicações de tempo real.
+--- PAGE 13 ---
+32.  Qual  das  seguintes  é  uma  vantagem  das  redes  P2P  em  comparação  com  a 
+arquitetura cliente-servidor?
+A) Maior controle centralizado.
+B) Melhor desempenho em redes locais.
+C) Maior resiliência a falhas.
+D) Menor complexidade de implementação.
+33. Qual é a função principal de um modem em uma rede de computadores?
+A) Converter sinais digitais em sinais analógicos e vice-versa
+B) Ampliar o sinal de rede para longas distâncias
+C) Gerenciar o tráfego de rede entre diferentes dispositivos
+D) Proteger a rede contra ataques cibernéticos
+34. Qual é a principal característica da tecnologia ADSL (Asymmetric Digital Subscriber 
+Line)?
+A) Velocidades de upload e download iguais
+B) Velocidade de download maior que a de upload
+C) Utiliza cabos coaxiais para transmissão de dados
+D) É uma tecnologia de comunicação sem fio
+35. Qual técnica de multiplexação é utilizada pelo ADSL para separar os canais de voz  
+e dados?
+A) TDM (Time Division Multiplexing)
+B) FDM (Frequency Division Multiplexing)
+C) CDM (Code Division Multiplexing)
+D) SDM (Space Division Multiplexing)
+E) CDMA
+36. O que significa a sigla HFC em redes de comunicação?
+A) Hybrid Fiber-Coaxial
+--- PAGE 14 ---
+B) High Frequency Cable
+C) High Fiber Communication
+D) Hybrid Frequency Communication
+37. Qual é a função principal dos protocolos na Internet?
+A) Definir a estrutura física dos cabos de rede.
+B) Estabelecer regras para a comunicação entre dispositivos.
+C) Controlar o acesso físico aos dispositivos de rede.
+D) Gerenciar o fornecimento de energia para os dispositivos de rede.
+38. Considere o modelo TCP/IP com a divisão em cinco camadas: física, enlace, rede,  
+transporte  e  aplicação.  Na  pilha  de  protocolos  componentes  desse  modelo,  são, 
+respectivamente, um protocolo da camada de rede e um da camada de aplicacão
+A) UDP e IP . 
+B) HTTP e TCP . 
+C) ICMP e SMTP .
+D) FDDI e IP .
+E) FTP e TCP . 
+39.  Os  serviços  de  controle  de  diálogo,  gerenciamento  de  token  e  sincronização 
+pertencem à camada de
+a) Rede. 
+b) Enlace de Dados. 
+c) Sessão.
+d) Apresentação.
+e) Transporte. 
+40. É correto afirmar que a camada que contém o protocolo HTTP é denominada  
+camada
+(A) Física. 
+(B) de Aplicação. 
+(C) de Rede.
+(D) de Transporte.
+(E) de Enlace de Dados. 
+--- PAGE 15 ---
+41. Qual das afirmativas abaixo está correta sobre satélites geoestacionários?
+A) Um satélite geoestacionário orbita a Terra a qualquer altitude, desde que mantenha 
+uma velocidade constante.
+B) Satélites geoestacionários permanecem fixos em relação a um ponto da superfície 
+terrestre porque orbitam a Terra com o mesmo período de rotação do planeta.
+C) O período orbital de um satélite geoestacionário é de aproximadamente 12 horas.
+D) Satélites geoestacionários podem ser colocados em qualquer plano orbital, desde 
+que estejam a uma altitude superior a 10.000 km.
+E) A órbita geoestacionária permite que o satélite observe toda a superfície terrestre 
+simultaneamente
+42. Qual das alternativas abaixo descreve corretamente a diferença entre fibra óptica  
+multimodo e monomodo?
+A) A fibra multimodo permite a transmissão de múltiplos comprimentos de onda 
+simultaneamente, enquanto a fibra monomodo só transmite luz em um único 
+comprimento de onda.
+B) A fibra multimodo é utilizada para longas distâncias devido à menor atenuação, 
+enquanto a fibra monomodo é ideal para curtas distâncias devido à maior dispersão 
+modal.
+C) A fibra monomodo possui um núcleo menor que a fibra multimodo, permitindo a 
+transmissão de um único modo de luz e reduzindo a dispersão, o que a torna ideal para 
+longas distâncias.
+D) A fibra monomodo apresenta maior dispersão modal do que a fibra multimodo, 
+tornando-a menos eficiente para transmissão de dados em alta velocidade.
+E) Tanto a fibra multimodo quanto a monomodo possuem a mesma estrutura de núcleo, 
+diferenciando-se apenas pelo material utilizado na fabricação.
+43. Qual das alternativas abaixo descreve corretamente as diferenças entre ondas de  
+rádio, micro-ondas e infravermelho?
+A) Ondas de rádio possuem menor frequência que micro-ondas e infravermelho, sendo 
+usadas principalmente em comunicações de curto alcance.
+B) Micro-ondas possuem frequência maior que as ondas de rádio e são amplamente 
+utilizadas em comunicação via satélite e redes sem fio.
+C) O infravermelho tem menor frequência que as micro-ondas e é utilizado em 
+transmissões de rádio e televisão.
+D) Ondas de rádio, micro-ondas e infravermelho pertencem ao espectro 
+eletromagnético, mas apenas as micro-ondas podem ser usadas para comunicação 
+sem fio.
+E) O infravermelho é uma forma de radiação ionizante e, por isso, pode causar danos 
+biológicos em baixas exposições.

@@ -1,0 +1,2304 @@
+
+--- PAGE 1 ---
+© 2010 Pearson. Todos os direitos reservados.slide 1
+Capítulo 3 Camada 
+de transporte
+Nota sobre o uso destes slides ppt:
+Estamos disponibilizando estes slides gratuitamente a todos
+(professores, alunos, leitores). Eles estão em formato do 
+PowerPoint para que você possa incluir, modificar e excluir 
+slides (incluindo este) e o conteúdo do slide, de acordo com 
+suas necessidades. Eles obviamente representam muito 
+trabalho da nossa parte. Em retorno pelo uso, pedimos apenas 
+o seguinte:
+ Se você usar estes slides (por exemplo, em sala de aula) 
+sem muita alteração, que mencione sua fonte (afinal, gostamos 
+que as pessoas usem nosso livro!).
+Se você postar quaisquer slides sem muita alteração em um 
+site Web, que informe que eles foram adaptados dos (ou talvez 
+idênticos aos) nossos slides, e inclua nossa nota de direito 
+autoral desse material.
+Obrigado e divirta-se!  JFK/KWR
+Todo o material copyright 1996-2009
+J. F Kurose e K. W. Ross, Todos os direitos reservados.
+© 2010 Pearson. Todos os direitos reservados.slide 1
+--- PAGE 2 ---
+© 2010 Pearson. Todos os direitos reservados.slide 2
+Capítulo 3: 
+Camada de transporte
+Objetivos do capítulo: 
+ entender princípios 
+por trás dos serviços 
+da camada de 
+transporte:
+ multiplexação/demul-
+tiplexação
+ transferência de 
+dados confiável
+ controle de fluxo
+ controle de 
+congestionamento
+ aprender sobre os 
+protocolos da camada de 
+transporte na Internet:
+ UDP: transporte sem 
+conexão
+ TCP: transporte orientado a 
+conexão
+ controle de 
+congestionamento TCP
+--- PAGE 3 ---
+© 2010 Pearson. Todos os direitos reservados.slide 3
+Capítulo 3: Esboço
+ 3.1 Serviços da camada 
+de transporte
+ 3.2 Multiplexação e 
+demultiplexação
+ 3.3 Transporte não 
+orientado para 
+conexão: UDP
+ 3.4 Princípios da 
+transferência 
+confiável de dados
+ 3.5 Transporte orientado 
+para conexão: TCP
+ estrutura de segmento
+ transferência confiável de 
+dados
+ controle de fluxo
+ gerenciamento da conexão
+ 3.6 Princípios de controle 
+de congestionamento
+ 3.7 Controle de 
+congestionamento no TCP
+--- PAGE 4 ---
+© 2010 Pearson. Todos os direitos reservados.slide 4
+Serviços e protocolos
+ de transporte
+ oferecem comunicação lógica 
+entre processos de aplicação 
+rodando em hospedeiros 
+diferentes
+ protocolos de transporte rodam 
+em sistemas finais 
+ lado remetente: divide as msgs 
+da aplicação em segmentos, 
+passa à camada de rede
+ lado destinatário: remonta os 
+segmentos em msgs, passa à 
+camada de aplicação
+ mais de um protocolo de 
+transporte disponível às 
+aplicações
+ Internet: TCP e UDP
+aplicação
+transporte
+rede
+enlace
+física
+aplicação
+transporte
+rede
+enlace
+física
+transporte lógico fim a fim
+--- PAGE 5 ---
+© 2010 Pearson. Todos os direitos reservados.slide 5
+rede
+enlace
+física
+rede
+enlace
+física
+Protocolos da camada 
+de transporte da Internet
+ remessa confiável e em 
+ordem (TCP)
+ controle de congestionamento
+ controle de fluxo
+ estabelecimento da conexão
+ remessa não confiável e 
+desordenada: UDP
+ extensão sem luxo do IP pelo 
+“melhor esforço”
+ serviços não disponíveis: 
+ garantias de atraso
+ garantias de largura de banda
+aplicação
+transporte
+rede
+enlace
+física
+network
+data link
+physical
+rede
+enlace
+física
+rede
+enlace
+física
+rede
+enlace
+física rede
+enlace
+física
+aplicação
+transporte
+rede
+enlace
+física
+logical end-end transport
+--- PAGE 6 ---
+© 2010 Pearson. Todos os direitos reservados.slide 6
+Capítulo 3: Esboço
+ 3.1 Serviços da camada 
+de transporte
+ 3.2 Multiplexação e 
+demultiplexação
+ 3.3 Transporte não 
+orientado para 
+conexão: UDP
+ 3.4 Princípios da 
+transferência 
+confiável de dados
+ 3.5 Transporte orientado 
+para conexão: TCP
+ estrutura de segmento
+ transferência confiável de 
+dados
+ controle de fluxo
+ gerenciamento da conexão
+ 3.6 Princípios de controle 
+de congestionamento
+ 3.7 Controle de 
+congestionamento no TCP
+--- PAGE 7 ---
+© 2010 Pearson. Todos os direitos reservados.slide 7
+Multiplexação/
+demultiplexação
+aplicação
+transporte
+rede
+enlace
+física
+P1 aplicação
+transporte
+rede
+enlace
+física
+aplicação
+transporte
+rede
+enlace
+física
+P2P3 P4P1
+hospedeiro 1 hospedeiro 2
+hospedeiro 3
+ =  processo =  socket
+entregando segmentos
+recebidos ao socket correto
+demultiplexação no destinatário:
+colhendo dados de múltiplos
+sockets, envelopando dados
+com cabeçalho (usados depois
+para demultiplexação)
+multiplexação no remetente:
+--- PAGE 8 ---
+© 2010 Pearson. Todos os direitos reservados.slide 8
+Como funciona a 
+demultiplexação
+ hospedeiro recebe 
+datagramas IP
+ cada datagrama tem 
+endereço IP de origem, 
+endereço IP de destino
+ cada datagrama carrega 1 
+segmento da camada de 
+transporte
+ cada segmento tem 
+número de porta de 
+origem, destino
+ hospedeiro usa endereços IP 
+& números de porta para 
+direcionar segmento ao 
+socket apropriado
+# porta origem # porta destino
+32 bits
+dados da
+aplicação
+(mensagem)
+outros campos de cabeçalho
+formato do segmento TCP/UDP
+--- PAGE 9 ---
+© 2010 Pearson. Todos os direitos reservados.slide 9
+DatagramSocket serverSocket = new DatagramSocket(6428);
+Cliente
+IP:B
+P2
+cliente
+ IP: A
+P1P1P3
+servidor
+IP: C
+SP: 6428
+DP: 9157
+SP: 9157
+DP: 6428
+SP: 6428
+DP: 5775
+SP: 5775
+DP: 6428
+SP oferece “endereço de retorno”
+--- PAGE 10 ---
+© 2010 Pearson. Todos os direitos reservados.slide 10
+Demultiplexação orientada
+ para conexão
+ socket TCP identificado 
+por tupla de 4 elementos: 
+ endereço IP de origem
+ número de porta de origem
+ endereço IP de destino
+ número de porta de destino
+ hospedeiro destinatário 
+usa todos os quatro 
+valores para direcionar 
+segmento ao socket 
+apropriado
+ hospedeiro servidor pode 
+admitir muitos sockets 
+TCP simultâneos:
+ cada socket identificado 
+por usa própria tupla de 4
+ servidores Web têm 
+diferentes sockets para 
+cada cliente conectando
+ HTTP não persistente terá 
+diferentes sockets para 
+cada requisição
+--- PAGE 11 ---
+© 2010 Pearson. Todos os direitos reservados.slide 11
+cliente
+IP:B
+P1
+cliente
+ IP: A
+P1P2P4
+servidor
+IP: C
+SP: 9157
+DP: 80
+SP: 9157
+DP: 80
+P5 P6 P3
+D-IP:C
+S-IP: A
+D-IP:C
+S-IP: B
+SP: 5775
+DP: 80
+D-IP:C
+S-IP: B
+--- PAGE 12 ---
+© 2010 Pearson. Todos os direitos reservados.slide 12
+Demultiplexação orientada
+para conexão: servidor Web
+ threaded
+cliente
+IP:B
+P1
+cliente
+ IP: A
+P1P2
+servidor
+IP: C
+SP: 9157
+DP: 80
+SP: 9157
+DP: 80
+P4 P3
+D-IP:C
+S-IP: A
+D-IP:C
+S-IP: B
+SP: 5775
+DP: 80
+D-IP:C
+S-IP: B
+--- PAGE 13 ---
+© 2010 Pearson. Todos os direitos reservados.slide 13
+Capítulo 3: Esboço
+ 3.1 Serviços da camada 
+de transporte
+ 3.2 Multiplexação e 
+demultiplexação
+ 3.3 Transporte não 
+orientado para 
+conexão: UDP
+ 3.4 Princípios da 
+transferência 
+confiável de dados
+ 3.5 Transporte orientado 
+para conexão: TCP
+ estrutura de segmento
+ transferência confiável de 
+dados
+ controle de fluxo
+ gerenciamento da conexão
+ 3.6 Princípios de controle 
+de congestionamento
+ 3.7 Controle de 
+congestionamento no TCP
+--- PAGE 14 ---
+© 2010 Pearson. Todos os direitos reservados.slide 14
+UDP: User Datagram
+ Protocol [RFC 768]
+ protocolo de transporte da 
+Internet “sem luxo”, básico
+ serviço de “melhor esforço”, 
+segmentos UDP podem ser:
+ perdidos
+ entregues à aplicação 
+fora da ordem
+ sem conexão:
+ sem handshaking entre 
+remetente e destinatário 
+UDP
+ cada segmento UDP 
+tratado independente 
+dos outros
+Por que existe um UDP?
+ sem estabelecimento de 
+conexão (que pode gerar 
+atraso)
+ simples: sem estado de 
+conexão no remetente, 
+destinatário
+ cabeçalho de segmento 
+pequeno
+ sem controle de 
+congestionamento: UDP 
+pode transmitir o mais 
+rápido possível
+--- PAGE 15 ---
+© 2010 Pearson. Todos os direitos reservados.slide 15
+UDP: mais
+ normalmente usado para 
+streaming de aplicações de 
+multimídia
+ tolerante a perdas
+ sensível à taxa
+ outros usos do UDP
+ DNS
+ SNMP
+ transferência confiável por 
+UDP: aumenta confiabilidade 
+na camada de aplicação
+ recuperação de erro 
+específica da aplicação!
+# porta origem # porta dest.
+32 bits
+dados da
+aplicação
+(mensagem)
+formato de segmento UDP
+tamanho soma verif.
+tamanho,
+em bytes, do
+segmento UDP,
+incluindo
+cabeçalho
+--- PAGE 16 ---
+© 2010 Pearson. Todos os direitos reservados.slide 16
+Soma de verificação UDP
+remetente:
+ trata conteúdo de 
+segmento como sequência 
+de inteiros de 16 bits
+ soma de verificação 
+(checksum): adição (soma 
+por complemento de 1) do 
+conteúdo do segmento
+ remetente coloca valor da 
+soma de verificação no 
+campo de soma de 
+verificação UDP
+destinatário:
+ calcula soma de verificação do 
+segmento recebido
+ verifica se soma de verificação 
+calculada igual ao valor do 
+campo de soma de verificação:
+ NÃO – erro detectado
+ SIM – nenhum erro 
+detectado. Mas pode haver 
+erros mesmo assim? Veja 
+mais adiante ….
+objetivo: detectar “erros” (p. e., bits invertidos) no 
+segmento transmitido
+--- PAGE 17 ---
+© 2010 Pearson. Todos os direitos reservados.slide 17
+Exemplo de soma de 
+verificação da Internet
+ nota
+ Ao somar números, um carryout do bit mais 
+significativo precisa ser somado ao resultado
+ exemplo: somar dois inteiros de 16 bits
+1  1  1  1  0  0  1  1  0  0  1  1  0  0  1  1  0
+1  1  1  0  1  0  1  0  1  0  1  0  1  0  1  0  1
+1  1  0  1  1  1  0  1  1  1  0  1  1  1  0  1  1
+1  1  0  1  1  1  0  1  1  1  0  1  1  1  1  0  0
+1  0  1  0  0  0  1  0  0  0  1  0  0  0  0  1  1
+contorna
+soma
+soma de
+verificação
+--- PAGE 18 ---
+© 2010 Pearson. Todos os direitos reservados.slide 18
+Capítulo 3: Esboço
+ 3.1 Serviços da camada 
+de transporte
+ 3.2 Multiplexação e 
+demultiplexação
+ 3.3 Transporte não 
+orientado para 
+conexão: UDP
+ 3.4 Princípios da 
+transferência 
+confiável de dados
+ 3.5 Transporte orientado 
+para conexão: TCP
+ estrutura de segmento
+ transferência confiável de 
+dados
+ controle de fluxo
+ gerenciamento da conexão
+ 3.6 Princípios de controle 
+de congestionamento
+ 3.7 Controle de 
+congestionamento no TCP
+--- PAGE 19 ---
+© 2010 Pearson. Todos os direitos reservados.slide 19
+Princípios de transferência
+ confiável de dados
+ importante nas camadas de aplicação, transporte e enlace
+ lista dos 10 mais importantes tópicos de redes!
+ características do canal confiável determinarão 
+complexidade do protocolo de transferência confiável (rdt)
+--- PAGE 20 ---
+© 2010 Pearson. Todos os direitos reservados.slide 20
+Transferência confiável de 
+dados: introdução
+lado
+remetente
+lado
+destinatário
+rdt_send(): chamado de cima, (p. e., 
+pela apl.). Dados passados para remeter 
+à camada superior do destinatário
+udt_send(): chamado pela 
+rdt, para transferir pacote por 
+canal não confiável ao 
+destinatário
+rdt_rcv(): chamado quando pacote 
+chega no lado destinatário do canal
+deliver_data(): chamado pela 
+rdt para remeter dados para cima
+--- PAGE 21 ---
+© 2010 Pearson. Todos os direitos reservados.slide 21
+vamos:
+ desenvolver de forma incremental os lados remetente e 
+destinatário do protocolo de transferência confiável de dados 
+(rdt)
+ considerar apenas a transf. de dados unidirecional
+ mas informações de controle fluirão nas duas direções!
+ usar máquinas de estado finito (FSM)  para especificar 
+remetente, destinatário
+estado
+1
+estado
+2
+evento causando transição de estado
+ações tomadas sobre transição de estado
+estado: quando neste 
+“estado”, próximo 
+estado determinado
+exclusivamente pelo 
+próximo evento
+evento
+ações
+--- PAGE 22 ---
+© 2010 Pearson. Todos os direitos reservados.slide 22
+Rdt1.0: transferência 
+confiável por canal confiável
+ canal subjacente perfeitamente confiável
+ sem erros de bit
+ sem perda de pacotes
+ FSMs separadas para remetente e destinatário:
+ remetente envia dados para canal subjacente
+ destinatário lê dados do canal subjacente
+Espera
+chamada
+de cima packet = make_pkt(dados)
+udt_send(pacote)
+rdt_send(dados)
+extract (pacote, dados)
+deliver_data(dados)
+Espera
+chamada
+de baixo
+rdt_rcv(pacote)
+remetente destinatário
+--- PAGE 23 ---
+© 2010 Pearson. Todos os direitos reservados.slide 23
+Rdt2.0: canal com erros 
+de bit
+ canal subjacente pode inverter bits no pacote
+ soma de verificação para detectar erros de bit
+ a questão: como recuperar-se dos erros:
+ reconhecimentos (ACKs): destinatário diz explicitamente 
+ao remetente que o pacote foi recebido OK
+ reconhecimentos negativas (NAKs): destinatário diz 
+explicitamente ao remetente que o pacote teve erros
+ remetente retransmite pacote ao receber NAK
+ novos mecanismos no rdt2.0 (além do rdt1.0):
+ detecção de erro
+ feedback do destinatário: msgs de controle (ACK,NAK) 
+destinatário->remetente
+--- PAGE 24 ---
+© 2010 Pearson. Todos os direitos reservados.slide 24
+rdt2.0: especificação da FSM
+Espera
+chamada
+de cima
+snkpkt = make_pkt(dados, soma_verif)
+udt_send(pctenv)
+extract(pctrec,dados)
+deliver_data(dados)
+udt_send(ACK)
+rdt_rcv(pctrec) && 
+   notcorrupt(pctrec)
+rdt_rcv(pctrec) && isACK(pctrec)
+udt_send(pctenv)
+rdt_rcv(pctrec) &&
+   isNAK(pctrec)
+udt_send(NAK)
+rdt_rcv(pctrec) && 
+  corrupt(pctrec)
+Espera
+ACK ou 
+NAK
+Espera
+chamada
+de baixo
+remetente
+destinatário
+rdt_send(dados)
+
+--- PAGE 25 ---
+© 2010 Pearson. Todos os direitos reservados.slide 25
+rdt2.0: operação sem erros
+Espera
+chamada
+de cima
+snkpkt = make_pkt(dados, soma_verif)
+udt_send(pctenv)
+extract(pctrec,dados)
+deliver_data(dados)
+udt_send(ACK)
+rdt_rcv(pctrec) && 
+   notcorrupt(pctrec)
+rdt_rcv(pctrec) && isACK(pctrec)
+udt_send(pctenv)
+rdt_rcv(pctrec) &&
+   isNAK(pctrec)
+udt_send(NAK)
+rdt_rcv(pctrec) && 
+  corrupt(pctrec)
+Espera
+ACK ou 
+NAK
+Espera
+chamada
+de baixo
+rdt_send(dados)
+
+--- PAGE 26 ---
+© 2010 Pearson. Todos os direitos reservados.slide 26
+rdt2.0: cenário de erro
+Espera
+chamada
+de cima
+snkpkt = make_pkt(dados, soma_verif)
+udt_send(pctenv)
+extract(pctrec,dados)
+deliver_data(dados)
+udt_send(ACK)
+rdt_rcv(pctrec) && 
+   notcorrupt(pctrec)
+rdt_rcv(pctrec) && isACK(pctrec)
+udt_send(pctenv)
+rdt_rcv(pctrec) && isNAK(pctrec)
+udt_send(NAK)
+rdt_rcv(pctrec) && 
+  corrupt(pctrec)
+Espera
+ACK ou 
+NAK
+Espera
+chamada
+de baixo
+rdt_send(dados)
+
+--- PAGE 27 ---
+© 2010 Pearson. Todos os direitos reservados.slide 27
+rdt2.0 tem uma falha fatal!
+O que acontece se 
+ACK/NAK for 
+corrompido?
+ remetente não sabe o que 
+aconteceu no destinatário!
+ não pode simplesmente 
+retransmitir: possível 
+duplicação
+tratando de duplicatas: 
+ remetente retransmite 
+pacote atual se ACK/NAK 
+corrompido
+ remetente acrescenta 
+número de sequência a cada 
+pacote
+ destinatário descarta (não 
+sobe) pacote duplicado
+remetente envia um pacote, 
+depois espera resposta do
+destinatário
+pare e espere
+--- PAGE 28 ---
+© 2010 Pearson. Todos os direitos reservados.slide 28
+rdt2.1: remetente trata de
+ ACK/NAKs corrompidos
+Espera
+chamada 0
+de cima
+pctenv = make_pkt(0, dados, checksum)
+udt_send(pctenv)
+rdt_send(dados)
+Espera
+ACK ou
+NAK 0 udt_send(pctenv)
+rdt_rcv(pctrec) &&  
+( corrupt(pctrec) ||
+isNAK(pctrec) )
+pctenv = make_pkt(1, dados, checksum)
+udt_send(pctenv)
+rdt_send(dados)
+rdt_rcv(pctrec)   
+&& notcorrupt(pctrec) 
+&& isACK(pctrec) 
+udt_send(pctenv)
+rdt_rcv(pctrec) &&  
+( corrupt(pctrec) ||
+isNAK(pctrec) )
+rdt_rcv(pctrec)   
+&& notcorrupt(pctrec) 
+&& isACK(pctrec) 
+Espera
+chamada 1
+de cima
+Espera
+ACK ou 
+NAK 1
+
+
+--- PAGE 29 ---
+© 2010 Pearson. Todos os direitos reservados.slide 29
+Espera
+0 de
+cima
+pctenv = make_pkt(NAK, chksum)
+udt_send(pctenv)
+rdt_rcv(pctrec) && 
+   not corrupt(pctrec) &&
+   has_seq0(pctrec)
+rdt_rcv(pctrec) && notcorrupt(pctrec) 
+  && has_seq1(pctrec) 
+extract(pctrec,dados)
+deliver_data(dados)
+pctenv = make_pkt(ACK, chksum)
+udt_send(pctenv)
+Espera
+1 de 
+baixo
+rdt_rcv(pctrec) && notcorrupt(pctrec) 
+  && has_seq0(pctrec) 
+extract(pctrec,dados)
+deliver_data(dados)
+pctenv = make_pkt(ACK, chksum)
+udt_send(pctenv)
+rdt_rcv(pctrec) && 
+(corrupt(pctrec)
+pctenv = make_pkt(ACK, chksum)
+udt_send(pctenv)
+rdt_rcv(pctrec) && 
+   not corrupt(pctrec) &&
+   has_seq1(pctrec)
+rdt_rcv(pctrec) && 
+(corrupt(pctrec)
+pctenv = make_pkt(ACK, chksum)
+udt_send(pctenv)
+pctenv = make_pkt(NAK, chksum)
+udt_send(pctenv)
+--- PAGE 30 ---
+© 2010 Pearson. Todos os direitos reservados.slide 30
+rdt2.1: discussão
+remetente:
+ # seq acrescentado ao 
+pkt
+ dois #s seq. (0,1) 
+bastarão.  Por quê?
+ deve verificar se 
+ACK/NAK recebido foi 
+corrompido 
+ o dobro de estados
+ estado de “lembrar” se 
+pacote “atual” tem # 
+seq. 0 ou 1
+destinatário:
+ deve verificar se 
+pacote recebido está 
+duplicado
+ estado indica se 0 ou 1 é 
+# seq. esperado do 
+pacote
+ nota: destinatário não 
+sabe se seu último 
+ACK/NAK foi recebido 
+OK no remetente
+--- PAGE 31 ---
+© 2010 Pearson. Todos os direitos reservados.slide 31
+rdt2.2: um protocolo sem NAK
+ mesma funcionalidade de rdt2.1, usando apenas ACKs
+ em vez de NAK, destinatário envia ACK para último 
+pacote recebido OK
+ destinatário precisa incluir explicitamente # seq. do pacote 
+sendo reconhecido com ACK
+ ACK duplicado no remetente resulta na mesma ação 
+de NAK: retransmitir pacote atual
+--- PAGE 32 ---
+© 2010 Pearson. Todos os direitos reservados.slide 32
+rdt2.2: fragmentos do 
+remetente, destinatário
+Espera
+chamada 
+0 de cima
+pctenv = make_pkt(0, dados, checksum)
+udt_send(pctenv)
+rdt_send(dados)
+udt_send(pctenv)
+rdt_rcv(pctrec) &&  
+( corrupt(pctrec) ||
+  isACK(pctrec,1) )
+rdt_rcv(pctrec)   
+&& notcorrupt(pctrec) 
+&& isACK(pctrec,0) 
+Espera
+ACK
+0
+fragmento FSM
+do remetente
+Espera
+0 de
+baixo
+rdt_rcv(pctrec) && notcorrupt(pctrec) 
+  && has_seq1(pctrec) 
+extract(pctrec,dados)
+deliver_data(dados)
+pctenv = make_pkt(ACK1, chksum)
+udt_send(pctenv)
+rdt_rcv(pctrec) && 
+   (corrupt(pctrec) ||
+     has_seq1(pctrec))
+udt_send(pctenv)
+fragmento FSM
+do destinatário
+
+--- PAGE 33 ---
+© 2010 Pearson. Todos os direitos reservados.slide 33
+rdt3.0: canais com erros 
+e perda
+nova suposição: canal 
+subjacente também 
+pode perder pacotes 
+(dados ou ACKs)
+ soma de verificação, # 
+seq., ACKs, 
+retransmissões serão 
+úteis, mas não 
+suficientes
+técnica: remetente espera 
+quantidade “razoável” de 
+tempo por ACK 
+ retransmite se não chegar ACK 
+nesse tempo
+ se pct (ou ACK) simplesmente 
+atrasado (não perdido):
+ retransmissão será 
+duplicada, mas os #s de seq. 
+já cuidam disso
+ destinatário deve especificar 
+# seq. do pacote sendo 
+reconhecido com ACK
+ requer contador regressivo
+--- PAGE 34 ---
+© 2010 Pearson. Todos os direitos reservados.slide 34
+remetente rdt3.0
+pctenv = make_pkt(0, dados, checksum)
+udt_send(pctenv)
+start_timer
+rdt_send(dados)
+Espera
+ACK0
+rdt_rcv(pctrec) &&  
+( corrupt(pctrec) ||
+isACK(pctrec,1) )
+Espera
+chamada 1
+de cima
+pctenv = make_pkt(1, dados, checksum)
+udt_send(pctenv)
+start_timer
+rdt_send(dados)
+rdt_rcv(pctrec)   
+&& notcorrupt(pctrec) 
+&& isACK(pctrec,0) 
+rdt_rcv(pctrec) && 
+ 
+( corrupt(pctrec) ||
+isACK(pctrec,0) )
+rdt_rcv(pctrec)   
+&& notcorrupt(pctrec) 
+&& isACK(pctrec,1) 
+stop_timer
+stop_timer
+udt_send(pctenv)
+start_timer
+timeout
+udt_send(pctenv)
+start_timer
+timeout
+rdt_rcv(pctrec)
+Espera
+chamada 0
+de cima
+Espera
+ACK1
+
+rdt_rcv(pctrec)
+
+
+
+--- PAGE 35 ---
+© 2010 Pearson. Todos os direitos reservados.slide 35
+rdt3.0 em ação
+
+--- PAGE 36 ---
+© 2010 Pearson. Todos os direitos reservados.slide 36
+
+--- PAGE 37 ---
+© 2010 Pearson. Todos os direitos reservados.slide 37
+Desempenho do rdt3.0
+ rdt3.0 funciona, mas com desempenho ruim
+ ex.: enlace 1 Gbps, 15 ms atraso propriedade, pacote 
+8000 bits:
+ U remet: utilização – fração do tempo remet. ocupado enviando
+ 
+U 
+remet 
+= 
+0,008 
+30,008 
+= 0,00027 
+microsec
+onds 
+L / R 
+RTT + L / R 
+= 
+ 
+ Pct. 1 KB cada 30 ms -> 33 kB/s vazão em enlace de 1 Gbps
+ protocolo de rede limita uso de recursos físicos!
+d trans =
+L
+R
+=
+8000bits
+10
+9
+bps
+=8 microssegundos
+--- PAGE 38 ---
+© 2010 Pearson. Todos os direitos reservados.slide 38
+rdt3.0: operação pare e 
+espere
+ 
+U 
+remet 
+= 
+0,008 
+30,008 
+= 0,00027 
+microsec
+onds 
+L / R 
+RTT + L / R 
+= 
+
+--- PAGE 39 ---
+© 2010 Pearson. Todos os direitos reservados.slide 39
+Protocolos com paralelismo
+paralelismo: remetente permite múltiplos pacotes 
+“no ar”, ainda a serem reconhecidos
+ intervalo de números de sequência deve ser aumentado
+ buffering no remetente e/ou destinatário
+ duas formas genéricas de protocolo com paralelismo: 
+Go-Back-N, repetição seletiva
+
+--- PAGE 40 ---
+© 2010 Pearson. Todos os direitos reservados.slide 40
+Paralelismo: utilização
+ aumentada
+ 
+U 
+remet 
+= 
+0,02
+4 30,008 
+= 0,0008 
+microsecon
+ds 
+3 * L / R 
+RTT + L / R 
+= 
+Aumento de utilização
+por fator de 3!
+--- PAGE 41 ---
+© 2010 Pearson. Todos os direitos reservados.slide 41
+Protocolos com paralelismo
+Go-back-N: visão geral
+ remetente: até N pacotes 
+não reconhecidos na 
+pipeline
+ destinatário: só envia ACKs 
+cumulativos
+ não envia pct ACK se 
+houver uma lacuna
+ remetente: tem 
+temporizador para pct sem 
+ACK mais antigo
+ se o temporizador expirar: 
+retransmite todos os 
+pacotes sem ACK
+Repetição seletiva: visão geral
+ remetente: até pacotes não 
+reconhecidos na pipeline
+ destinatário: reconhece (ACK) 
+pacotes individuais
+ remetente: mantém 
+temporizador para cada pct sem 
+ACK
+ se o temporizador expirar: 
+retransmite apenas o pacote 
+sem ACK
+--- PAGE 42 ---
+© 2010 Pearson. Todos os direitos reservados.slide 42
+Go-Back-N
+remetente:
+ # seq. de k bits no cabeçalho do pacote
+ “janela” de até N pcts consecutivos sem ACK permitidos
+ ACK(n): ACK de todos pcts até inclusive # seq. n – “ACK 
+cumulativo”
+ pode receber ACKs duplicados (ver destinatário)
+ temporizador para cada pacote no ar
+ timeout(n): retransmite pct n e todos pcts com # seq. mais alto 
+na janela
+
+--- PAGE 43 ---
+© 2010 Pearson. Todos os direitos reservados.slide 43
+GBN: FSM estendido no 
+remetente
+Espera start_timer
+udt_send(pctenv[base])
+udt_send(pctenv[base+1])
+…
+udt_send(pctenv[nextseqnum-1]
+)
+timeout
+rdt_send(dados) 
+if (nextseqnum < base+N) {
+    pctenv[nextseqnum] = make_pkt(nextseqnum,dados,chksum)
+    udt_send(pctenv[nextseqnum])
+    if (base = =  nextseqnum)
+       start_timer
+    nextseqnum++
+    }
+else
+  refuse_data(dados)
+base = getacknum(pctrec)+1
+If (base = =  nextseqnum)
+    stop_timer
+  else
+    start_timer
+rdt_rcv(pctrec) && 
+   notcorrupt(pctrec) 
+base = 1
+nextseqnum = 1
+rdt_rcv(pctrec) 
+   && corrupt(pctrec) 
+
+--- PAGE 44 ---
+© 2010 Pearson. Todos os direitos reservados.slide 44
+GBN: FSM estendido no 
+destinatário
+apenas ACK: sempre envia ACK para pct recebido 
+corretamente com # seq. mais alto em ordem
+ pode gerar ACKs duplicados
+ só precisa se lembrar de expectedseqnum
+ pacote fora de ordem: 
+ descarta (não mantém em buffer) -> sem buffering no 
+destinatário!
+ reenvia ACK do pct com # seq. mais alto em ordem
+Espera
+udt_send(pctenv)
+default
+rdt_rcv(pctrec)
+  && notcurrupt(pctrec)
+  && hasseqnum(pctrec,expectedseqnum) 
+extract(pctrec,dados)
+deliver_data(dados)
+pctenv = make_pkt(expectedseqnum,ACK,chksum)
+udt_send(pctenv)
+expectedseqnum++
+expectedseqnum = 1
+pctenv =    
+  make_pkt(expectedseqnum,ACK,chksum)
+
+--- PAGE 45 ---
+© 2010 Pearson. Todos os direitos reservados.slide 45
+GBN em operação
+
+--- PAGE 46 ---
+© 2010 Pearson. Todos os direitos reservados.slide 46
+Repetição seletiva
+ destinatário reconhece individualmente todos os 
+pacotes recebidos de modo correto
+ mantém pcts em buffer, se for preciso, para eventual 
+remessa em ordem para a camada superior
+ remetente só reenvia pcts para os quais o ACK 
+não foi recebido
+ temporizador no remetente para cada pct sem ACK
+ janela do remetente
+ N # seq. consecutivos
+ novamente limita #s seq. de pcts enviados, sem ACK
+--- PAGE 47 ---
+© 2010 Pearson. Todos os direitos reservados.slide 47
+Repetição seletiva: janelas 
+de remetente, destinatário
+
+--- PAGE 48 ---
+© 2010 Pearson. Todos os direitos reservados.slide 48
+Repetição seletiva
+dados de cima:
+ se próx. # seq. disponível 
+na janela, envia pct
+timeout(n):
+ reenvia pct n, reinicia 
+temporizador
+ACK(n) em 
+[sendbase,sendbase+N]:
+ marca pct n como recebido
+ se n menor pct com ACK, 
+avança base da janela para 
+próximo # seq. sem ACK
+pct n em [rcvbase, 
+rcvbase+N-1]
+ envia ACK(n)
+ fora de ordem: buffer
+ em ordem: entrega 
+(também entrega pcts em 
+ordem no buffer), avança 
+janela para próximo pct 
+ainda não recebido
+pct n em [rcvbase-N,rcvbase-1]
+ ACK(n)
+caso contrário: 
+ ignora 
+destinatário
+remetente
+--- PAGE 49 ---
+© 2010 Pearson. Todos os direitos reservados.slide 49
+Repetição seletiva em 
+operação
+
+--- PAGE 50 ---
+© 2010 Pearson. Todos os direitos reservados.slide 50
+Repetição seletiva:
+dilema
+Exemplo: 
+ # seq.: 0, 1, 2, 3
+ tamanho janela = 3
+ destinatário não vê 
+diferença nos dois 
+cenários!
+ passa incorretamente 
+dados duplicados como 
+novos em (a)
+P: Qual o relacionamento 
+entre tamanho do # seq. e 
+tamanho de janela?
+
+--- PAGE 51 ---
+© 2010 Pearson. Todos os direitos reservados.slide 51
+Capítulo 3: Esboço
+ 3.1 Serviços da camada 
+de transporte
+ 3.2 Multiplexação e 
+demultiplexação
+ 3.3 Transporte não 
+orientado para 
+conexão: UDP
+ 3.4 Princípios da 
+transferência 
+confiável de dados
+ 3.5 Transporte orientado 
+para conexão: TCP
+ estrutura de segmento
+ transferência confiável de 
+dados
+ controle de fluxo
+ gerenciamento da conexão
+ 3.6 Princípios de controle 
+de congestionamento
+ 3.7 Controle de 
+congestionamento no TCP
+--- PAGE 52 ---
+© 2010 Pearson. Todos os direitos reservados.slide 52
+TCP: Visão geral 
+RFCs: 793, 1122, 1323, 2018, 2581
+ dados full duplex:
+ dados bidirecionais fluem 
+na mesma conexão
+ MSS: tamanho máximo do 
+segmento
+ orientado a conexão: 
+ apresentação (troca de 
+msgs de controle) inicia 
+estado do remetente e 
+destinatário antes da 
+troca de dados
+ fluxo controlado:
+ remetente não 
+sobrecarrega destinatário
+ ponto a ponto:
+ um remetente, um 
+destinatário 
+ cadeia de bytes confiável, em 
+ordem:
+ sem “limites de mensagem”
+ paralelismo:
+ congestionamento TCP e 
+controle de fluxo definem 
+tamanho da janela
+ buffers de envio & recepção
+
+--- PAGE 53 ---
+© 2010 Pearson. Todos os direitos reservados.slide 53
+
+--- PAGE 54 ---
+© 2010 Pearson. Todos os direitos reservados.slide 54
+Estrutura do segmento TCP
+porta origem porta destino
+32 bits
+dados da
+aplicação
+(tamanho variável)
+número sequência
+número reconhecimento
+janela recepção
+ponteiro dados urg.soma verificação
+FSRPAUcompr.
+cab.
+não
+usado
+opções (tamanho variável)
+URG: dados urgentes 
+(quase não usado)
+ACK: # ACK
+válido
+PSH: empurrar dados
+agora (quase não usado)
+RST, SYN, FIN:
+estab. conexão
+(comandos setup,
+teardown)
+# bytes 
+destinatário
+pode aceitar
+contagem por
+bytes de dados
+(não segmentos!)
+soma de verificação
+da Internet
+(como em UDP)
+--- PAGE 55 ---
+© 2010 Pearson. Todos os direitos reservados.slide 55
+#s sequência e ACKs do TCP
+cenário telnet simples
+#’s de sequência:
+ “número” na cadeia de 
+bytes do 1o byte nos 
+dados do segmento
+ACKs:
+ # seq do próximo byte 
+esperado do outro lado
+ ACK cumulativo
+P: como o destinatário trata 
+segmentos fora de ordem
+ R: TCP não diz – a 
+critério do 
+implementador
+--- PAGE 56 ---
+© 2010 Pearson. Todos os direitos reservados.slide 56
+Tempo de ida e volta e 
+timeout do TCP
+P: Como definir o valor 
+de timeout do TCP?
+ maior que RTT
+ mas RTT varia
+ muito curto: 
+timeout prematuro
+ retransmissões 
+desnecessárias
+ muito longo: baixa 
+reação a perda de 
+segmento
+P: Como estimar o RTT?
+ SampleRTT: tempo medido 
+da transmissão do 
+segmento até receber o 
+ACK
+ ignora retransmissões
+ SampleRTT variará; 
+queremos RTT estimado 
+“mais estável”
+ média de várias 
+medições recentes, não 
+apenas SampleRTT atual
+--- PAGE 57 ---
+© 2010 Pearson. Todos os direitos reservados.slide 57
+EstimatedRTT = (1- )*EstimatedRTT + *SampleRTT
+ média móvel exponencial ponderada
+ influência da amostra passada diminui exponencialmente 
+rápido
+ valor típico:  = 0,125
+--- PAGE 58 ---
+© 2010 Pearson. Todos os direitos reservados.slide 58
+Amostras de RTTs estimados:
+
+--- PAGE 59 ---
+© 2010 Pearson. Todos os direitos reservados.slide 59
+definindo o timeout
+ EstimtedRTT mais “margem de segurança”
+ grande variação em EstimatedRTT -> maior margem de seg.
+ primeira estimativa do quanto SampleRTT se desvia de 
+EstimatedRTT: 
+TimeoutInterval = EstimatedRTT + 4*DevRTT
+DevRTT = (1-)*DevRTT +
+             *|SampleRTT-EstimatedRTT|
+(geralmente,  = 0,25)
+depois definir intervalo de timeout
+Tempo de ida e volta e 
+timeout do TCP
+--- PAGE 60 ---
+© 2010 Pearson. Todos os direitos reservados.slide 60
+Capítulo 3: Esboço
+ 3.1 Serviços da camada 
+de transporte
+ 3.2 Multiplexação e 
+demultiplexação
+ 3.3 Transporte não 
+orientado para 
+conexão: UDP
+ 3.4 Princípios da 
+transferência 
+confiável de dados
+ 3.5 Transporte orientado 
+para conexão: TCP
+ estrutura de segmento
+ transferência confiável de 
+dados
+ controle de fluxo
+ gerenciamento da conexão
+ 3.6 Princípios de controle 
+de congestionamento
+ 3.7 Controle de 
+congestionamento no TCP
+--- PAGE 61 ---
+© 2010 Pearson. Todos os direitos reservados.slide 61
+Transferência confiável 
+de dados no TCP
+ TCP cria serviço rdt 
+em cima do serviço não 
+confiável do IP
+ segmentos em paralelo
+ ACKs cumulativos
+ TCP usa único 
+temporizador de 
+retransmissão
+ retransmissões são 
+disparadas por:
+ eventos de timeout
+ ACKs duplicados
+ inicialmente, considera 
+remetente TCP 
+simplificado:
+ ignora ACKs duplicados
+ ignora controle de 
+fluxo, controle de 
+congestionamento
+--- PAGE 62 ---
+© 2010 Pearson. Todos os direitos reservados.slide 62
+Eventos de remetente TCP:
+dados recebidos da apl.:
+ cria segmento com # 
+seq
+ # seq # é número da 
+cadeia de bytes do 
+primeiro byte de dados 
+no segmento
+ inicia temporizador, se 
+ainda não tiver iniciado 
+(pense nele como para 
+o segmento mais antigo 
+sem ACK)
+ intervalo de expiração: 
+TimeOutInterval 
+timeout:
+ retransmite segmento 
+que causou timeout
+ reinicia temporizador
+ ACK recebido:
+ Reconhecem-se 
+segmentos sem ACK 
+anteriores
+ atualiza o que 
+sabidamente tem ACK
+ inicia temporizador se 
+houver segmentos 
+pendentes
+--- PAGE 63 ---
+© 2010 Pearson. Todos os direitos reservados.slide 63
+RemetenteTCP (simplificado)
+        NextSeqNum = InitialSeqNum
+       SendBase = InitialSeqNum
+        loop (forever) { 
+           switch(event) 
+           event: data received from application above 
+                 create TCP segment with sequence number NextSeqNum 
+                 if (timer currently not running)
+                       start timer
+                 pass segment to IP 
+                 NextSeqNum = NextSeqNum + length(dados) 
+            event: timer timeout
+                 retransmit not-yet-acknowledged segment with 
+                         smallest sequence number
+                 start timer
+            event: ACK received, with ACK field value of y 
+                 if (y > SendBase) { 
+                       SendBase = y
+                      if (there are currently not-yet-acknowledged segments)
+                               start timer 
+                      } 
+         }  /* end of loop forever */ 
+Comentário:
+• SendBase-1: último byte 
+cumulativo com ACK
+Exemplo:
+• SendBase-1 = 71;
+y =  73, de modo que 
+destinatário deseja 73+ ;
+y > SendBase, de modo que 
+novos dados têm ACK
+--- PAGE 64 ---
+© 2010 Pearson. Todos os direitos reservados.slide 64
+TCP: cenários de 
+retransmissão
+Hosp. A
+Seq = 100, 20 bytes dados
+ACK = 100
+tempo
+Timeout prematuro
+Hosp. B
+Seq = 92, 8 bytes dados
+ACK = 
+120
+Seq = 92, 8 bytes dados
+Seq = 92 timeout
+ACK = 
+120
+Hosp. A
+Seq = 92, 8 bytes dados
+ACK = 100
+loss
+timeout
+Cenário de ACK perdido
+Hosp. B
+X
+Seq = 92, 8 bytes dados
+ACK = 
+100
+tempo
+Seq = 92 timeout
+SendBase
+ =  100
+SendBase
+ =  120
+SendBase
+ =  120
+Sendbase
+ =  100
+--- PAGE 65 ---
+© 2010 Pearson. Todos os direitos reservados.slide 65
+Host A
+Seq = 92, 8 bytes dados
+ACK = 100
+perda
+timeout
+Cenário ACK cumulativo
+Host B
+X
+Seq = 100, 20 bytes dados
+ACK = 
+120
+tempo
+SendBase
+ =  120
+--- PAGE 66 ---
+© 2010 Pearson. Todos os direitos reservados.slide 66
+TCP: geração de ACK 
+[RFC 1122, RFC 2581]
+
+--- PAGE 67 ---
+© 2010 Pearson. Todos os direitos reservados.slide 67
+
+--- PAGE 68 ---
+© 2010 Pearson. Todos os direitos reservados.slide 68
+
+--- PAGE 69 ---
+© 2010 Pearson. Todos os direitos reservados.slide 69
+
+--- PAGE 70 ---
+© 2010 Pearson. Todos os direitos reservados.slide 70
+
+--- PAGE 71 ---
+© 2010 Pearson. Todos os direitos reservados.slide 71
+
+--- PAGE 72 ---
+© 2010 Pearson. Todos os direitos reservados.slide 72
+Retransmissão rápida
+ período de timeout 
+relativamente grande:
+ longo atraso antes de 
+reenviar pacote perdido
+ detecta segmentos 
+perdidos por meio de ACKs 
+duplicados
+ remetente geralmente 
+envia muitos segmentos um 
+após o outro
+ se segmento for perdido, 
+provavelmente haverá 
+muitos ACKs duplicados 
+para esse segmento
+ se remetente recebe 3 ACKs 
+para os mesmos dados, ele 
+supõe que segmento após 
+dados com ACK foi perdido:
+ retransmissão rápida: 
+reenvia segmento antes que 
+o temporizador expire
+--- PAGE 73 ---
+© 2010 Pearson. Todos os direitos reservados.slide 73
+Hosp. Atimeout
+Hosp. B
+tempo
+X
+reenvia seq X2
+seq # x1
+seq # x2
+seq # x3
+seq # x4
+seq # x5
+ACK x1
+ACK x1
+ACK x1
+ACK x1
+ACKs
+duplicados
+três vezes
+--- PAGE 74 ---
+© 2010 Pearson. Todos os direitos reservados.slide 74
+ 
+ event: ACK received, with ACK field value of y 
+                 if (y > SendBase) { 
+                       SendBase = y
+                       if (there are currently not-yet-acknowledged segments)
+                             start timer 
+                     } 
+                 else { 
+                         increment count of dup ACKs received for y
+                         if (count of dup ACKs received for y = 3) {
+                               resend segment with sequence number y
+                          }
+         
+Algoritmo de retransmissão
+ rápida:
+ACK duplicado para
+segmento já com ACK
+retransmissão rápida
+--- PAGE 75 ---
+© 2010 Pearson. Todos os direitos reservados.slide 75
+Capítulo 3: Esboço
+ 3.1 Serviços da camada 
+de transporte
+ 3.2 Multiplexação e 
+demultiplexação
+ 3.3 Transporte não 
+orientado para 
+conexão: UDP
+ 3.4 Princípios da 
+transferência 
+confiável de dados
+ 3.5 Transporte orientado 
+para conexão: TCP
+ estrutura de segmento
+ transferência confiável de 
+dados
+ controle de fluxo
+ gerenciamento da conexão
+ 3.6 Princípios de controle 
+de congestionamento
+ 3.7 Controle de 
+congestionamento no TCP
+--- PAGE 76 ---
+© 2010 Pearson. Todos os direitos reservados.slide 76
+Controle de fluxo TCP
+ lado receptor da 
+conexão TCP tem um 
+buffer de recepção:
+ serviço de 
+compatibilização de 
+velocidades: 
+compatibiliza a taxa de 
+envio do remetente 
+com a de leitura da 
+aplicação receptora
+ processo da aplicação 
+pode ser lento na 
+leitura do buffer
+remetente não estourará 
+buffer do destinatário 
+transmitindo muitos 
+dados muito rapidamente
+controle de fluxo
+datagramas
+IP
+dados TCP
+(no buffer)
+espaço
+de buffer
+(atualmente)
+não usado
+processo da
+aplicação
+--- PAGE 77 ---
+© 2010 Pearson. Todos os direitos reservados.slide 77
+Controle de fluxo TCP:
+ como funciona
+(suponha que destinatário TCP 
+descarte segmentos fora de 
+ordem)
+ espaço de buffer não usado:
+ =  rwnd
+ =  RcvBuffer-[LastByteRcvd 
+- LastByteRead]
+ destinatário: anuncia 
+espaço de buffer não 
+usado incluindo valor de 
+rwnd no cabeçalho do 
+segmento
+ remetente: limita # de 
+bytes com ACKa rwnd
+ garante que buffer do 
+destinatário não estoura
+rwnd
+RcvBuffer
+datagramas
+IP
+dados TCP
+(no buffer)
+espaço
+de buffer
+(atualmente)
+não usado
+processo da
+aplicação
+--- PAGE 78 ---
+© 2010 Pearson. Todos os direitos reservados.slide 78
+
+--- PAGE 79 ---
+© 2010 Pearson. Todos os direitos reservados.slide 79
+Capítulo 3: Esboço
+ 3.1 Serviços da camada 
+de transporte
+ 3.2 Multiplexação e 
+demultiplexação
+ 3.3 Transporte não 
+orientado para 
+conexão: UDP
+ 3.4 Princípios da 
+transferência 
+confiável de dados
+ 3.5 Transporte orientado 
+para conexão: TCP
+ estrutura de segmento
+ transferência confiável de 
+dados
+ controle de fluxo
+ gerenciamento da conexão
+ 3.6 Princípios de controle 
+de congestionamento
+ 3.7 Controle de 
+congestionamento no TCP
+--- PAGE 80 ---
+© 2010 Pearson. Todos os direitos reservados.slide 80
+Gerenciamento da 
+conexão TCP
+lembre-se: Remetente e 
+destinatário TCP 
+estabelecem “conexão” antes 
+que troquem segmentos 
+dados
+ inicializa variáveis TCP:
+ #s seq.:
+ buffers, informação de 
+controle de fluxo (p. e. 
+RcvWindow)
+ cliente: inicia a conexão
+  Socket clientSocket = new   
+Socket("hostname","port #"); 
+ servidor: contactado pelo 
+cliente
+  Socket connectionSocket = 
+welcomeSocket.accept();
+apresentação de 3 vias:
+etapa 1: hosp. cliente envia segmento 
+SYN do TCP ao servidor
+ especifica # seq. inicial
+ sem dados
+etapa 2: hosp. servidor recebe SYN, 
+responde com segmento SYNACK
+ servidor aloca buffers
+ especifica # seq. inicial do 
+servidor
+etapa 3: cliente recebe SYNACK, 
+responde com segmento ACK, que 
+pode conter dados
+--- PAGE 81 ---
+© 2010 Pearson. Todos os direitos reservados.slide 81
+
+--- PAGE 82 ---
+© 2010 Pearson. Todos os direitos reservados.slide 82
+
+--- PAGE 83 ---
+© 2010 Pearson. Todos os direitos reservados.slide 83
+
+--- PAGE 84 ---
+© 2010 Pearson. Todos os direitos reservados.slide 84
+fechando uma conexão:
+cliente fecha socket: 
+clientSocket.close(); 
+etapa 1: sistema final do 
+cliente envia segmento de 
+controle TCP FIN ao 
+servidor
+etapa 2: servidor recebe 
+FIN, responde com ACK. 
+Fecha conexão, envia FIN. 
+cliente
+FIN
+servidor
+ACK
+ACK
+FIN
+fecha
+fecha
+fechado
+espera 
+temporizada
+--- PAGE 85 ---
+© 2010 Pearson. Todos os direitos reservados.slide 85
+etapa 3: cliente recebe 
+FIN, responde com ACK 
+ entra em “espera 
+temporizada” – 
+responderá com ACK 
+aos FINs recebidos
+etapa 4: servidor recebe 
+ACK - conexão fechada 
+Nota: Com pequena 
+modificação, pode tratar 
+de FINs simultâneos.
+cliente
+FIN
+servidor
+ACK
+ACK
+FIN
+fechado
+fechando
+fechado
+fechado
+espera 
+temporizada
+--- PAGE 86 ---
+© 2010 Pearson. Todos os direitos reservados.slide 86
+ciclo de vida do
+cliente TCP
+ciclo de vida do
+servidor TCP
+
+--- PAGE 87 ---
+© 2010 Pearson. Todos os direitos reservados.slide 87
+Capítulo 3: Esboço
+ 3.1 Serviços da camada 
+de transporte
+ 3.2 Multiplexação e 
+demultiplexação
+ 3.3 Transporte não 
+orientado para 
+conexão: UDP
+ 3.4 Princípios da 
+transferência 
+confiável de dados
+ 3.5 Transporte orientado 
+para conexão: TCP
+ estrutura de segmento
+ transferência confiável de 
+dados
+ controle de fluxo
+ gerenciamento da conexão
+ 3.6 Princípios de controle 
+de congestionamento
+ 3.7 Controle de 
+congestionamento no TCP
+--- PAGE 88 ---
+© 2010 Pearson. Todos os direitos reservados.slide 88
+Princípios de controle de 
+congestionamento
+Congestionamento:
+ informalmente: “muitas fontes enviando muitos 
+dados muito rápido para a rede tratar”
+ diferente de controle de fluxo!
+ manifestações:
+ pacotes perdidos (estouro de buffer nos 
+roteadores)
+ longos atrasos (enfileiramento nos buffers do 
+roteador)
+ um dos maiores problemas da rede!
+--- PAGE 89 ---
+© 2010 Pearson. Todos os direitos reservados.slide 89
+Causas/custos do 
+congestionamento: cenário 1
+ dois remetentes, 
+dois destinatários
+ um roteador, 
+infinitos buffers 
+ sem retransmissão
+ grandes atrasos 
+quando 
+congestionado
+ vazão máxima 
+alcançável
+
+--- PAGE 90 ---
+© 2010 Pearson. Todos os direitos reservados.slide 90
+Causas/custos do
+congestionamento: cenário 2
+ um roteador, buffers finitos
+ retransmissão do pacote perdido pelo remetente
+
+--- PAGE 91 ---
+© 2010 Pearson. Todos os direitos reservados.slide 91
+ sempre:                   (vazão)
+ retransmissão “perfeita” apenas quando há perda:
+ retransmissão do pacote adiado (não pedido) torna         maior 
+(que o caso perfeito ) para o mesmo
+
+in
+
+out
+ = 
+
+in
+
+out
+>
+
+in
+
+out
+“custos” do congestionamento: 
+ mais trabalho (retransmissão) para determinada “vazão”
+ retransmissões desnecessárias: enlace transporta várias cópias 
+do pacote
+R/2
+R/2in
+out
+b.
+R/2
+R/2in
+out
+a.
+R/2
+R/2in
+out
+c.
+R/4
+R/3
+--- PAGE 92 ---
+© 2010 Pearson. Todos os direitos reservados.slide 92
+Causas/custos do 
+congestionamento: cenário 3
+ quatro remetentes
+ caminhos com vários saltos
+ timeout/retransmissão
+
+in
+P: O que acontece quando      
+e      aumentam ?
+in
+
+--- PAGE 93 ---
+© 2010 Pearson. Todos os direitos reservados.slide 93
+outro “custo” do congestionamento: 
+ quando pacote é descartado, qualquer capacidade 
+de transmissão “upstream” usada para esse pacote 
+foi desperdiçada!
+H
+o
+s
+t 
+A
+H
+o
+s
+t 
+B
+
+o
+u
+t
+
+--- PAGE 94 ---
+© 2010 Pearson. Todos os direitos reservados.slide 94
+Técnicas para controle de 
+congestionamento
+controle de 
+congestionamento fim a 
+fim:
+ nenhum feedback explícito da 
+rede
+ congestionamento deduzido da 
+perda e atraso observados do 
+sistema final
+ técnica tomada pelo TCP
+controle de 
+congestionamento 
+assistido pela rede:
+ roteadores oferecem 
+feedback aos sistemas 
+finais
+ único bit indicando 
+congestionamento 
+(SNA, DECbit, TCP/IP 
+ECN, ATM)
+ taxa explícita que o 
+remetente deve enviar 
+no enlace de saída
+duas técnicas amplas para controle de congestionamento:
+--- PAGE 95 ---
+© 2010 Pearson. Todos os direitos reservados.slide 95
+Estudo de caso: controle de 
+congestionamento ATM ABR
+ABR: taxa de bit 
+disponível:
+ “serviço elástico” 
+ se caminho do remetente 
+“sobrecarregado”: 
+ remetente deve usar 
+largura de banda 
+disponível
+ se caminho do remetente 
+congestionado: 
+ remetente sufocado à 
+taxa mínima garantida
+células RM (gerenciamento de 
+recursos) :
+ enviadas pelo remetente, 
+intercaladas com células de dados
+ bits na célula RM definida por 
+comutadores (“assistido pela rede”) 
+ bit NI: sem aumento na taxa 
+(congestionamento leve)
+ bit CI: indicação de 
+congestionamento
+ células RM retornadas ao remetente 
+pelo destinatário, com bits intactos
+ 
+--- PAGE 96 ---
+© 2010 Pearson. Todos os direitos reservados.slide 96
+ campo ER (explicit rate) de 2 bytes na célula RM
+ comutador congestionado pode reduzir valor de ER na célula
+ taxa de envio do remetente é taxa máxima admissível no caminho
+ bit EFCI nas células de dados: defina como 1 no 
+comutador congestionado
+ se a célula de dados anterior à célula RM tiver EFCI definido, 
+remetente define bit CI na célula RM retornada
+
+--- PAGE 97 ---
+© 2010 Pearson. Todos os direitos reservados.slide 97
+Capítulo 3: Esboço
+ 3.1 Serviços da camada 
+de transporte
+ 3.2 Multiplexação e 
+demultiplexação
+ 3.3 Transporte não 
+orientado para 
+conexão: UDP
+ 3.4 Princípios da 
+transferência 
+confiável de dados
+ 3.5 Transporte orientado 
+para conexão: TCP
+ estrutura de segmento
+ transferência confiável de 
+dados
+ controle de fluxo
+ gerenciamento da conexão
+ 3.6 Princípios de controle 
+de congestionamento
+ 3.7 Controle de 
+congestionamento no TCP
+--- PAGE 98 ---
+© 2010 Pearson. Todos os direitos reservados.slide 98
+Controle de congestionamento 
+TCP: busca por largura 
+de banda
+ “procura por largura de banda”: aumenta taxa de 
+transmissão no recebimento do ACK até por fim ocorrer 
+perda; depois diminui taxa de transmissão 
+ continua a aumentar no ACK, diminui na perda (pois largura de 
+banda disponível está mudando, dependendo de outras conexões 
+na rede) ACKs sendo recebidos, 
+de modo que aumenta 
+taxa
+X
+X
+X
+X
+X perda e diminuição de taxa
+taxa de emissão
+tempo
+ P: Com que velocidade aumentar/diminuir?
+ detalhes a seguir
+comportamento
+“dente de serra”
+do TCP
+--- PAGE 99 ---
+© 2010 Pearson. Todos os direitos reservados.slide 99
+Controle de congestionamento
+ TCP: detalhes
+ remetente limita taxa limitando número de 
+bytes sem ACK “na pipeline”:
+ cwnd: difere de rwnd (como, por quê?)
+ remetente limitado por min(cwnd,rwnd)
+ aproximadamente,
+ cwnd é dinâmico, função do 
+congestionamento de rede percebido
+taxa = 
+cwnd 
+RTT 
+bytes/seg
+ LastByteSent-LastByteAcked  cwnd
+bytes
+cwnd
+RTT
+ACK(s)
+--- PAGE 100 ---
+© 2010 Pearson. Todos os direitos reservados.slide 100
+Controle de congestionamento
+ TCP:  mais detalhes
+evento de perda de segmento: 
+reduzindo cwnd
+ timeout: sem resposta do 
+destinatário
+ corta cwnd para 1
+ 3 ACKs duplicados: pelo 
+menos alguns segmentos 
+passando (lembre-se da 
+retransmissão rápida)
+ corta cwnd pela metade, 
+menos agressivamente do que 
+no timeout
+ACK recebido: aumenta 
+cwnd
+ fase de partida lenta: 
+ aumento exponencialmente 
+rápido (apesar do nome) no 
+início da conexão, ou após 
+o timeout
+ prevenção de 
+congestionamento: 
+ aumento linear
+--- PAGE 101 ---
+© 2010 Pearson. Todos os direitos reservados.slide 101
+Partida lenta do TCP
+ quando conexão começa, cwnd = 1 
+MSS
+ exemplo: MSS = 500 bytes & 
+RTT = 200 ms
+ taxa inicial = 20 kbps
+ largura de banda disponível pode 
+ser >> MSS/RTT
+ desejável subir rapidamente 
+para taxa respeitável
+ aumenta taxa exponencialmente até 
+o primeiro evento de perda ou 
+quando o patamar é alcançado
+ cwnd duplo a cada RTT
+ feito incrementando cwnd por 1 
+para cada ACK recebido
+Hosp. A
+um segmento
+RTT
+Hosp. B
+tempo
+dois segmentos
+quatro segmentos
+--- PAGE 102 ---
+© 2010 Pearson. Todos os direitos reservados.slide 102
+Transição dentro/fora 
+da partida rápida
+ssthresh: patamar de cwnd mantido pelo TCP
+ um evento de perda: define ssthresh como cwnd/2
+ lembre-se (metade) da taxa TCP quando ocorreu perda de 
+congestionamento 
+ quando transição de cwnd > = ssthresh: da partida lenta para fase 
+de prevenção de congestionamento
+partida
+lenta timeout
+ssthresh = cwnd/2
+cwnd = 1 MSS
+dupACKcount = 0
+retransmite segmento que faltatimeout
+ssthresh = cwnd/2 
+cwnd = 1 MSS
+dupACKcount = 0
+retransmite segmento que falta 
+
+cwnd > ssthresh
+dupACKcount++
+duplicate ACK
+
+cwnd = 1 MSS
+ssthresh = 64 KB
+dupACKcount = 0 prevenção de
+congestionamento
+cwnd = cwnd+MSS
+dupACKcount = 0
+transmite novos segmento(s), como permitido
+new ACK
+--- PAGE 103 ---
+© 2010 Pearson. Todos os direitos reservados.slide 103
+TCP: prevenção de 
+congestionamento
+ quando cwnd > ssthresh 
+cresce cwnd de forma linear
+ aumenta cwnd em 1 MSS 
+por RTT 
+ aborda possível 
+congestionamento mais 
+lento que na partida lenta
+ implementação: cwnd = 
+cwnd + MSS/cwnd para 
+cada ACK recebido
+ ACKs: aumenta cwnd em 1 
+MSS por RTT: aumento 
+aditivo
+ perda: corta cwnd ao meio 
+(perda sem timeout 
+detectado): diminuição 
+multiplicativa
+AIMD
+AIMD: Additive Increase
+Multiplicative Decrease
+--- PAGE 104 ---
+© 2010 Pearson. Todos os direitos reservados.slide 104
+FSM do controle de
+congestionamento TCP:
+ visão geral
+partida
+lenta
+prevenção
+de cong.
+ recup.
+rápida
+cwnd > ssthresh
+perda:
+timeout
+perda:
+timeout
+novo ACK perda:
+3dupACK
+perda:
+3dupACK
+perda:
+timeout
+--- PAGE 105 ---
+© 2010 Pearson. Todos os direitos reservados.slide 105
+FSM do controle de 
+congestionamento TCP: detalhes
+
+--- PAGE 106 ---
+© 2010 Pearson. Todos os direitos reservados.slide 106
+Tipos populares de TCP
+
+--- PAGE 107 ---
+© 2010 Pearson. Todos os direitos reservados.slide 107
+Resumo: controle de
+congestionamento TCP
+ quando cwnd < ssthresh, remetente na fase de 
+partida lenta, janela cresce exponencialmente.
+ quando cwnd > =  ssthresh, remetente está na 
+fase de prevenção de congestionamento, janela 
+cresce linearmente.
+ quando ocorre o ACK duplicado triplo, ssthresh 
+definido como cwnd/2, cwnd definido como 
+~ssthresh
+ quando ocorre o timeout, ssthresh definido como 
+cwnd/2, cwnd definido como 1 MSS.
+--- PAGE 108 ---
+© 2010 Pearson. Todos os direitos reservados.slide 108
+Vazão do TCP
+ P: Qual é a vazão média do TCP como função 
+do tamanho da janela, RTT?
+ ignorando partida lenta
+ seja W o tamanho da janela quando ocorre 
+a perda
+  quando janela é W, a vazão é W/RTT
+  logo após perda, janela cai para W/2, 
+vazão para W/2RTT. 
+  após a vazão: 0,75 W/RTT
+--- PAGE 109 ---
+© 2010 Pearson. Todos os direitos reservados.slide 109
+Futuros do TCP: TCP sobre
+ pipes “longos, gordos”
+ exemplo: segmentos de 1500 bytes, RTT de 
+100 ms, deseja vazão de 10 Gbps
+ exige tamanho de janela W = 83.333 segmentos 
+no ar
+ vazão em termos da taxa de perda:
+ ➜ L = 2 · 10-10  Uau!
+ novas versões do TCP para alta velocidade
+1 , 22⋅MSS
+RTT √ L
+--- PAGE 110 ---
+© 2010 Pearson. Todos os direitos reservados.slide 110
+objetivo da equidade: se K sessões TCP 
+compartilharem o mesmo enlace de gargalo da 
+largura de banda R, cada uma deve ter uma taxa 
+média de R/K
+conexão TCP 1
+capacidade de
+gargalo do
+roteador R
+conexão
+TCP 2
+Equidade do TCP
+--- PAGE 111 ---
+© 2010 Pearson. Todos os direitos reservados.slide 111
+Por que o TCP é justo?
+duas sessões concorrentes:
+ aumento aditivo dá inclinação 1, pois vazão aumenta
+ diminuição multiplicativa diminui vazão proporcionalmente
+R
+R
+compartilhamento de largura de banda igual
+Vazão da conexão 1
+Vazão da conexão 2
+prevenção de cong.: aumento aditivo
+perda: diminui janela por fator de 2
+prevenção de congestionamento: aumento aditivo
+perda: diminui janela por fator de 2
+--- PAGE 112 ---
+© 2010 Pearson. Todos os direitos reservados.slide 112
+Equidade (mais)
+equidade e UDP
+ aplicações de multimídia 
+normalmente não usam 
+TCP
+ não desejam que a taxa 
+seja sufocada pelo 
+controle de 
+congestionamento
+ em vez disso, use UDP:
+ envia áudio/vídeo em 
+taxa constante, tolera 
+perdas de pacotes
+qquidade e conexões TCP 
+paralelas
+ nada impede que a 
+aplicação abra conexões 
+paralelas entre 2 
+hospedeiros.
+ navegadores Web fazem 
+isso
+ exemplo: enlace de taxa R 
+admitindo 9 conexões; 
+ nova aplicação solicita 1 TCP, 
+recebe taxa R/10
+ nova aplicação solicita 11 
+TCPs, recebe R/2!
+--- PAGE 113 ---
+© 2010 Pearson. Todos os direitos reservados.slide 113
+Capítulo 3: Resumo
+ princípios por trás dos 
+serviços da camada de 
+transporte:
+ multiplexação, 
+demultiplexação
+ transferência de dados 
+confiável
+ controle de fluxo
+ controle de 
+congestionamento
+ instância e implementação na 
+Internet
+ UDP
+ TCP
+Em seguida:
+ saindo da “borda” da 
+rede (camada de 
+transportes da 
+aplicação)
+ no “núcleo” da rede

@@ -1,0 +1,34 @@
+
+--- PAGE 1 ---
+Camada de Enlace 
+Exercícios
+1. Explique o papel da camada de enlace no modelo OSI. Como ela interage com as camadas física 
+e de rede?  
+   
+2. Quais são as principais funções da camada de enlace? Cite pelo menos três e explique cada uma 
+delas.  
+3. Qual é a unidade de dados na camada de enlace? 
+4. Cite três protocolos da camada de enlace e descreva suas características e aplicações principais.  
+5. Quais serviços a camada de enlace oferece à camada de rede? 
+6. Qual a diferença entre Switch, Hub e Roteador?
+7. Em uma rede local, qual método de acesso ao meio seria mais adequado para evitar colisões em 
+um ambiente com muitos dispositivos? Justifique sua resposta.  
+8. Como funciona o método de acesso ao meio baseado em Token Passing? Dê exemplos de redes 
+que utilizam esse método.  
+9. Explique o que é uma colisão em redes Ethernet e descreva como o protocolo CSMA/CD a 
+detecta e resolve.  
+10. O que é controle de fluxo?
+11. Quais são os principais métodos de detecção e correção de erros na camada de enlace? Dê 
+exemplos práticos.  
+12. Explique as principais características da Ethernet. Qual a diferença entre Ethernet comutado e 
+Ethernet compartilhado?
+13. O que é um endereço MAC? Por que ele é importante para a comunicação na camada de enlace? 
+14. O que são VLANs e como a camada de enlace as implementa? Explique os benefícios de 
+utilizar VLANs em uma rede.  
+15. Quais as principais características dos padrões IEEE 802.3 10BASE2, 10BASE5, 10BASET, 
+100BASET
+16. Quais as técnicas para formação de quadros na camada de enlace?
+17. Para que serve o protocolo ARP? Para que serve o protocolo RARP?
+19. Descreva enlaces broadcast e enlaces ponto a ponto; Defina enlaces simplex, full-duplex e half-
+duplex.
+20. Quais os métodos de detecção e correção de erros?

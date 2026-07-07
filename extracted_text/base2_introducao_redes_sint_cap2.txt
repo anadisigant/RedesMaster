@@ -1,0 +1,24 @@
+
+--- PAGE 1 ---
+Síntese do capítulo 2: LANs, placa de rede, conectores e cabeamento
+REDES LOCAIS
+Hub
+Switch
+Roteador
+INTRODUÇÃO A REDES DE COMPUTADORES
+Quanto à topologia
+Utilizam quais 
+elementos
+podem ser
+Conectores
+Tipos de redes podem ser
+Barramento
+Anel
+Estrela
+Placa de rede
+Gateway
+Repetidor
+Cabeamento 
+Estruturadoutilizam cabos apresentam padrões
+EIA 568A
+EIA 568B
