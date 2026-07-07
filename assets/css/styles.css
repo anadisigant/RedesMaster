@@ -971,13 +971,211 @@ select.form-control option {
   border-left: 2px solid var(--color-accent);
 }
 
-/* Animations and Responsive */
+/* ==========================================================================
+   Mobile Responsive Adjustments
+   ========================================================================== */
+
+/* Hamburger and Close Button Defaults (Desktop) */
+.hamburger-btn, .sidebar-close-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.hamburger-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.hamburger-btn:hover, .sidebar-close-btn:hover {
+  color: var(--color-accent);
+}
+
+/* Sidebar Overlay Default (Desktop) */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.sidebar-overlay.active {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Responsive Breakpoint: Tablets and Laptops (< 1024px) */
 @media (max-width: 1024px) {
   #app-container {
     grid-template-columns: 1fr;
   }
+
+  /* Hamburger Menu visible on mobile */
+  .hamburger-btn {
+    display: flex;
+  }
+
+  /* Sidebar Close Button visible inside sidebar */
+  .sidebar-close-btn {
+    display: flex;
+    margin-left: auto;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-glass);
+  }
+
+  /* Sidebar transformed into slide-out drawer */
   aside {
-    display: none; /* In a real app we'd build a drawer, but we focus on desktop for user review dashboard */
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    height: 100vh;
+    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
+    background-color: var(--bg-secondary);
+  }
+
+  aside.open {
+    transform: translateX(0);
+  }
+
+  /* Reduce content padding on mobile */
+  main {
+    padding: 1.5rem;
+  }
+
+  /* Responsive adjust module concepts grid in review section */
+  .review-container {
+    grid-template-columns: 1fr;
+  }
+
+  .review-toc {
+    position: relative;
+    top: 0;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Game Layout responsiveness */
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .game-stats-panel {
+    width: 100%;
+  }
+
+  .game-directive-banner-card {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 1rem;
+  }
+}
+
+/* Responsive Breakpoint: Phones (< 768px) */
+@media (max-width: 768px) {
+  header.content-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    text-align: left;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .header-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Calculator Form wrapping */
+  .calc-form {
+    grid-template-columns: 1fr;
+  }
+
+  .calc-form-full {
+    grid-column: span 1;
+  }
+
+  .calculator-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Columns matching board wrapping */
+  .matching-board {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Simulado Final Layout stacking */
+  #simulado-final-quiz-screen > div {
+    grid-template-columns: 1fr !important;
+  }
+
+  #simulado-final-quiz-screen {
+    max-width: 100%;
+  }
+
+  /* Quiz navigation grid adjust */
+  #sf-question-grid {
+    grid-template-columns: repeat(8, 1fr) !important;
+  }
+
+  /* Footer adjustments */
+  .quiz-footer {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+
+  .quiz-footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Responsive Breakpoint: Small Phones (< 480px) */
+@media (max-width: 480px) {
+  #sf-question-grid {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+
+  .concept-block {
+    padding: 1.5rem;
+  }
+
+  .question-card {
+    padding: 1.5rem;
+  }
+
+  .score-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .score-number {
+    font-size: 2.2rem;
   }
 }
 
